@@ -1,0 +1,34 @@
+# random crap
+*~
+*.swp
+
+# python crap
+*.pyc
+__pycache__/
+
+evaluations/*.pdf
+
+# Dataset files and folders
+ml-100k
+ml-100k.zip
+MNIST_data/
+images_resize
+labs/04_conv_nets_2/VOCdevkit/
+labs/04_conv_nets_2/VOCtrainval_06-Nov-2007.tar
+labs/04_conv_nets_2/voc_representaions.h5
+
+
+# generated data
+results
+tsne.png
+
+# editors crap
+.vscode
+.ipynb_checkpoints/
+
+# tf summary folders
+tensorflow_summaries
+
+# VS Code jupyter temp files
+kernel-*.json
+tags

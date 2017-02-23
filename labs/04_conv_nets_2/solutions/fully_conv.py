@@ -1,0 +1,17 @@
+from keras.layers import Convolution2D
+from keras.models import Model
+
+input = base_model.layers[0].input
+
+# Remove average pooling
+x = base_model.layers[-2].output
+
+# A 1x1 convolution, with 1000 output channels
+x = Convolution2D(1000, 1, 1, name='conv1000')(x)
+
+# Softmax on last axis of tensor
+output = SoftmaxMap(axis=-1)(x)
+
+fully_conv_ResNet = Model(input = input, output = output)
+
+# A 1x1 convolution applies a Dense to each spatial grid location
