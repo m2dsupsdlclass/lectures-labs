@@ -11,10 +11,10 @@ heatmap_3 = build_heatmap(probas_3, synset=s)
 
 display_img_and_heatmap("dog.jpg", heatmap_3)
 
-# We observe that the heatmap_1 and 2 gived a coarser 
-# segmentation that heatmap_3. However, heatmap_3
+# We observe that heatmap_1 and heatmap_2 gave coarser 
+# segmentations than heatmap_3. However, heatmap_3
 # has small artifacts outside of the dog area
-# heatmap_3 encodes more local/texture information about the
-# dog, while lower resolutions will encode more
+# heatmap_3 encodes more local, texture level information
+# about the dog, while lower resolutions will encode more
 # semantic information about the full object
-# combining them is a good idea !
+# combining them is probably a good idea!
