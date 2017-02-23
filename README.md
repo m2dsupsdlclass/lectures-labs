@@ -20,7 +20,7 @@ The course covers the basics of Deep Learning, with a focus on applications:
 The jupyter notebooks for the labs can be found in the `labs` folder of
 the [github repository](https://github.com/m2dsupsdlclass/lectures-labs/):
 
-    git clone https://github.com/m2dsupsdlclass/lectures-lab
+    git clone https://github.com/m2dsupsdlclass/lectures-labs
 
 ## Acknowledgments
 
