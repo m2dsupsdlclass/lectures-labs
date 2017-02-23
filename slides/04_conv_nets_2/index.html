@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Deep Learning Lectures</title>
+    <meta charset="utf-8">
+    <style>
+     .left-column {
+       width: 50%;
+       float: left;
+     }
+     .reset-column {
+       overflow: auto;
+        width: 100%;
+     }
+     .small { font-size: 0.2em; }
+     .right-column {
+       width: 50%;
+       float: right;
+     }
+     .footnote {
+        position: absolute;
+        bottom: 2em;
+        margin: 0em 2em;
+      }
+     .grey { color: #bbbbbb; }
+      </style>
+    <link rel="stylesheet" type="text/css" href="slides.css">
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle
+
+# Convolutional Neural Networks - Part II
+
+Charles Ollion - Olivier Grisel
+
+.affiliations[
+  ![Heuritech](images/logo heuritech v2.png)
+  ![Inria](images/inria-logo.png)
+  ![UPS](images/Logo_Master_Datascience.png)
+]
+
+
+---
+# CNNs for computer Vision
+
+.center[
+<img src="images/vision.png" style="width: 600px;" />
+]
+
+---
+# Beyond Image Classification
+
+### CNNs
+- previous lecture: classification problem
+
+--
+
+### Limitations
+- Mostly on centered images
+- Only a single object per image
+- Not enough for many real world vision tasks
+
+---
+# Beyond Image Classification
+
+<br/>
+
+.center[
+<img src="images/cls_1.png" style="width: 800px;" />
+]
+
+---
+# Beyond Image Classification
+
+<br/>
+
+.center[
+<img src="images/cls_2.png" style="width: 800px;" />
+]
+---
+# Beyond Image Classification
+
+<br/>
+
+.center[
+<img src="images/cls_3.png" style="width: 800px;" />
+]
+---
+# Beyond Image Classification
+
+<br/>
+
+.center[
+<img src="images/cls_4.png" style="width: 800px;" />
+]
+---
+# Outline
+
+<br/>
+
+### Localisation
+
+--
+
+### Segmentation
+
+--
+
+### Weak supervision
+
+---
+class: middle, center
+
+# Localisation
+
+---
+# Localisation
+
+.center[
+<img src="images/dog.jpg" style="width: 400px;" />
+]
+
+--
+
+- Single object per image
+- Predict coordinates of a bounding box  `(x,y,w,h)` 
+
+--
+- Evaluate via Interection over Union (IoU)
+
+---
+# Localisation as regression
+
+.center[
+<img src="images/regression_dog_1.svg" style="width: 700px;" />
+]
+
+---
+# Localisation as regression
+
+.center[
+<img src="images/regression_dog.svg" style="width: 700px;" />
+]
+
+---
+# Classification + Localisation
+
+.center[
+<img src="images/doublehead_1.svg" style="width: 600px;" />
+]
+
+---
+# Classification + Localisation
+
+.center[
+<img src="images/doublehead.svg" style="width: 600px;" />
+]
+
+--
+
+- Use a pre-trained CNN on ImageNet (ex. ResNet)
+- The "localisation head" is trained seperately with regression
+
+--
+- Possible end-to-end finetuning of both tasks
+
+--
+- At test time, use both heads
+
+---
+# Classification + Localisation
+
+.center[
+<img src="images/doublehead.svg" style="width: 600px;" />
+]
+
+$C$ classes, $4$ output dimensions ($1$ box)
+
+--
+
+**Predict exactly $N$ objects:** predict $(N \times 4)$ coordinates and $(N \times K)$ class scores
+
+---
+#Object detection
+
+We don't know in advance the number of objects in the image. Object detection relies on *object proposal* and *object classification*
+
+**Object proposal:** find regions of interest (RoIs) in the image
+
+--
+
+**Object classification:** classify the object in these regions
+
+--
+
+<br/>
+
+### Two main families:
+
+- A grid in the image where each cell is a proposal (SSD, YOLO)
+- Region proposal (SPP, MultiBox, Faster RCNN, ...)
+
+---
+# YOLO
+.center[
+<img src="images/yolo0.png" style="width: 500px;" />
+]
+
+.footnote.small[
+Redmon, Joseph, et al. "You only look once: Unified, real-time object detection." CVPR (2016)
+]
+
+--
+
+For each cell of the $S \times S$ predict:
+- $B$ **boxes** and **confidence scores** $C$ ($5 \times B$ values) + **classes** $c$
+
+---
+# YOLO
+.center[
+<img src="images/yolo1.png" style="width: 500px;" />
+]
+
+For each cell of the $S \times S$ predict:
+- $B$ **boxes** and **confidence scores** $C$ ($5 \times B$ values) + **classes** $c$
+
+.footnote.small[
+Redmon, Joseph, et al. "You only look once: Unified, real-time object detection." CVPR (2016)
+]
+---
+# YOLO
+.center[
+<img src="images/yolo1.png" style="width: 500px;" />
+]
+
+Final detections: $C_j * prob(c) > \text{threshold}$
+
+.footnote.small[
+Redmon, Joseph, et al. "You only look once: Unified, real-time object detection." CVPR (2016)
+]
+
+---
+# YOLO
+
+.footnote.small[
+Redmon, Joseph, et al. "You only look once: Unified, real-time object detection." CVPR (2016)
+]
+
+- After ImageNet pretraining, the whole network is trained end-to-end
+
+--
+- The loss is a weighted sum of different regressions
+
+.center[
+<img src="images/yolo_loss.png" style="width: 400px;" />
+]
+
+---
+# SSD: single-shot detector
+
+.center[
+<img src="images/ssd.png" style="width: 600px;" />
+]
+
+.footnote.small[
+Liu, Wei, et al. "SSD: Single shot multibox detector." ECCV 2016.
+]
+
+--
+
+Same as YOLO with:
+- Multiple default proto-box
+- Multiple scales
+
+--
+- Better training (data augmentation, hard negative mining)
+
+---
+# Box Proposals
+
+Instead of having a predefined set of box proposals, find them on the image:
+- **Selective Search** - from pixels (not learnt)
+- **Faster - RCNN** - Region Proposal Network (RPN)
+
+--
+
+**Crop-and-resize** operator (**RoI-Pooling**):
+- Input: convolutional map + $N$ regions of interest
+- Output: tensor of $N \times 7 \times 7 \times \text{depth}$ boxes
+- Allows to propagate gradient only on interesting regions, and efficient computation
+
+---
+# Fast-RCNN
+
+.center[
+<img src="images/fastRCNN.png" style="width: 650px;" />
+]
+
+
+.footnote.small[
+Girshick, Ross, et al. "Fast r-cnn." ICCV 2015
+]
+
+--
+
+- **Selective Search** + Crop-and-resize (RoI pooling)
+
+--
+- Output: Softmax over $(K + 1)$ classes, and $4$ box offsets
+
+--
+- Positive box are the ones with largest Intersection over Union **IoU** with ground truth
+
+???
+- 200 box proposals
+- gradient propagated only in positive boxes
+
+---
+# Faster-RCNN
+
+.center[
+<img src="images/fasterrcnn.png" style="width: 300px;" />
+]
+
+.footnote.small[
+Ren, Shaoqing, et al. "Faster r-cnn: Towards real-time object detection with region proposal networks." NIPS 2015
+]
+
+--
+
+- Replace **Selective Search** with **RPN**, train jointly
+
+--
+- Region proposal is translation invariant, compared to YOLO
+
+???
+Region proposal input is a fully convolutional network: shares weights across spatial dimensions
+
+---
+# Comparison of Detection Methods
+
+Measures: mean Average Precision **mAP** and Frames per Second **FPS**
+
+.center[
+<img src="images/resultsyolo.png" style="width: 500px;" />
+]
+
+.footnote.small[
+Redmon, Joseph, et al. "YOLO9000, Faster, Better, Stronger." 2017
+]
+
+---
+# Results
+
+.center[
+<img src="images/localisationresults.png" style="width: 500px;" />
+]
+
+---
+class: middle, center
+
+# Segmentation
+
+---
+# Segmentation
+
+Output a class map for each pixel (here: dog vs background)
+
+.center[
+<img src="images/dog_segment.jpg" style="width: 400px;" />
+]
+
+--
+
+- **Instance segmentation**: specify each object instance as well (two dogs have different instances)
+
+--
+- This can be done through **object detection** + **segmentation**
+
+---
+# Convolutionize
+
+.center[         
+<img src="images/convolutionalization.png" style="width: 400px;" />
+]
+
+
+.footnote.small[
+Long, Jonathan, et al. "Fully convolutional networks for semantic segmentation." CVPR 2015
+]
+
+- Slide the network with an input of `(224, 224)` over a larger image. Output of varying spatial size
+--
+
+- **Convolutionize**: change Dense `(4096, 1000)` to $1 \times 1$ Convolution, with `4096, 1000` input and output channels
+
+--
+- Gives a coarse **segmentation** (no extra supervision)
+
+???
+output map upscaled from fully convolutional network
+---
+# Fully Convolutional Network
+
+.center[
+<img src="images/densefc.png" style="width: 500px;" />
+]
+
+.footnote.small[
+Long, Jonathan, et al. "Fully convolutional networks for semantic segmentation." CVPR 2015
+]
+
+--
+
+- Predict / backpropagate for every output pixel
+
+--
+- Aggregate maps from several convolutions at different scales for more robust results
+
+---
+# Deconvolution
+
+.center[
+<img src="images/deconv.png" style="width: 650px;" />
+]
+
+.footnote.small[
+Noh, Hyeonwoo, et al. "Learning deconvolution network for semantic segmentation." ICCV 2015
+]
+
+--
+
+<br/>
+- "Deconvolution": transposed convolutions
+
+.center[
+<img src="images/conv_deconv.png" style="width: 350px;" />
+]
+
+---
+# Deconvolution
+
+.center[
+<img src="images/deconv.png" style="width: 650px;" />
+]
+
+.footnote.small[
+Noh, Hyeonwoo, et al. "Learning deconvolution network for semantic segmentation." ICCV 2015
+]
+
+<br/>
+- **skip connections** between corresponding convolution and deconvolution layers
+
+--
+- **sharper masks** by using precise spatial information (early layers)
+- **better object detection** by using semantic information (late layers)
+
+???
+Unpooling: switch variables tied to corresponding pooling layers. Remembers which pixel was the max
+
+---
+# DeepMask / SharpMask
+
+.center[
+<img src="images/deepmask.png" style="width: 500px;" />
+]
+
+.footnote.small[
+Pinheiro, Pedro O., et al. "Learning to segment object candidates" / "Learning to refine object segments", NIPS 2015 / ECCV 2016
+]
+
+--
+
+- The network is fully convolutional: masks and scores are computed for each region
+
+--
+- Score = 1 only if object centered and fully contained in the mask
+
+--
+- SharpMask: make use of all conv layers with refinement network
+
+---
+# Results
+
+.center[
+<img src="images/segmentationresults.png" style="width: 760px;" />
+]
+
+.footnote.small[
+Li, Yi, et al. "Fully Convolutional Instance-aware Semantic Segmentation." Winner of COCO challenge 2016.
+]
+---
+# Results
+
+.center[
+<img src="images/segmentationresults2.png" style="width: 760px;" />
+]
+
+.footnote.small[
+Li, Yi, et al. "Fully Convolutional Instance-aware Semantic Segmentation." Winner of COCO challenge 2016.
+]
+---
+# Take away NN for Vision
+
+### Pre-trained features as a basis
+
+- ImageNet: centered objects, very broad image domain
+- 1M+ labels and many different classes resulting in very **general** and **disantangling** representations
+- Better Networks (i.e. ResNet vs VGG) have **a huge impact** 
+
+--
+
+### Fine tuning
+
+- Add new layers on top of convolutional or dense layer of CNNs
+- **Fine tune** the whole architecture end-to-end
+- Make use of much less richer data (bounding boxes, masks...)
+
+---
+class: middle, center
+
+# Weak supervision
+
+---
+# Weak supervision
+
+.center[
+<img src="images/flickr.png" style="width: 300px;" />
+]
+
+.footnote.small[
+Joulin, Armand, et al. "Learning visual features from large weakly supervised data." ECCV, 2016
+]
+
+--
+
+- **Output dimension** (vocabulary) is huge: ~100 000
+
+--
+- After stopword removal, **importance sampling** of positive labels
+
+--
+- Do not compute the full softmax, **randomly sample negatives**
+
+---
+# Weak supervision
+
+Object localisation with only global image label data
+
+.center[
+<img src="images/weaklocalisation.png" style="width: 650px;" />
+]
+
+.footnote.small[
+Oquab, Maxime, "Is object localization for free? – Weakly-supervised learning with convolutional neural networks", 2015
+]
+
+- Fully convolutional network at different image scales
+
+--
+- Loss: $- \max C\_{i,j}^{label} + \max C\_{i,j}^{other}$
+
+--
+- Provides good localisation of **center** of objects
+
+--
+- Image-level classification is on par with / better than  object-level classification
+---
+# Self-supervised learning
+
+- **No labels at all**: find smart ways to build supervision
+
+---
+# Self-supervised learning
+
+.center[
+<img src="images/gupta1.png" style="width: 400px;" />
+]
+
+.footnote.small[
+Doersch, Carl, Abhinav Gupta, and Alexei A. Efros. "Unsupervised visual representation learning by context prediction." ICCV 2015.
+]
+
+--
+
+- Predict patches arrangement in images: 8 class classifier
+
+---
+# Labels Take Away
+
+number of *unsupervised* **>>** *Weakly-supervised*  **>>** *Supervised* data
+
+--
+
+number of *class labels* **>>** *bounding boxes* **>>** *segmentation masks*
+
+--
+
+- For most cases, use **ImageNet pre-trained networks**
+
+--
+- Good ongoing research on learning *weakly* supervised features: cover larger spectrum of image domains
+
+--
+- Unsupervised learning of features still inferior to ImageNet features
+
+--
+
+Segmentation and localisation using **weak labels**: very early but promising results
+
+--
+
+Use of **simulations** for localisation / segmentation data (GTA V...)
+
+---
+class: middle, center
+
+# Lab 4: Room B316 and B543 in 15min!
+
+---
+# Bonus: Self-supervised 
+
+.center[
+<img src="images/gupta2.png" style="width: 380px;" />
+]
+
+.footnote.small[
+Wang, Xiaolong, and Abhinav Gupta. "Unsupervised learning of visual representations using videos." ICCV 2015.
+]
+--
+
+- Collect pairs of similar objects from videos
+
+--
+- Train a siamese net with positive pairs = similar objects detected
+
+--
+- Hard negative mining: find objects with large movement
+
+    </textarea>
+    <style TYPE="text/css">
+      code.has-jax {font: inherit; font-size: 100%; background: inherit; border: inherit;}
+    </style>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+      tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'] // removed 'code' entry
+      }
+      });
+      MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i = 0; i < all.length; i += 1) {
+		     all[i].SourceElement().parentNode.className += ' has-jax';
+		     }
+		     });
+		     </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../remark.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create({
+        highlightStyle: 'github',
+        highlightSpans: true,
+        highlightLines: true
+      });
+    </script>
+  </body>
+</html>
