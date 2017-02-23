@@ -13,7 +13,7 @@ The course covers the basics of Deep Learning, with a focus on applications:
 - Neural Networks and Backpropagation
 - Embeddings and Recommender Systems
 - Convolutional Neural Networks
-- Advanced Vision using Deep Learning [slides](/slides/04_conv_nets_2/index.html)
+- Advanced Vision using Deep Learning ([slides](https://m2dsupsdlclass.github.io/lectures-labs/slides/04_conv_nets_2/index.html))
 - Recurrent Neural Networks and NLP
 - Optimization techniques in Deep Learning
 
