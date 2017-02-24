@@ -7,6 +7,10 @@ import numpy as np
 from scipy.misc import imread, imresize
 import xml.etree.ElementTree as etree
 import os
+import os.path as op
+
+images_folder = "VOCdevkit/VOC2007/JPEGImages"
+annotations_folder = "VOCdevkit/VOC2007/Annotations"
 
 
 # Parse the xml annotation file and retrieve the path to each image,
@@ -32,9 +36,9 @@ filters = ["dog", "cat", "bus", "car", "aeroplane"]
 idx2labels = {k: v for k, v in enumerate(filters)}
 labels2idx = {v: k for k, v in idx2labels.items()}
 
-annotation_folder = "VOCdevkit/VOC2007/Annotations/"
-for filename in sorted(os.listdir(annotation_folder)):
-    annotation = extract_xml_annotation(op.join(annotation_folder, filename))
+for filename in sorted(os.listdir(annotations_folder)):
+    annotation_path = op.join(annotations_folder, filename)
+    annotation = extract_xml_annotation(annotation_path)
 
     new_objects = []
     for obj in annotation["objects"]:
@@ -64,11 +68,11 @@ def predict_batch(model, img_batch_path, img_size=None):
     try:
         img_batch = np.stack(img_list, axis=0)
     except:
-        raise ValueError('when img_size and crop_size are None, images'
-                ' in image_paths must have the same shapes.')
+        raise ValueError(
+            'when both img_size and crop_size are None, all images '
+            'in image_paths must have the same shapes.')
 
-    batch = preprocess_input(img_batch)
-    return model.predict(x = img_batch)
+    return model.predict(preprocess_input(img_batch))
 
 
 # Build the resnet
@@ -86,15 +90,17 @@ def compute_representations(annotations):
     batch_size = 32
     batches = []
 
-    for a_idx in range(len(annotations) // 32 + 1):
-        batch_bgn = a_idx * 32
-        batch_end = min(len(annotations), (a_idx + 1) * 32)
+    n_batches = len(annotations) // 32 + 1
+    for batch_idx in range(n_batches):
+        batch_bgn = batch_idx * 32
+        batch_end = min(len(annotations), (batch_idx + 1) * 32)
         img_names = []
         for annotation in annotations[batch_bgn:batch_end]:
-            img_names.append("VOCdevkit/VOC2007/JPEGImages/" + annotation["filename"])
-        batch = predict_batch(img_names, (224, 224), headless_conv)
+            img_path = op.join(images_folder, annotation["filename"])
+            img_names.append(img_path)
+        batch = predict_batch(headless_conv, img_names, img_size=(224, 224))
         batches.append(batch)
-        print("batch " +str(a_idx) + " prepared") 
+        print("batch %d/%d prepared" % (batch_idx + 1, n_batches)) 
     return np.vstack(batches)
 
 

@@ -16,6 +16,7 @@ images_resize
 labs/04_conv_nets_2/VOCdevkit/
 labs/04_conv_nets_2/VOCtrainval_06-Nov-2007.tar
 labs/04_conv_nets_2/voc_representaions.h5
+labs/04_conv_nets_2/voc_representations.h5
 
 
 # generated data
