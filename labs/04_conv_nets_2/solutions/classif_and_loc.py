@@ -23,7 +23,7 @@ model = classif_and_loc(5)
 
 history = model.fit(x = inputs, y=[out_cls, out_boxes], 
                     validation_data=(test_inputs, [test_cls, test_boxes]), 
-                    batch_size=batch_size, nb_epoch=30)
+                    batch_size=batch_size, nb_epoch=30, verbose=2)
 
 compute_acc(train=True)
 compute_acc(train=False)
