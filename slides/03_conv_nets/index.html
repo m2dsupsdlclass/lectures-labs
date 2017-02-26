@@ -108,25 +108,25 @@ class: middle, center
 ---
 # Convolution
 
-Discrete convolution between two functions $f$ and $g$:
+Discrete convolution (actually cross-correlation) between two functions
+$f$ and $g$:
 
 $$
-(f \star g) (x) = \sum\_{a+b=x} f(a) . g(b) = \sum\_{a} f(a) . g(x - a)
-$$
-
-<br/>
-
---
-
-In computer vision, we typically use 2D-convolutions:
-
-$$
-(f \star g) (x, y) = \sum_n \sum_m f(n,m) . g(x - n, y - m)
+(f \star g) (x) = \sum\_{a+b=x} f(a) . g(b) = \sum\_{a} f(a) . g(x + a)
 $$
 
 --
 
-- $f$ is the **Kernel** of the convolution, applied to the 2-d map $g$ (think image)
+In computer vision, we typically use 2D-convolutions (actually 2D
+cross-correlation):
+
+$$
+(f \star g) (x, y) = \sum_n \sum_m f(n, m) . g(x + n, y + m)
+$$
+
+--
+
+$f$ is a convolution **kernel** applied to the 2-d map $g$ (think image)
 
 ---
 # A convolution on an image
@@ -201,7 +201,7 @@ Convolutions can be computed across channels:
 --
 
 $$
- (k \star im) (x, y) = \sum\limits\_{c=0}^2 \sum\limits\_{n=0}^4 \sum\limits\_{m=0}^4 k(n, m, c) . im(x - n - 2, y - m - 2, c) 
+(k \star im) (x, y) = \sum\limits\_{c=0}^2 \sum\limits\_{n=0}^4 \sum\limits\_{m=0}^4 k(n, m, c) . im(x + n - 2, y + m - 2, c)
 $$
 
 ---
