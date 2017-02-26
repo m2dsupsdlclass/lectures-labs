@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Deep Learning Lectures</title>
+    <meta charset="utf-8">
+    <style>
+     .left-column {
+       width: 50%;
+       float: left;
+     }
+     .reset-column {
+       overflow: auto;
+        width: 100%;
+     }
+     .small { font-size: 0.2em; }
+     .right-column {
+       width: 50%;
+       float: right;
+     }
+     .footnote {
+        position: absolute;
+        bottom: 2em;
+        margin: 0em 2em;
+      }
+     .grey { color: #bbbbbb; }
+      </style>
+    <link rel="stylesheet" type="text/css" href="slides.css">
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle
+
+# Deep Networks: Expressivity, Optimization &amp; Generalization
+
+Charles Ollion - Olivier Grisel
+
+.affiliations[
+  ![Heuritech](images/logo heuritech v2.png)
+  ![Inria](images/inria-logo.png)
+  ![UPS](images/Logo_Master_Datascience.png)
+]
+
+
+---
+# Decomposition of the Error
+
+
+---
+# Outline
+
+<br/>
+
+
+### Function Approximation
+
+--
+
+### Optimization
+
+--
+
+### Generalization
+
+---
+class: middle, center
+
+# Learning with Deep Networks
+
+---
+class: middle, center
+
+# Expressivity and Universal Function Approximation
+
+---
+# Expressivity (DRAFT)
+
+- Universal Continuous Function Approximation
+
+- Finite domain approximation
+
+- Depth vs Width and parametric cost
+
+---
+class: middle, center
+
+# Optimization for Deep Networks
+
+---
+# Optimization (DRAFT)
+
+- Why SGD?
+
+- Local Minima
+
+  - Intuition: overparametrization => easy overfitting => all minima
+    have zero training cost and are therefore global
+
+- Optimization issues related to depth
+
+  - Initialization / Residual Connections
+
+- Conditioning / Natural Gradient
+
+  - Adam / Batch Normalization
+
+- Remaining optimization problems:
+
+  - Still slow on large vision problems: e.g.
+
+  - RL with Policy Gradient: too much noise: no training
+
+---
+class: middle, center
+
+# Generalization
+
+---
+# Generalization (DRAFT)
+
+- Memorization vs Generalization
+
+- Importance of small batch sizes
+
+- Dropout and Gradient noise
+
+- Early stopping as implicit regularization
+
+  - Computational constraints as implicit regularization
+
+---
+# Conclusions
+
+- A strong optimizer is not necessarily a strong learner
+
+- Neural Networks are non-convex but local minima are rarely a problem
+
+- Neural Networks are over-parametrized but can still generalize
+
+- Stochastic Gradient solvers is a strong implicit regularizer
+
+- Open area of research
+
+---
+class: middle, center
+
+# Lab #6: Room C48 and C49 in 15min!
+
+    </textarea>
+    <style TYPE="text/css">
+      code.has-jax {font: inherit; font-size: 100%; background: inherit; border: inherit;}
+    </style>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+      tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'] // removed 'code' entry
+      }
+      });
+      MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i = 0; i < all.length; i += 1) {
+		     all[i].SourceElement().parentNode.className += ' has-jax';
+		     }
+		     });
+		     </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../remark.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create({
+        highlightStyle: 'github',
+        highlightSpans: true,
+        highlightLines: true
+      });
+    </script>
+  </body>
+</html>
