@@ -191,16 +191,17 @@ class:middle, center
 
 assign a probability to a sequence of words
 
-$p(\text{I like cats}) > p(\text{I table cats})$
-$p(\text{I like cats}) > p(\text{like I cats})$
+- $p(\text{I like cats}) > p(\text{I table cats})$
+- $p(\text{I like cats}) > p(\text{like I cats})$
 
 more informative than Bag of Words
+
 --
 
 Sequence modelling
 
 $$
-p(w_n | w_{n-1}, w_{n-2}, ..., w_0) 
+p(w\_n | w\_{n-1}, w\_{n-2}, ..., w\_0) 
 $$
 
 ---
@@ -208,19 +209,22 @@ $$
 
 Many NLP problems can be expressed as Conditional Language Models:
 
-Translation:
+**Translation:** $p(source | destination)$
 
-$$
-p(\text{I like cats} | \text{J'aime les chats})
-$$
+*source/destination*:  "J'aime les chats" / "I like cats"
 
 --
 
-Question Answering / dialogue:
+**Question Answering / dialogue:** $p( Answer | Question , Context )$
 
-$$
-p(\text{\text{There are four balls.} | \text{How many balls are there ?}, \textit{Context})
-$$
+- *Context*: "John put 2 glasses on the table. Bob adds two more glasses"
+- *Question*: "How many glasses are there?"
+- *Answer*: "There are four glasses."
+
+--
+
+**Image Captionning:** $p( Caption | Image )$
+
 
 ---
 # Fixed sequence size
@@ -266,25 +270,51 @@ $\{w_t\}$ sequence of words ( 1-hot encoded )
 include picture
 
 $$
-x_t = \text{Emb}(w_t) = \mathbf{E} w_t
-h_t = g(\mathbf{W_h} h_{t-1} + x_t + b_h)\\
-y = \text{softmax}( \mathbf{W_o} h_t + b_o )
+x\_t = \text{Emb}(w\_t) = \mathbf{E} w\_t \\\\
+h\_t = g(\mathbf{W\_h} h\_{t-1} + x\_t + b\_h)\\\\
+y = \text{softmax}( \mathbf{W\_o} h\_t + b\_o )
 $$
+
+---
+# GRU
+
+Gated Recurrent Unit
+
+.footnote.small[
+Chung, Junyoung, et al. "Gated Feedback Recurrent Neural Networks." ICML 2015
+]
 ---
 # LSTM
 
-$$
-x_t = \text{Emb}(w_t) = \mathbf{E} w_t
-f_t = \sigma(\mathbf{W_h} h_{t-1} + x_t + b_h)\\
-
-h_t = 
-c_t = \sigma
-y = \text{softmax}( \mathbf{W_o} h_t + b_o )
-$$
-
 .footnote.small[
-hochreiter schmidhuber
+Hochreiter, Sepp, and Jürgen Schmidhuber. "Long short-term memory." Neural computation 1997
 ]
+
+- $\mathbf{ u} = \sigma(\mathbf{W^u} \cdot h\_{t-1} + \mathbf{I^u} \cdot x\_t + b^u)$
+
+--
+- $\mathbf{ f} = \sigma(\mathbf{W^f} \cdot h\_{t-1} + \mathbf{I^f} \cdot x\_t + b^f)$
+
+--
+- $\mathbf{ \tilde{C}} = \tanh(\mathbf{W^c} \cdot h\_{t-1} + \mathbf{I^c} \cdot x\_t + b^c)$
+
+--
+- $\mathbf{ C\_t} = \mathbf{f} \odot \mathbf{C\_{t-1}} + \mathbf{u} \odot \mathbf{ \tilde{C}}$
+
+--
+- $\mathbf{ o} = \sigma(\mathbf{W^o} \cdot h\_{t-1} + \mathbf{I^o} \cdot x\_t + b^o)$
+
+--
+- $\mathbf{ h\_t} = \mathbf{o} \odot \tanh(\mathbf{C\_t})$
+
+--
+- $y = \text{softmax}( \mathbf{W} \cdot h\_t + b )$
+
+--
+
+$W^u, W^f, W^c, W^o$ recurrent weights `H x H` <br/>
+$I^u, I^f, I^c, I^o$ input weights `N x H`
+
 ---
 input: sequence of words
 output: single vector of dimension K, or sequence of vectors of dimension K
