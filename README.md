@@ -10,12 +10,12 @@ Saclay](http://datascience-x-master-paris-saclay.fr)
 
 The course covers the basics of Deep Learning, with a focus on applications:
 
-  - Neural Networks and Backpropagation
-  - Embeddings and Recommender Systems
-  - Convolutional Neural Networks
-  - Advanced Vision using Deep Learning ([slides](https://m2dsupsdlclass.github.io/lectures-labs/slides/04_conv_nets_2/index.html))
+  - Neural Networks and Backpropagation ([slides](https://m2dsupsdlclass.github.io/lectures-labs/slides/01_intro_to_deep_learning/index.html))
+  - Embeddings and Recommender Systems ([slides](https://m2dsupsdlclass.github.io/lectures-labs/slides/02_recommender_systems/index.html))
+  - Convolutional Neural Networks for Image Classification ([slides](https://m2dsupsdlclass.github.io/lectures-labs/slides/03_conv_nets/index.html))
+  - Deep Learning for Object Dection and Image Segmentation ([slides](https://m2dsupsdlclass.github.io/lectures-labs/slides/04_conv_nets_2/index.html))
   - Recurrent Neural Networks and NLP
-  - Optimization techniques in Deep Learning
+  - Expressivity, Optimization and Generalization
 
 The jupyter notebooks for the labs can be found in the `labs` folder of
 the [github repository](https://github.com/m2dsupsdlclass/lectures-labs/):
