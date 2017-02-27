@@ -10,6 +10,13 @@
 
 ## Lab #2 (embeddings and recsys)
 
+- Highlight the importance of time-based cross-validation splits and
+  other cross-validation splits: to measure the ability of the model to
+  generalize either to the future, to new users or to new items.
+
+- Lecture: do not tie explicit feedback to regression metrics, it would
+  be possible to use ranking metrics for explicit feedback.
+
 - Embedding diagrams should include the one-hot vector of the data
   points that is multiplied with the embedding matrices to emphasize the
   fact that embedding matrices holds model parameters and not training
