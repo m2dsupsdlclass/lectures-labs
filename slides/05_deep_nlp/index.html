@@ -17,11 +17,18 @@
        width: 50%;
        float: right;
      }
+     .right{
+       float:right;
+     }
+     .left{
+       float:left;
+     }
      .footnote {
         position: absolute;
         bottom: 2em;
         margin: 0em 2em;
-      }
+     }
+     .red { color: #ee1111; }
      .grey { color: #bbbbbb; }
       </style>
     <link rel="stylesheet" type="text/css" href="slides.css">
@@ -227,62 +234,177 @@ Many NLP problems can be expressed as Conditional Language Models:
 
 
 ---
-# Fixed sequence size
+## Fixed sequence size
 
 .center[
 <img src="images/fixedsize_mlp.svg" style="width: 400px;" />
 ]
 
+--
+
+Fixed context size
+
+- **average**: (same as Word2Vec) no sequence information
+
+--
+- **concatenate**: introduces many parameters
+
+--
+- **1D convolution**: larger contexts and limit parameters
+
+--
+- Still does not take well into account varying sequence sizes and sequence dependencies
+
 ---
-# Recurrent Neural Network
+## Recurrent Neural Network
+
+.center[
+<img src="images/rnn_simple.svg" style="width: 200px;" />
+]
+
+---
+## Recurrent Neural Network
+
+.center[
+<img src="images/unrolled_rnn_3.svg" style="width: 400px;" />
+]
+---
+## Recurrent Neural Network
+
+.center[
+<img src="images/unrolled_rnn_2.svg" style="width: 400px;" />
+]
+
+---
+## Recurrent Neural Network
 
 .center[
 <img src="images/unrolled_rnn.svg" style="width: 400px;" />
+]
+---
+## Backpropagation through time
+
+.center[
+<img src="images/unrolled_rnn_backwards_1.svg" style="width: 400px;" />
 ]
 
 ---
 ## Backpropagation through time
 
 .center[
-<img src="images/unrolled_rnn_backward.svg" style="width: 400px;" />
+<img src="images/unrolled_rnn_backwards_2.svg" style="width: 400px;" />
 ]
 
 ---
-# Recurrent Neural Network
+## Backpropagation through time
 
 .center[
-<img src="images/rnn_simple.svg" style="width: 200px;" />
+<img src="images/unrolled_rnn_backwards_3.svg" style="width: 400px;" />
+]
+
+---
+## Language Modelling
+
+.center[
+<img src="images/unrolled_rnn_words.svg" style="width: 500px;" />
+]
+
+input $(w\_0, w\_1, ..., w\_t)$ .small[ sequence of words ( 1-hot encoded ) ] <br/>
+output $(w\_1, w\_2, ..., w\_{t+1})$ .small[shifted sequence of words ( 1-hot encoded ) ]
+--
+
+- $x\_t = \text{Emb}(w\_t) = \mathbf{E} w\_t$ .right[input projection .red[`H`]] 
+
+--
+- $h\_t = g(\mathbf{W^h} h\_{t-1} + x\_t + b^h)$ .right[recurrent connection .red[`H`]] 
+
+--
+- $y = \text{softmax}( \mathbf{W^o} h\_t + b^o )$ .right[output projection .red[`K = |V|`]] 
+
+---
+## Recurrent Neural Network
+
+.center[
+<img src="images/unrolled_rnn_words.svg" style="width: 500px;" />
+]
+
+Parameters:
+
+- input embedding $\mathbf{E}$  .right[.red[`|V| x H`]] 
+
+--
+- recurrent weights $\mathbf{W^h}$  .right[recurrent weights .red[`H x H`]] 
+
+--
+- output weights $\mathbf{W^{out}}$ .right[ .red[`H x K`]] 
+
+For  language models usually `K = |V|`
+
+---
+## Other uses: Sentiment analysis
+
+.center[
+<img src="images/unrolled_rnn_one_output_2.svg" style="width: 600px;" />
+]
+
+- Output is sentiment (1 for positive, 0 for negative)
+
+--
+- Very dependant on words order
+
+--
+- Very flexible network architectures
+---
+## Other uses: Sentiment analysis
+
+.center[
+<img src="images/unrolled_rnn_one_output.svg" style="width: 600px;" />
+]
+
+- Output is sentiment (1 for positive, 0 for negative)
+- Very dependant on words order
+- Very flexible network architectures
+
+---
+
+# LSTM
+.center[
+<img src="images/unrolled_lstm_2.svg" style="width: 500px;" />
+]
+
+.footnote.small[
+Hochreiter, Sepp, and Jürgen Schmidhuber. "Long short-term memory." Neural computation 1997
+]
+---
+
+# LSTM
+.center[
+<img src="images/unrolled_lstm_1.svg" style="width: 500px;" />
+]
+
+.footnote.small[
+Hochreiter, Sepp, and Jürgen Schmidhuber. "Long short-term memory." Neural computation 1997
+]
+---
+
+# LSTM
+.center[
+<img src="images/unrolled_lstm.svg" style="width: 500px;" />
+]
+
+.footnote.small[
+Hochreiter, Sepp, and Jürgen Schmidhuber. "Long short-term memory." Neural computation 1997
 ]
 
 --
+- 4 times more parameters than RNN
 
-Params:
+--
+- Mitigates **vanishing gradient** problem through **gating**
 
-- $W_{in} |V| \times h$ : embedding 
-- $W_h h \times h$ : reccurent layer
-- $W_{out} h \times K$ : output, can be $|V|$
+--
+- Widely used and SOTA in many sequence learning problems
 
----
-# Recurrent Neural Network
-
-$\{w_t\}$ sequence of words ( 1-hot encoded )
-
-include picture
-
-$$
-x\_t = \text{Emb}(w\_t) = \mathbf{E} w\_t \\\\
-h\_t = g(\mathbf{W\_h} h\_{t-1} + x\_t + b\_h)\\\\
-y = \text{softmax}( \mathbf{W\_o} h\_t + b\_o )
-$$
-
----
-# GRU
-
-Gated Recurrent Unit
-
-.footnote.small[
-Chung, Junyoung, et al. "Gated Feedback Recurrent Neural Networks." ICML 2015
-]
 ---
 # LSTM
 
@@ -290,36 +412,174 @@ Chung, Junyoung, et al. "Gated Feedback Recurrent Neural Networks." ICML 2015
 Hochreiter, Sepp, and Jürgen Schmidhuber. "Long short-term memory." Neural computation 1997
 ]
 
-- $\mathbf{ u} = \sigma(\mathbf{W^u} \cdot h\_{t-1} + \mathbf{I^u} \cdot x\_t + b^u)$
+- $\mathbf{ u} = \sigma(\mathbf{W^u} \cdot h\_{t-1} + \mathbf{I^u} \cdot x\_t + b^u)$ .right[update gate .red[`H`]]
 
 --
-- $\mathbf{ f} = \sigma(\mathbf{W^f} \cdot h\_{t-1} + \mathbf{I^f} \cdot x\_t + b^f)$
+- $\mathbf{ f} = \sigma(\mathbf{W^f} \cdot h\_{t-1} + \mathbf{I^f} \cdot x\_t + b^f)$ .right[forget gate .red[`H`]]
 
 --
-- $\mathbf{ \tilde{C}} = \tanh(\mathbf{W^c} \cdot h\_{t-1} + \mathbf{I^c} \cdot x\_t + b^c)$
+- $\mathbf{ \tilde{C}} = \tanh(\mathbf{W^c} \cdot h\_{t-1} + \mathbf{I^c} \cdot x\_t + b^c)$ .right[Cell candidate .red[`H`]]
 
 --
-- $\mathbf{ C\_t} = \mathbf{f} \odot \mathbf{C\_{t-1}} + \mathbf{u} \odot \mathbf{ \tilde{C}}$
+- $\mathbf{ C\_t} = \mathbf{f} \odot \mathbf{C\_{t-1}} + \mathbf{u} \odot \mathbf{ \tilde{C}}$ .right[Cell output .red[`H`]]
 
 --
-- $\mathbf{ o} = \sigma(\mathbf{W^o} \cdot h\_{t-1} + \mathbf{I^o} \cdot x\_t + b^o)$
+- $\mathbf{ o} = \sigma(\mathbf{W^o} \cdot h\_{t-1} + \mathbf{I^o} \cdot x\_t + b^o)$ .right[output gate .red[`H`]]
 
 --
-- $\mathbf{ h\_t} = \mathbf{o} \odot \tanh(\mathbf{C\_t})$
+- $\mathbf{ h\_t} = \mathbf{o} \odot \tanh(\mathbf{C\_t})$ .right[Hidden output .red[`H`]]
 
 --
-- $y = \text{softmax}( \mathbf{W} \cdot h\_t + b )$
+- $y = \text{softmax}( \mathbf{W} \cdot h\_t + b )$ .right[Output .red[`K`]]
 
 --
+<br/>
 
-$W^u, W^f, W^c, W^o$ recurrent weights `H x H` <br/>
-$I^u, I^f, I^c, I^o$ input weights `N x H`
+$W^u, W^f, W^c, W^o$ .right[recurrent weights .red[`H x H`]]
+
+$I^u, I^f, I^c, I^o$ .right[input weights .red[`N x H`]]
+
 
 ---
-input: sequence of words
-output: single vector of dimension K, or sequence of vectors of dimension K
+# GRU
 
-schema karpathy many-to-one, one-to-many, many-to-many
+Gated Recurrent Unit: similar idea as LSTM
+
+.footnote.small[
+Chung, Junyoung, et al. "Gated Feedback Recurrent Neural Networks." ICML 2015
+]
+
+- less parameters, as there is one gate less
+- no "cell", only hidden vector $h_t$ is passed to next unit
+
+--
+- more recent, people tend to use LSTM more
+- no real significant difference
+
+---
+## Vanishing / Exploding Gradients
+
+- Passing through $t$ time-steps, the resulting gradient is the **product** of many gradients and activations
+
+--
+- Gradients close to $0$ will soon be $0$
+- Gradients larger than $1$ will explode
+
+--
+
+
+- **LSTM / GRU** mitigate that in RNNs
+
+--
+- **Gradient clipping** prevents gradient explosion 
+- Well chosen **activation function** are critical (tanh, reLU)
+
+--
+
+
+- **Skip connections** in ResNet also alleviate this problem
+
+---
+# Encoder-Decoder
+
+.center[
+<img src="images/encoder_decoder_1.svg" style="width: 680px;" />
+]
+
+.footnote.small[
+Cho, Kyunghyun, et al. "Learning phrase representations using RNN encoder-decoder for statistical machine translation." 2014
+]
+---
+# Encoder-Decoder
+
+.center[
+<img src="images/encoder_decoder_2.svg" style="width: 680px;" />
+]
+
+.footnote.small[
+Cho, Kyunghyun, et al. "Learning phrase representations using RNN encoder-decoder for statistical machine translation." 2014
+]
+---
+# Encoder-Decoder
+
+.center[
+<img src="images/encoder_decoder.svg" style="width: 680px;" />
+]
+
+.footnote.small[
+Cho, Kyunghyun, et al. "Learning phrase representations using RNN encoder-decoder for statistical machine translation." 2014
+]
+---
+# Encoder-Decoder
+
+.center[
+<img src="images/encoder_decoder_forcing.svg" style="width: 680px;" />
+]
+
+.footnote.small[
+Cho, Kyunghyun, et al. "Learning phrase representations using RNN encoder-decoder for statistical machine translation." 2014
+]
+
+---
+# Sequence to Sequence
+
+.center[
+<img src="images/basic_seq2seq.png" style="width: 760px;" />
+]
+
+- Very close to Encoder-Decoder architecture
+
+--
+
+- Reversed input sequence for traduction
+- Special symbols for starting decoding and end of sentence
+
+--
+- Encoder and decoder can share weights (but more common to have separate weights)
+
+.footnote.small[
+Sutskever, Ilya, Oriol Vinyals, and Quoc V. Le. "Sequence to sequence learning with neural networks." NIPS 2014
+]
+---
+# Attention Mechanism
+
+.center[
+<img src="images/attention_0.png" style="width: 670px;" />
+]
+
+.footnote.small[
+Neural machine translation by jointly learning to align and translate, D Bahdanau, K Cho, Y Bengio 2014
+]
+---
+# Attention Mechanism
+
+.center[
+<img src="images/attention_1.png" style="width: 670px;" />
+]
+
+.footnote.small[
+Neural machine translation by jointly learning to align and translate, D Bahdanau, K Cho, Y Bengio 2014
+]
+---
+# Attention Mechanism
+
+.center[
+<img src="images/attention_2.png" style="width: 670px;" />
+]
+
+.footnote.small[
+Neural machine translation by jointly learning to align and translate, D Bahdanau, K Cho, Y Bengio 2014
+]
+---
+# Attention Mechanism
+
+.center[
+<img src="images/attention_3.png" style="width: 670px;" />
+]
+
+.footnote.small[
+Neural machine translation by jointly learning to align and translate, D Bahdanau, K Cho, Y Bengio 2014
+]
 ---
 class: middle, center
 
