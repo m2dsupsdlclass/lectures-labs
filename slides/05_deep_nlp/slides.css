@@ -32,6 +32,11 @@ li {
   line-height: 160%;
 }
 
+li li {
+  font-size: 100%;
+  line-height: 160%;
+}
+
 p {
 font-size: 120%;
   line-height: 140%;
