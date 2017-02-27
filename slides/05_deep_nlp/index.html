@@ -51,7 +51,17 @@ Charles Ollion - Olivier Grisel
 ---
 ### Natural Language Processing
 
-intro
+.center[
+<img src="images/nlp.png" style="width: 720px;" />
+]
+
+intro:
+- Google translate
+- Chatbots / dialogue systems
+- sentiment
+- topic classification
+- summarization
+- topic modeling
 
 ---
 # Outline
@@ -59,32 +69,49 @@ intro
 <br/>
 
 
-### Word representation: Word2Vec
+### Word representation and Word2Vec
 
 --
 
-### Recurrent Neural Networks for Language Modelling 
+### Recurrent Neural Networks and Language Modelling 
 
 --
 
-### Attention Mechanism & Memory
+### Encoder-Decoder and Attention Mechanism 
 
 ---
 class: middle, center
 
-# Localisation
+# Word Representation and Word2Vec
 
 ---
 # Word representation
 
-Vocabulary, ...
-- Remember: embeddings
+- Words are indexed and represented as 1-hot vectors
+- Large Vocabulary of possible words $|V|$
+
+--
+- Use of **Embeddings** as inputs in all Deep NLP tasks
+
+--
+- We don't usually use Embeddings as outputs as we want to choose a single word
 
 --
 
-Application to text classification
-- (example fastText)
+- **Character** level embeddings: same as words
 
+--
+- much smaller vocab size
+- need long term sequence modelisation
+
+---
+# Text classification
+
+TODO schema fastText
+
+.footnote.small[
+Joulin, Armand, et al. "Bag of tricks for efficient text classification." FAIR 2016
+]
 ---
 # Transfer Learning with text
 
@@ -124,7 +151,7 @@ Supervision comes from context.
 Requires a lot of text data to cover rare words correctly.
 
 .footnote.small[
-Word2vec mikolov
+Mikolov, Tomas, et al. "Distributed representations of words and phrases and their compositionality." NIPS 2013
 ]
 ---
 # Word2Vec: CBoW
@@ -169,6 +196,8 @@ Word2vec mikolov
 ---
 # Word2Vec: Skip Gram
 
+todo change diagram of W2V
+
 --
 add details hierarchical softmax VS negative sampling
 
@@ -201,7 +230,7 @@ Always difficult to evaluate unsupervised tasks
 ---
 class:middle, center
 
-# Recurrent Neural Networks for Language Modelling
+# Recurrent Neural Networks and Language Modelling
 
 ---
 # Language Models
@@ -215,7 +244,7 @@ more informative than Bag of Words
 
 --
 
-Sequence modelling
+**Sequence modelling**
 
 $$
 p(w\_n | w\_{n-1}, w\_{n-2}, ..., w\_0) 
@@ -224,7 +253,7 @@ $$
 ---
 # Conditional Language Models
 
-Many NLP problems can be expressed as Conditional Language Models:
+Many NLP problems can be expressed as **Conditional Language Models**:
 
 **Translation:** $p(source | destination)$
 
@@ -488,6 +517,11 @@ Chung, Junyoung, et al. "Gated Feedback Recurrent Neural Networks." ICML 2015
 
 
 - **Skip connections** in ResNet also alleviate this problem
+
+---
+class: center,middle
+
+# Encoder-Decoder and Attention Mechanism
 
 ---
 # Encoder-Decoder
