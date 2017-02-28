@@ -49,20 +49,36 @@ Charles Ollion - Olivier Grisel
 
 
 ---
-### Natural Language Processing
+## Natural Language Processing
 
 .center[
-<img src="images/nlp.png" style="width: 720px;" />
+<img src="images/nlp.png" style="width: 550px;" />
 ]
 
-???
-- Google translate
-- Chatbots / dialogue systems
-- Natural Language query interpretation (e.g. Google Now, Siri, Alexa)
-- Sentiment Analysis
+---
+## Natural Language Processing
+
 - Topic Classification
+
+- Topic modeling
+
+- Sentiment Analysis
+
+--
+
+- Google Translate
+
+--
+
+- Chatbots / dialogue systems
+
+--
+
+- Natural Language query interpretation (e.g. Google Now, Siri, Alexa)
+
+--
+
 - Summarization
-- Topic Modeling
 
 ---
 # Recommended reading
@@ -105,39 +121,124 @@ class: middle, center
 - Use of **Embeddings** as inputs in all Deep NLP tasks
 
 --
-- We don't usually use Embeddings as outputs as we want to choose a single word
+
+Notes
+
+- Embeddings for text usually have dimensions `50, 100, 200, 300`
 
 --
-
-- **Character** level embeddings: same as words
-
---
-- much smaller vocab size
-- need long term sequence modelisation
+- We don't usually use Embeddings as outputs (hard to train, and we want a decision on a single word)
 
 ---
 # Text classification
 
-TODO schema fastText
+.center[
+<img src="images/fasttext.svg" style="width: 500px;" />
+]
 
 .footnote.small[
 Joulin, Armand, et al. "Bag of tricks for efficient text classification." FAIR 2016
 ]
+
+--
+
+<br/>
+Parameters:
+- $\mathbf{E}$ embedding (linear projection) .right.red[`|V| x H`]
+
+--
+- Embeddings are averaged .right[hidden activation size: .red[`H`]]
+
+--
+- Dense output connection $\mathbf{W}$ (+bias) .right.red[`H x K`]
+
+---
+# Text classification
+
+.center[
+<img src="images/fasttext.svg" style="width: 500px;" />
+]
+
+.footnote.small[
+Joulin, Armand, et al. "Bag of tricks for efficient text classification." FAIR 2016
+]
+
+<br/>
+
+- Very efficient (**speed** and **accuracy**) on large datasets
+
+--
+- State-of-the-art (or close to) on several classification, when adding **bigrams/trigrams**
+
+--
+- Little gains with depth
+
 ---
 # Transfer Learning with text
 
-- Similar to image: can we have word representations that are generic
-  enough to transfer from one task to another?
+Similar to image: can we have word representations that are generic
+  enough to **transfer** from one task to another?
 
 --
-- Unsupervised / self-supervised learning of word representations
+
+**Unsupervised / self-supervised** learning of word representations
 
 --
-- Unlabelled text data is almost infinite:
+
+**Unlabelled** text data is almost infinite:
   - Wikipedia dumps
   - Project Gutenberg
   - Social Networks
   - Common Crawl
+
+---
+# Word Vectors
+
+.center[
+<img src="images/tsne_words.png" style="width: 630px;" />
+]
+
+.footnote.small[
+excerpt from work by J. Turian on a model trained by R. Collobert et al. 2008
+]
+---
+# Word2Vec
+
+.center[
+<img src="images/most_sim.png" style="width: 500px;" />
+]
+
+.footnote.small[
+Colobert et al. 2011, Mikolov, et al. 2013
+]
+
+--
+
+<br/>
+
+### Compositionality
+
+.center[
+<img src="images/sum_wv.png" style="width: 700px;" />
+]
+
+---
+# Word analogies
+
+.center[
+<img src="images/capitals.png" style="width: 450px;" />
+]
+
+.footnote.small[
+Mikolov, Tomas, et al. "Distributed representations of words and phrases and their compositionality." NIPS 2013
+]
+
+--
+
+- Linear relations in Word2Vec embeddings
+
+--
+- Many come from text structure (e.g. Wikipedia)
 
 ---
 # Distributional Hypothesis
@@ -145,7 +246,11 @@ Joulin, Armand, et al. "Bag of tricks for efficient text classification." FAIR 2
 Distributional Hypothesis (Harris, 1954):
 *“words are characterised by the company that they keep”*
 
-Main idea: learning word embeddings by predicting word contexts
+Main idea: learning word embeddings by **predicting word contexts**
+
+.footnote.small[
+Mikolov, Tomas, et al. "Distributed representations of words and phrases and their compositionality." NIPS 2013
+]
 
 --
 
@@ -155,71 +260,83 @@ probability $P(w|\text{carrot})$ that $w$ occurs in the context of
 
 --
 
-Unsupervised / self-supervised: no need of labels.
+- **Unsupervised / self-supervised**: no need of labels.
+- Supervision comes from context.
+- Requires a lot of text data to cover rare words correctly.
 
-Supervision comes from context.
+---
+# Word2Vec: CBoW
 
-Requires a lot of text data to cover rare words correctly.
+ CBoW: representing the context as **Continuous Bag-of-Word**
+
+Self-supervision from large unlabeled corpus of text: *slide* over an **anchor word** and its **context**:
+
+.center[
+<img src="images/words.svg" style="width: 500px;" />
+]
 
 .footnote.small[
 Mikolov, Tomas, et al. "Distributed representations of words and phrases and their compositionality." NIPS 2013
 ]
+
+--
+
 ---
 # Word2Vec: CBoW
 
-.center[
-<img src="images/word2vec_simple3.svg" style="width: 720px;" />
-]
+ CBoW: representing the context as **Continuous Bag-of-Word**
+
+Self-supervision from large unlabeled corpus of text: *slide* over an **anchor word** and its **context**:
 
 .center[
-<img src="images/textcontext.svg" style="width: 620px;" />
+<img src="images/word2vec_words.svg" style="width: 500px;" />
 ]
+
+.footnote.small[
+Mikolov, Tomas, et al. "Distributed representations of words and phrases and their compositionality." NIPS 2013
+]
+
 ---
-# Word2Vec: CBoW
+# Word2Vec: Details
+
+<br/>
 
 .center[
-<img src="images/word2vec_simple4.svg" style="width: 720px;" />
+<img src="images/word2vec.svg" style="width: 500px;" />
 ]
 
-.center[
-<img src="images/textcontext.svg" style="width: 620px;" />
-]
----
-# Word2Vec: CBoW
-
-.center[
-<img src="images/word2vec_simple5.svg" style="width: 720px;" />
+.footnote.small[
+Mikolov, Tomas, et al. "Distributed representations of words and phrases and their compositionality." NIPS 2013
 ]
 
-.center[
-<img src="images/textcontext.svg" style="width: 620px;" />
-]
----
-# Word2Vec: CBoW
+<br/>
 
-.center[
-<img src="images/word2vec_simple2.svg" style="width: 720px;" />
-]
+- Similar architecture as FastText
 
-.center[
-<img src="images/textcontext.svg" style="width: 620px;" />
-]
+--
+- Output classification over large vocabulary |V|
+
+--
+- Large impact of **context size**
+
 ---
 # Word2Vec: Skip Gram
 
-todo change diagram of W2V
+<br/>
+
+.center[
+<img src="images/word2vec_skipgram.svg" style="width: 500px;" />
+]
+
+<br/>
+
+- Given a word, predict context probabilities
 
 --
-add details hierarchical softmax VS negative sampling
+- Widely used in practice
 
 ---
-# Related methods
-
-- GloVe (Socher et al.) insert link
-- PMI matrix factorization  (Levi & Golberg) relation with count based methods
-
----
-# Evaluating representations
+# Evaluation and Related methods
 
 Always difficult to evaluate unsupervised tasks
 
@@ -227,17 +344,36 @@ Always difficult to evaluate unsupervised tasks
 - SimLex-999 (Hill et al.)
 - Word Analogies (Mikolov et al.)
 
+--
+
+<br/>
+
+Other popular method: **GloVe** (Socher et al.) http://nlp.stanford.edu/projects/glove/
+
+.footnote.small[
+Pennington, Jeffrey, Richard Socher, and Christopher D. Manning. "Glove: Global Vectors for Word Representation." EMNLP. 2014
+]
 ---
-# Word and Embeddings
+# Take Away on Embeddings
 
-### For text applications, inputs of Neural Networks are Embeddings
-
-If you have **little training data**, or wide vocabulary not covered by data, use **pre-trained embeddings** (transfer learning)
+**For text applications, inputs of Neural Networks are Embeddings**
 
 --
 
-Otherwise train your embeddings in the task (results in task-specific
-embeddings)
+- If you have **little training data**, or wide vocabulary not covered by data, use **pre-trained embeddings** (transfer learning)
+
+--
+- For **large training data**, use methods such as **FastText**, results in task-specific embeddings
+
+--
+- These methods use **Bag-Of-Words**: do not take into account the **sequence** of words
+
+--
+- Deep Learning is not always suited for BoW Text classification, or sentiment analysis
+
+--
+
+**Deep Learning in NLP** is less mature than in other domains (image analysis, speech recognition), expect new discoveries soon!
 
 ---
 class:middle, center
@@ -313,8 +449,9 @@ Fixed context size
 <img src="images/rnn_simple.svg" style="width: 200px;" />
 ]
 
----
-## Recurrent Neural Network
+--
+
+Unroll over a sequence $(x_0, x_1, x_2)$: 
 
 .center[
 <img src="images/unrolled_rnn_3.svg" style="width: 400px;" />
@@ -323,41 +460,32 @@ Fixed context size
 ## Recurrent Neural Network
 
 .center[
-<img src="images/unrolled_rnn_2.svg" style="width: 400px;" />
+<img src="images/rnn_simple.svg" style="width: 200px;" />
 ]
 
+Unroll over a sequence $(x_0, x_1, x_2)$: 
+
+.center[
+<img src="images/unrolled_rnn_2.svg" style="width: 400px;" />
+]
 ---
 ## Recurrent Neural Network
 
 .center[
+<img src="images/rnn_simple.svg" style="width: 200px;" />
+]
+
+Unroll over a sequence $(x_0, x_1, x_2)$: 
+
+.center[
 <img src="images/unrolled_rnn.svg" style="width: 400px;" />
-]
----
-## Backpropagation through time
-
-.center[
-<img src="images/unrolled_rnn_backwards_1.svg" style="width: 400px;" />
-]
-
----
-## Backpropagation through time
-
-.center[
-<img src="images/unrolled_rnn_backwards_2.svg" style="width: 400px;" />
-]
-
----
-## Backpropagation through time
-
-.center[
-<img src="images/unrolled_rnn_backwards_3.svg" style="width: 400px;" />
 ]
 
 ---
 ## Language Modelling
 
 .center[
-<img src="images/unrolled_rnn_words.svg" style="width: 500px;" />
+<img src="images/unrolled_rnn_words.svg" style="width: 450px;" />
 ]
 
 input $(w\_0, w\_1, ..., w\_t)$ .small[ sequence of words ( 1-hot encoded ) ] <br/>
@@ -376,7 +504,7 @@ output $(w\_1, w\_2, ..., w\_{t+1})$ .small[shifted sequence of words ( 1-hot en
 ## Recurrent Neural Network
 
 .center[
-<img src="images/unrolled_rnn_words.svg" style="width: 500px;" />
+<img src="images/unrolled_rnn_words.svg" style="width: 450px;" />
 ]
 
 Parameters:
@@ -384,12 +512,50 @@ Parameters:
 - input embedding $\mathbf{E}$  .right[.red[`|V| x H`]] 
 
 --
-- recurrent weights $\mathbf{W^h}$  .right[recurrent weights .red[`H x H`]] 
+- recurrent weights $\mathbf{W^h}$  .right[.red[`H x H`]] 
 
 --
 - output weights $\mathbf{W^{out}}$ .right[ .red[`H x K`]] 
 
 For  language models usually `K = |V|`
+---
+## Backpropagation through time
+
+Similar as standard backpropagation on unrolled network
+
+.center[
+<img src="images/unrolled_rnn_backwards_1.svg" style="width: 400px;" />
+]
+
+---
+## Backpropagation through time
+
+Similar as standard backpropagation on unrolled network
+
+.center[
+<img src="images/unrolled_rnn_backwards_2.svg" style="width: 400px;" />
+]
+
+---
+## Backpropagation through time
+
+Similar as standard backpropagation on unrolled network
+
+.center[
+<img src="images/unrolled_rnn_backwards_3.svg" style="width: 400px;" />
+]
+
+<br/>
+
+--
+
+- Similar as training **very deep networks**
+
+--
+- Usually truncate the backprop after $T$ timesteps
+
+--
+- Difficulties to train long-term dependencies 
 
 ---
 ## Other uses: Sentiment analysis
@@ -504,13 +670,16 @@ Chung, Junyoung, et al. "Gated Feedback Recurrent Neural Networks." ICML 2015
 - no "cell", only hidden vector $h_t$ is passed to next unit
 
 --
+
+In practice
+
 - more recent, people tend to use LSTM more
 - no real significant difference
 
 ---
 ## Vanishing / Exploding Gradients
 
-- Passing through $t$ time-steps, the resulting gradient is the **product** of many gradients and activations
+Passing through $t$ time-steps, the resulting gradient is the **product** of many gradients and activations
 
 --
 - Gradients close to $0$ will soon be $0$
@@ -518,6 +687,7 @@ Chung, Junyoung, et al. "Gated Feedback Recurrent Neural Networks." ICML 2015
 
 --
 
+<br/>
 
 - **LSTM / GRU** mitigate that in RNNs
 
@@ -527,8 +697,9 @@ Chung, Junyoung, et al. "Gated Feedback Recurrent Neural Networks." ICML 2015
 
 --
 
+<br/>
 
-- **Skip connections** in ResNet also alleviate this problem
+**Skip connections** in ResNet also alleviate this problem
 
 ---
 class: center,middle
@@ -583,19 +754,41 @@ Cho, Kyunghyun, et al. "Learning phrase representations using RNN encoder-decode
 <img src="images/basic_seq2seq.png" style="width: 760px;" />
 ]
 
-- Very close to Encoder-Decoder architecture
-
---
-
-- Reversed input sequence for traduction
-- Special symbols for starting decoding and end of sentence
-
---
-- Encoder and decoder can share weights (but more common to have separate weights)
-
 .footnote.small[
 Sutskever, Ilya, Oriol Vinyals, and Quoc V. Le. "Sequence to sequence learning with neural networks." NIPS 2014
 ]
+
+- Encoder-Decoder architecture
+
+--
+- **Reverse input sequence** for traduction
+- Special symbols for starting decoding and end of sentence
+
+--
+- Encoder and decoder can **share weights** (but more common to have separate weights)
+
+---
+# Attention Mechanism
+
+Main problem with Encoder-Decoder:
+- A sentence may have different parts with different concepts
+- The **whole sentence** is represented as a **single vector**
+
+.center[
+*I like cats but I don't like dogs*
+]
+
+.footnote.small[
+In depth explanation on https://blog.heuritech.com/2016/01/20/attention-mechanism/
+]
+--
+
+<br/> 
+ Solution: 
+
+- Use all outputs of the encoder $\{h_i\}$ to compute the outputs
+- Build an **Attention Mechanism** to determine which output(s) to attend to
+
 ---
 # Attention Mechanism
 
