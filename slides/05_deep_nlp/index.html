@@ -63,6 +63,13 @@ intro:
 - summarization
 - topic modeling
 
+### Recommended reading:
+
+A Primer on Neural Network Models for Natural Language Processing by
+Yoav Goldberg
+
+https://arxiv.org/abs/1510.00726
+
 ---
 # Outline
 
@@ -219,13 +226,14 @@ Always difficult to evaluate unsupervised tasks
 ---
 # Word and Embeddings
 
-### for text applications, inputs of Neural Networks are Embeddings
+### For text applications, inputs of Neural Networks are Embeddings
 
-#### If you have little training data, or wide vocabulary not covered by data, use pre-trained embeddings (transfer learning)
+If you have **little training data**, or wide vocabulary not covered by data, use **pre-trained embeddings** (transfer learning)
 
 --
 
-#### Otherwise train your embeddings in the task (results in task-specific embeddings)
+Otherwise train your embeddings in the task (results in task-specific
+embeddings)
 
 ---
 class:middle, center
@@ -624,6 +632,58 @@ Neural machine translation by jointly learning to align and translate, D Bahdana
 .footnote.small[
 Neural machine translation by jointly learning to align and translate, D Bahdanau, K Cho, Y Bengio 2014
 ]
+
+---
+# Large Vocabulary Size
+
+**Softmax** computation becomes **intractable** both at training and
+inference time (sum over $|V|$).
+
+--
+
+**Negative Sampling** works well to learn word embeddings but is **not a
+good approximation** for **language modeling** and machine translation.
+
+--
+
+Approximate softmax with **sampled softmax** (a.k.a. bucketing):
+
+  - Accumulate training sequences in buckets $i$ with $|V_i| ~= 50k$;
+  - Sample training bucket $i$ at random and use regular softmax on $V_i$;
+  - Share softmax parameters for words in common across buckets;
+  - Iterate untill the end of the training set.
+
+???
+Sample softmax (https://arxiv.org/abs/1412.2007):
+  - Biased estimate, but works reasonably well in practice;
+  - Also useful to train item embedding in RecSys.
+
+---
+# Alternative to Word Embeddings
+
+Character-level Embedding (+ CNN layer)
+- Pros:
+  - Very small vocabulary size
+  - No need for language specific segmentation;
+  - Quite robust to spelling mistakes;
+  - Better deal with mixed language contents.
+- Cons:
+  - Need to learn word structure from data
+  - Decoding more complex (expensive)
+
+Better: **Byte Pair Embedding** (BPE)
+
+???
+
+BPE (https://arxiv.org/abs/1508.07909):
+
+- Start with a vocabulary of characters (encoded as bytes);
+- Scan training set to compute most frequent char bigrams and replace
+  them with a new single byte symbol;
+- Recurse until target vocabulary size is reached (hyper-parameter).
+
+
+
 ---
 class: middle, center
 
