@@ -362,23 +362,24 @@ Pennington, Jeffrey, Richard Socher, and Christopher D. Manning. "Glove: Global 
 
 - If you have **little training data**, or wide vocabulary not covered
   by data, use **pre-trained self-supervised embeddings**
-  (transfer learning)
+  (transfer learning from Glove, word2vec or fastText embeddings)
 
 --
-- For **large training data** with labels, learn supervised
-  task-specific embedding with methods such as **fastText**
+- For **large training data** with labels, learn
+  task-specific embedding with methods such as **fastText in
+  supervised mode**.
 
 --
-- These methods use **Bag-Of-Words**: do not take into account the
-  **sequence** of words
+- These methods use **Bag-of-Words** (BoW): they **ignore the order** in
+  word sequences
 
 --
-- Deep Learning is not that useful simple BoW text classification.
+- Deep Learning is not that useful for simple BoW text classification.
 
 --
 
-**Deep Learning in NLP** is less mature than for other domains
-(computer vision, speech recognition).
+**Deep Learning in NLP** is less mature than for other domains such as
+computer vision and speech recognition.
 
 ---
 class:middle, center
@@ -573,7 +574,7 @@ Similar as standard backpropagation on unrolled network
 - Difficulties to train long-term dependencies 
 
 ---
-## Other uses: Sentiment analysis
+## Other uses: Sentiment Analysis
 
 .center[
 <img src="images/unrolled_rnn_one_output_2.svg" style="width: 600px;" />
@@ -582,7 +583,7 @@ Similar as standard backpropagation on unrolled network
 - Output is sentiment (1 for positive, 0 for negative)
 
 --
-- Very dependant on words order
+- Very dependent on words order
 
 --
 - Very flexible network architectures
@@ -594,7 +595,7 @@ Similar as standard backpropagation on unrolled network
 ]
 
 - Output is sentiment (1 for positive, 0 for negative)
-- Very dependant on words order
+- Very dependent on words order
 - Very flexible network architectures
 
 ---
