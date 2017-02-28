@@ -599,7 +599,6 @@ Similar as standard backpropagation on unrolled network
 - Very flexible network architectures
 
 ---
-
 # LSTM
 .center[
 <img src="images/unrolled_lstm_2.svg" style="width: 500px;" />
@@ -608,8 +607,8 @@ Similar as standard backpropagation on unrolled network
 .footnote.small[
 Hochreiter, Sepp, and Jürgen Schmidhuber. "Long short-term memory." Neural computation 1997
 ]
----
 
+---
 # LSTM
 .center[
 <img src="images/unrolled_lstm_1.svg" style="width: 500px;" />
@@ -618,8 +617,8 @@ Hochreiter, Sepp, and Jürgen Schmidhuber. "Long short-term memory." Neural comp
 .footnote.small[
 Hochreiter, Sepp, and Jürgen Schmidhuber. "Long short-term memory." Neural computation 1997
 ]
----
 
+---
 # LSTM
 .center[
 <img src="images/unrolled_lstm.svg" style="width: 500px;" />
@@ -894,6 +893,18 @@ BPE (https://arxiv.org/abs/1508.07909):
 - Scan training set to compute most frequent char bigrams and replace
   them with a new single byte symbol;
 - Recurse until target vocabulary size is reached (hyper-parameter).
+
+---
+# The GNMT architecture
+
+.center[
+<img src="images/gnmt-architecture.png" style="width: 600px;" />
+]
+
+.footnote.small[
+Yonghui Wu et al. "Google's Neural Machine Translation System: Bridging
+the Gap between Human and Machine Translation"
+]
 
 ---
 class: middle, center
