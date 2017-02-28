@@ -398,15 +398,19 @@ Assign a probability to a sequence of words, e.g:
 **Sequence modelling**
 
 $$
-p(w\_n | w\_{n-1}, w\_{n-2}, ..., w\_0) 
+p\_{\theta}(w\_n | w\_{n-1}, w\_{n-2}, \ldots, w\_0) \cdot p\_{\theta}(w\_{n-1} | w\_{n-2}, \ldots, w\_0) \cdot \ldots \cdot p\_{\theta}(w\_{0})
 $$
+
+--
+
+$p\_{\theta}$ is parameterized by a neural network.
 
 --
 
 The internal representation of the model has to better capture the
 meaning of a sequence than a simple Bag-of-Words.
 
-More computationally expensive as well.
+Much more computationally expensive than Bag-of-Words models.
 
 
 ---
