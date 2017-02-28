@@ -114,20 +114,19 @@ class: middle, center
 ---
 # Word representation
 
-- Words are indexed and represented as 1-hot vectors
-- Large Vocabulary of possible words $|V|$
-
---
-- Use of **Embeddings** as inputs in all Deep NLP tasks
+Words are indexed and represented as 1-hot vectors
 
 --
 
-Notes
-
-- Embeddings for text usually have dimensions `50, 100, 200, 300`
+Large Vocabulary of possible words $|V|$
 
 --
-- We don't usually use Embeddings as outputs (hard to train, and we want a decision on a single word)
+
+Use of **Embeddings** as inputs in all Deep NLP tasks
+
+--
+
+Word embeddings usually have dimensions 50, 100, 200, 300
 
 ---
 # Text classification
@@ -260,8 +259,8 @@ probability $P(w|\text{carrot})$ that $w$ occurs in the context of
 
 --
 
-- **Unsupervised / self-supervised**: no need of labels.
-- Supervision comes from context.
+- **Unsupervised / self-supervised**: no need for labels.
+- Supervision comes from **context**.
 - Requires a lot of text data to cover rare words correctly.
 
 ---
@@ -383,12 +382,10 @@ class:middle, center
 ---
 # Language Models
 
-assign a probability to a sequence of words
+Assign a probability to a sequence of words, e.g:
 
 - $p(\text{I like cats}) > p(\text{I table cats})$
 - $p(\text{I like cats}) > p(\text{like I cats})$
-
-more informative than Bag of Words
 
 --
 
@@ -397,6 +394,14 @@ more informative than Bag of Words
 $$
 p(w\_n | w\_{n-1}, w\_{n-2}, ..., w\_0) 
 $$
+
+--
+
+The internal representation of the model has to better capture the
+meaning of a sequence than a simple Bag-of-Words.
+
+More computationally expensive as well.
+
 
 ---
 # Conditional Language Models
