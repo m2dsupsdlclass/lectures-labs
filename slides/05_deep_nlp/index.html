@@ -75,7 +75,7 @@ Charles Ollion - Olivier Grisel
 --
 
 - Natural language query understanding (Google Now, Apple Siri, Amazon
-  ssAlexa)
+  Alexa)
 
 --
 
@@ -130,7 +130,7 @@ Use of **Embeddings** as inputs in all Deep NLP tasks
 Word embeddings usually have dimensions 50, 100, 200, 300
 
 ---
-# Text classification
+# Supervised Text Classification
 
 .center[
 <img src="images/fasttext.svg" style="width: 500px;" />
@@ -153,7 +153,7 @@ Parameters:
 - Dense output connection $\mathbf{W}$ (+bias) .right.red[`H x K`]
 
 ---
-# Text Classification
+# Supervised Text Classification
 
 .center[
 <img src="images/fasttext.svg" style="width: 500px;" />
@@ -171,13 +171,13 @@ Joulin, Armand, et al. "Bag of tricks for efficient text classification." FAIR 2
 - State-of-the-art (or close to) on several classification, when adding **bigrams/trigrams**
 
 --
-- Little gains with depth
+- Little gains from depth
 
 ---
-# Transfer Learning with text
+# Transfer Learning for Text
 
 Similar to image: can we have word representations that are generic
-  enough to **transfer** from one task to another?
+enough to **transfer** from one task to another?
 
 --
 
@@ -223,7 +223,7 @@ Colobert et al. 2011, Mikolov, et al. 2013
 ]
 
 ---
-# Word analogies
+# Word Analogies
 
 .center[
 <img src="images/capitals.png" style="width: 450px;" />
@@ -260,14 +260,14 @@ probability $P(w|\text{carrot})$ that $w$ occurs in the context of
 
 --
 
-- **Unsupervised / self-supervised**: no need for labels.
-- Supervision comes from **context**.
+- **Unsupervised / self-supervised**: no need for class labels.
+- (Self-)supervision comes from **context**.
 - Requires a lot of text data to cover rare words correctly.
 
 ---
 # Word2Vec: CBoW
 
- CBoW: representing the context as **Continuous Bag-of-Word**
+CBoW: representing the context as **Continuous Bag-of-Word**
 
 Self-supervision from large unlabeled corpus of text: *slide* over an **anchor word** and its **context**:
 
@@ -284,7 +284,7 @@ Mikolov, Tomas, et al. "Distributed representations of words and phrases and the
 ---
 # Word2Vec: CBoW
 
- CBoW: representing the context as **Continuous Bag-of-Word**
+CBoW: representing the context as **Continuous Bag-of-Word**
 
 Self-supervision from large unlabeled corpus of text: *slide* over an **anchor word** and its **context**:
 
@@ -311,10 +311,10 @@ Mikolov, Tomas, et al. "Distributed representations of words and phrases and the
 
 <br/>
 
-- Similar architecture as fastText
+- Similar architecture as supervised CBoW (e.g. fastText)
 
 --
-- Output classification over large vocabulary |V|
+- But output classification over very large vocabulary |V|
 
 --
 - Large impact of **context size**
@@ -360,20 +360,25 @@ Pennington, Jeffrey, Richard Socher, and Christopher D. Manning. "Glove: Global 
 
 --
 
-- If you have **little training data**, or wide vocabulary not covered by data, use **pre-trained embeddings** (transfer learning)
+- If you have **little training data**, or wide vocabulary not covered
+  by data, use **pre-trained self-supervised embeddings**
+  (transfer learning)
 
 --
-- For **large training data**, use methods such as **fastText**, results in task-specific embeddings
+- For **large training data** with labels, learn supervised
+  task-specific embedding with methods such as **fastText**
 
 --
-- These methods use **Bag-Of-Words**: do not take into account the **sequence** of words
+- These methods use **Bag-Of-Words**: do not take into account the
+  **sequence** of words
 
 --
-- Deep Learning is not always suited for BoW text classification, or sentiment analysis
+- Deep Learning is not that useful simple BoW text classification.
 
 --
 
-**Deep Learning in NLP** is less mature than in other domains (image analysis, speech recognition), expect new discoveries soon!
+**Deep Learning in NLP** is less mature than for other domains
+(computer vision, speech recognition).
 
 ---
 class:middle, center
@@ -436,13 +441,13 @@ NLP problems expressed as **Conditional Language Models**:
 
 Fixed context size
 
-- **average**: (same as Word2Vec) no sequence information
+- **Average embeddings**: (same as CBoW) no sequence information
 
 --
-- **concatenate**: introduces many parameters
+- **Concatenate embeddings**: introduces many parameters
 
 --
-- **1D convolution**: larger contexts and limit parameters
+- **1D convolution**: larger contexts and limit number of parameters
 
 --
 - Still does not take well into account varying sequence sizes and sequence dependencies
