@@ -645,25 +645,31 @@ Hochreiter, Sepp, and Jürgen Schmidhuber. "Long short-term memory." Neural comp
 Hochreiter, Sepp, and Jürgen Schmidhuber. "Long short-term memory." Neural computation 1997
 ]
 
-- $\mathbf{ u} = \sigma(\mathbf{W^u} \cdot h\_{t-1} + \mathbf{I^u} \cdot x\_t + b^u)$ .right[update gate .red[`H`]]
+$\mathbf{ u} = \sigma(\mathbf{W^u} \cdot h\_{t-1} + \mathbf{I^u} \cdot x\_t + b^u)$ .right[update gate .red[`H`]]
 
 --
-- $\mathbf{ f} = \sigma(\mathbf{W^f} \cdot h\_{t-1} + \mathbf{I^f} \cdot x\_t + b^f)$ .right[forget gate .red[`H`]]
+
+$\mathbf{ f} = \sigma(\mathbf{W^f} \cdot h\_{t-1} + \mathbf{I^f} \cdot x\_t + b^f)$ .right[forget gate .red[`H`]]
 
 --
-- $\mathbf{ \tilde{C}} = \tanh(\mathbf{W^c} \cdot h\_{t-1} + \mathbf{I^c} \cdot x\_t + b^c)$ .right[Cell candidate .red[`H`]]
+
+$\mathbf{ \tilde{C}} = \tanh(\mathbf{W^c} \cdot h\_{t-1} + \mathbf{I^c} \cdot x\_t + b^c)$ .right[Cell candidate .red[`H`]]
 
 --
-- $\mathbf{ C\_t} = \mathbf{f} \odot \mathbf{C\_{t-1}} + \mathbf{u} \odot \mathbf{ \tilde{C}}$ .right[Cell output .red[`H`]]
+
+$\mathbf{ C\_t} = \mathbf{f} \odot \mathbf{C\_{t-1}} + \mathbf{u} \odot \mathbf{ \tilde{C}}$ .right[Cell output .red[`H`]]
 
 --
-- $\mathbf{ o} = \sigma(\mathbf{W^o} \cdot h\_{t-1} + \mathbf{I^o} \cdot x\_t + b^o)$ .right[output gate .red[`H`]]
+
+$\mathbf{ o} = \sigma(\mathbf{W^o} \cdot h\_{t-1} + \mathbf{I^o} \cdot x\_t + b^o)$ .right[output gate .red[`H`]]
 
 --
-- $\mathbf{ h\_t} = \mathbf{o} \odot \tanh(\mathbf{C\_t})$ .right[Hidden output .red[`H`]]
+
+$\mathbf{ h\_t} = \mathbf{o} \odot \tanh(\mathbf{C\_t})$ .right[Hidden output .red[`H`]]
 
 --
-- $y = \text{softmax}( \mathbf{W} \cdot h\_t + b )$ .right[Output .red[`K`]]
+
+$y = \text{softmax}( \mathbf{W} \cdot h\_t + b )$ .right[Output .red[`K`]]
 
 --
 <br/>
