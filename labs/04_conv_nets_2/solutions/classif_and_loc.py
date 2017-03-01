@@ -15,7 +15,7 @@ def classif_and_loc(num_classes):
     head_boxes = Dense(4, name="head_boxes")(y)
     
     model = Model(model_input, output = [head_classes, head_boxes], name="resnet_loc")
-    model.compile(optimizer="adam", loss=[binary_crossentropy, "mse"], 
+    model.compile(optimizer="adam", loss=['categorical_crossentropy', "mse"], 
                   loss_weights=[1., 1/(224*224)]) 
     return model
 
