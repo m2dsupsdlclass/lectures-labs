@@ -143,14 +143,15 @@ Joulin, Armand, et al. "Bag of tricks for efficient text classification." FAIR 2
 --
 
 <br/>
-Parameters:
-- $\mathbf{E}$ embedding (linear projection) .right.red[`|V| x H`]
+$\mathbf{E}$ embedding (linear projection) .right.red[`|V| x H`]
 
 --
-- Embeddings are averaged .right[hidden activation size: .red[`H`]]
+
+Embeddings are averaged .right[hidden activation size: .red[`H`]]
 
 --
-- Dense output connection $\mathbf{W}$ (+bias) .right.red[`H x K`]
+
+Dense output connection $\mathbf{W}, \mathbf{b}$ + softmax activation .right.red[`H x K`]
 
 ---
 # Supervised Text Classification
