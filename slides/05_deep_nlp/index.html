@@ -538,15 +538,15 @@ $y = \text{softmax}( \mathbf{W^o} h\_t + b^o )$ .right[output projection .red[`K
 <img src="images/unrolled_rnn_words.svg" style="width: 450px;" />
 ]
 
- input embedding $\mathbf{E}$  .right[.red[`|V| x H`]] 
+Input embedding $\mathbf{E}$  .right[.red[`|V| x H`]]
 
 --
 
-recurrent weights $\mathbf{W^h}$  .right[.red[`H x H`]] 
+Recurrent weights $\mathbf{W^h}$  .right[.red[`H x H`]]
 
 --
 
-output weights $\mathbf{W^{out}}$ .right[ .red[`H x K = H x |V|`]]
+Output weights $\mathbf{W^{out}}$ .right[ .red[`H x K = H x |V|`]]
 
 ---
 ## Backpropagation through time
@@ -657,11 +657,11 @@ Hochreiter, Sepp, and Jürgen Schmidhuber. "Long short-term memory." Neural comp
 Hochreiter, Sepp, and Jürgen Schmidhuber. "Long short-term memory." Neural computation 1997
 ]
 
-$\mathbf{ u} = \sigma(\mathbf{W^u} \cdot h\_{t-1} + \mathbf{I^u} \cdot x\_t + b^u)$ .right[update gate .red[`H`]]
+$\mathbf{ u} = \sigma(\mathbf{W^u} \cdot h\_{t-1} + \mathbf{I^u} \cdot x\_t + b^u)$ .right[Update gate .red[`H`]]
 
 --
 
-$\mathbf{ f} = \sigma(\mathbf{W^f} \cdot h\_{t-1} + \mathbf{I^f} \cdot x\_t + b^f)$ .right[forget gate .red[`H`]]
+$\mathbf{ f} = \sigma(\mathbf{W^f} \cdot h\_{t-1} + \mathbf{I^f} \cdot x\_t + b^f)$ .right[Forget gate .red[`H`]]
 
 --
 
@@ -673,7 +673,7 @@ $\mathbf{ C\_t} = \mathbf{f} \odot \mathbf{C\_{t-1}} + \mathbf{u} \odot \mathbf{
 
 --
 
-$\mathbf{ o} = \sigma(\mathbf{W^o} \cdot h\_{t-1} + \mathbf{I^o} \cdot x\_t + b^o)$ .right[output gate .red[`H`]]
+$\mathbf{ o} = \sigma(\mathbf{W^o} \cdot h\_{t-1} + \mathbf{I^o} \cdot x\_t + b^o)$ .right[Output gate .red[`H`]]
 
 --
 
@@ -686,9 +686,9 @@ $y = \text{softmax}( \mathbf{W} \cdot h\_t + b )$ .right[Output .red[`K`]]
 --
 <br/>
 
-$W^u, W^f, W^c, W^o$ .right[recurrent weights .red[`H x H`]]
+$W^u, W^f, W^c, W^o$ .right[Recurrent weights .red[`H x H`]]
 
-$I^u, I^f, I^c, I^o$ .right[input weights .red[`N x H`]]
+$I^u, I^f, I^c, I^o$ .right[Input weights .red[`N x H`]]
 
 
 ---
