@@ -14,7 +14,7 @@ The course covers the basics of Deep Learning, with a focus on applications:
   - Embeddings and Recommender Systems ([slides](https://m2dsupsdlclass.github.io/lectures-labs/slides/02_recommender_systems/index.html))
   - Convolutional Neural Networks for Image Classification ([slides](https://m2dsupsdlclass.github.io/lectures-labs/slides/03_conv_nets/index.html))
   - Deep Learning for Object Dection and Image Segmentation ([slides](https://m2dsupsdlclass.github.io/lectures-labs/slides/04_conv_nets_2/index.html))
-  - Recurrent Neural Networks and NLP
+  - Recurrent Neural Networks and NLP ([slides](https://m2dsupsdlclass.github.io/lectures-labs/slides/05_deep_nlp/index.html))
   - Expressivity, Optimization and Generalization
 
 The jupyter notebooks for the labs can be found in the `labs` folder of
