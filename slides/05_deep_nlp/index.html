@@ -139,10 +139,10 @@ Word embeddings usually have dimensions 50, 100, 200, 300
 .footnote.small[
 Joulin, Armand, et al. "Bag of tricks for efficient text classification." FAIR 2016
 ]
-
+???
+Question: shape of embeddings if hidden size is H
 --
 
-<br/>
 $\mathbf{E}$ embedding (linear projection) .right.red[`|V| x H`]
 
 --
@@ -151,7 +151,11 @@ Embeddings are averaged .right[hidden activation size: .red[`H`]]
 
 --
 
-Dense output connection $\mathbf{W}, \mathbf{b}$ + softmax activation .right.red[`H x K`]
+Dense output connection $\mathbf{W}, \mathbf{b}$ .right.red[`H x K`]
+
+--
+
+Softmax and **cross-entropy** loss
 
 ---
 # Supervised Text Classification
@@ -202,6 +206,9 @@ enough to **transfer** from one task to another?
 .footnote.small[
 excerpt from work by J. Turian on a model trained by R. Collobert et al. 2008
 ]
+
+???
+Question: what distance to use in such a space
 ---
 # Word2Vec
 
@@ -242,7 +249,7 @@ Mikolov, Tomas, et al. "Distributed representations of words and phrases and the
 - Many come from text structure (e.g. Wikipedia)
 
 ---
-# Distributional Hypothesis
+# Self-supervised training
 
 Distributional Hypothesis (Harris, 1954):
 *“words are characterised by the company that they keep”*
@@ -296,7 +303,8 @@ Self-supervision from large unlabeled corpus of text: *slide* over an **anchor w
 .footnote.small[
 Mikolov, Tomas, et al. "Distributed representations of words and phrases and their compositionality." NIPS 2013
 ]
-
+???
+Question: dim of output embedding vs dim of input embedding
 ---
 # Word2Vec: Details
 
@@ -310,12 +318,10 @@ Mikolov, Tomas, et al. "Distributed representations of words and phrases and the
 Mikolov, Tomas, et al. "Distributed representations of words and phrases and their compositionality." NIPS 2013
 ]
 
-<br/>
-
-- Similar architecture as supervised CBoW (e.g. fastText)
+- Similar as supervised CBoW (e.g. fastText) with |V| classes
 
 --
-- But output classification over very large vocabulary |V|
+- Use **Negative Sampling**: Sample *negative* words at random instead of computing the full softmax
 
 --
 - Large impact of **context size**
@@ -457,7 +463,8 @@ Fixed context size
 
 --
 - Still does not take well into account varying sequence sizes and sequence dependencies
-
+???
+Question: What's the dimension of concatenate embeddings?
 ---
 ## Recurrent Neural Network
 
@@ -504,17 +511,25 @@ Unroll over a sequence $(x_0, x_1, x_2)$:
 <img src="images/unrolled_rnn_words.svg" style="width: 450px;" />
 ]
 
-input $(w\_0, w\_1, ..., w\_t)$ .small[ sequence of words ( 1-hot encoded ) ] <br/>
-output $(w\_1, w\_2, ..., w\_{t+1})$ .small[shifted sequence of words ( 1-hot encoded ) ]
+**input** $(w\_0, w\_1, ..., w\_t)$ .small[ sequence of words ( 1-hot encoded ) ] <br/>
+**output** $(w\_1, w\_2, ..., w\_{t+1})$ .small[shifted sequence of words ( 1-hot encoded ) ]
+
+---
+## Language Modelling
+
+.center[
+<img src="images/unrolled_rnn_words.svg" style="width: 450px;" />
+]
+
+$x\_t = \text{Emb}(w\_t) = \mathbf{E} w\_t$ .right[input projection .red[`H`]] 
+
 --
 
-- $x\_t = \text{Emb}(w\_t) = \mathbf{E} w\_t$ .right[input projection .red[`H`]] 
+$h\_t = g(\mathbf{W^h} h\_{t-1} + x\_t + b^h)$ .right[recurrent connection .red[`H`]] 
 
 --
-- $h\_t = g(\mathbf{W^h} h\_{t-1} + x\_t + b^h)$ .right[recurrent connection .red[`H`]] 
 
---
-- $y = \text{softmax}( \mathbf{W^o} h\_t + b^o )$ .right[output projection .red[`K = |V|`]] 
+$y = \text{softmax}( \mathbf{W^o} h\_t + b^o )$ .right[output projection .red[`K = |V|`]] 
 
 ---
 ## Recurrent Neural Network
@@ -523,17 +538,16 @@ output $(w\_1, w\_2, ..., w\_{t+1})$ .small[shifted sequence of words ( 1-hot en
 <img src="images/unrolled_rnn_words.svg" style="width: 450px;" />
 ]
 
-Parameters:
-
-- input embedding $\mathbf{E}$  .right[.red[`|V| x H`]] 
+ input embedding $\mathbf{E}$  .right[.red[`|V| x H`]] 
 
 --
-- recurrent weights $\mathbf{W^h}$  .right[.red[`H x H`]] 
+
+recurrent weights $\mathbf{W^h}$  .right[.red[`H x H`]] 
 
 --
-- output weights $\mathbf{W^{out}}$ .right[ .red[`H x K`]] 
 
-For  language models usually `K = |V|`
+output weights $\mathbf{W^{out}}$ .right[ .red[`H x K = H x |V|`]]
+
 ---
 ## Backpropagation through time
 
@@ -639,8 +653,6 @@ Hochreiter, Sepp, and Jürgen Schmidhuber. "Long short-term memory." Neural comp
 - Widely used and SOTA in many sequence learning problems
 
 ---
-# LSTM
-
 .footnote.small[
 Hochreiter, Sepp, and Jürgen Schmidhuber. "Long short-term memory." Neural computation 1997
 ]
