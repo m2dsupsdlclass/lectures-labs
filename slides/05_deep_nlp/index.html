@@ -139,8 +139,10 @@ Word embeddings usually have dimensions 50, 100, 200, 300
 .footnote.small[
 Joulin, Armand, et al. "Bag of tricks for efficient text classification." FAIR 2016
 ]
+
 ???
 Question: shape of embeddings if hidden size is H
+
 --
 
 $\mathbf{E}$ embedding (linear projection) .right.red[`|V| x H`]
@@ -156,6 +158,7 @@ Dense output connection $\mathbf{W}, \mathbf{b}$ .right.red[`H x K`]
 --
 
 Softmax and **cross-entropy** loss
+
 
 ---
 # Supervised Text Classification
@@ -272,6 +275,8 @@ probability $P(w|\text{carrot})$ that $w$ occurs in the context of
 - (Self-)supervision comes from **context**.
 - Requires a lot of text data to cover rare words correctly.
 
+???
+How to train fastText like model on this?
 ---
 # Word2Vec: CBoW
 
@@ -287,8 +292,6 @@ Self-supervision from large unlabeled corpus of text: *slide* over an **anchor w
 Mikolov, Tomas, et al. "Distributed representations of words and phrases and their compositionality." NIPS 2013
 ]
 
---
-
 ---
 # Word2Vec: CBoW
 
@@ -303,6 +306,7 @@ Self-supervision from large unlabeled corpus of text: *slide* over an **anchor w
 .footnote.small[
 Mikolov, Tomas, et al. "Distributed representations of words and phrases and their compositionality." NIPS 2013
 ]
+
 ???
 Question: dim of output embedding vs dim of input embedding
 ---
@@ -321,7 +325,7 @@ Mikolov, Tomas, et al. "Distributed representations of words and phrases and the
 - Similar as supervised CBoW (e.g. fastText) with |V| classes
 
 --
-- Use **Negative Sampling**: Sample *negative* words at random instead of computing the full softmax
+- Use **Negative Sampling**: Sample *negative* words at random instead of computing the full softmax. See http://sebastianruder.com/word-embeddings-softmax/index.html#noisecontrastiveestimation
 
 --
 - Large impact of **context size**
@@ -434,7 +438,6 @@ NLP problems expressed as **Conditional Language Models**:
 
 Question: do you have any idea of those NLP tasks that could be tackled
 with a similar conditional modeling approach?
-
 
 --
 
@@ -714,7 +717,7 @@ Chung, Junyoung, et al. "Gated Feedback Recurrent Neural Networks." ICML 2015
 In practice
 
 - more recent, people tend to use LSTM more
-- no real significant difference
+- no systematic difference between the two
 
 ---
 ## Vanishing / Exploding Gradients
@@ -733,7 +736,7 @@ Passing through $t$ time-steps, the resulting gradient is the **product** of man
 
 --
 - **Gradient clipping** prevents gradient explosion 
-- Well chosen **activation function** are critical (tanh, reLU)
+- Well chosen **activation function** is critical (tanh)
 
 --
 
@@ -801,7 +804,7 @@ Sutskever, Ilya, Oriol Vinyals, and Quoc V. Le. "Sequence to sequence learning w
 - Encoder-Decoder architecture
 
 --
-- **Reverse input sequence** for traduction
+- **Reverse input sequence** for translation
 - Special symbols for starting decoding and end of sentence
 
 --
@@ -930,6 +933,12 @@ BPE (https://arxiv.org/abs/1508.07909):
 Yonghui Wu et al. "Google's Neural Machine Translation System: Bridging
 the Gap between Human and Machine Translation"
 ]
+
+???
+- bi LSTM
+- stack LSTM GPU
+- reLU
+- inference TPU
 
 ---
 class: middle, center
