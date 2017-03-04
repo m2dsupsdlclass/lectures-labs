@@ -12,6 +12,7 @@ from tensorflow.models.rnn.translate import data_utils
 
 # Python 2 / 3 compat helper
 unicode_type = type(u"")
+bytes_type = type(b"")
 
 
 french_digit_names = [
@@ -233,18 +234,18 @@ def save_sentences(sentences, vocab, token_filename, text_filename,
             token_f.write(b"\n")
 
 
-def save_vocabulary(rev_vocab, filename):
+def save_vocabulary(rev_vocab, filename, encoding='utf-8'):
     with open(filename, 'wb') as f:
         for token in rev_vocab:
-            f.write(token)
+            f.write(token.encode(encoding))
             f.write(b'\n')
 
 
-def load_vocabulary(filename):
+def load_vocabulary(filename, encoding='utf-8'):
     vocab, rev_vocab = {}, []
     with open(filename, 'rb') as f:
         for line in f:
-            rev_vocab.append(line.strip())
+            rev_vocab.append(line.decode(encoding).strip())
     for i, token in enumerate(rev_vocab):
         vocab[token] = i
     return vocab, rev_vocab
@@ -262,19 +263,18 @@ def build_vocabulary(sentences, word_level=True, encoding="utf-8"):
     9
     >>> sorted(vocabulary.items(), key=lambda x: x[1])
     ...                            # doctest: +NORMALIZE_WHITESPACE
-    [(b'_PAD', 0), (b'_GO', 1), (b'_EOS', 2), (b'_UNK', 3),
-     (b'cinq', 4), (b'deux', 5), (b'sept', 6), (b'trois', 7), (b'un', 8)]
+    [('_PAD', 0), ('_GO', 1), ('_EOS', 2), ('_UNK', 3),
+     ('cinq', 4), ('deux', 5), ('sept', 6), ('trois', 7), ('un', 8)]
     >>> rev_vocabulary
     ...                            # doctest: +NORMALIZE_WHITESPACE
-    [b'_PAD', b'_GO', b'_EOS', b'_UNK', b'cinq', b'deux', b'sept', b'trois',
-     b'un']
+    ['_PAD', '_GO', '_EOS', '_UNK', 'cinq', 'deux', 'sept', 'trois', 'un']
 
     """
-    rev_vocabulary = data_utils._START_VOCAB[:]
+    rev_vocabulary = [t.decode(encoding) for t in data_utils._START_VOCAB[:]]
     unique_tokens = set()
     for sentence in sentences:
-        if isinstance(sentence, unicode_type):
-            sentence = sentence.encode(encoding)
+        if isinstance(sentence, bytes_type):
+            sentence = sentence.decode('utf-8')
         tokens = tokenize(sentence, word_level=word_level)
         unique_tokens.update(tokens)
     rev_vocabulary += sorted(unique_tokens)
@@ -292,12 +292,12 @@ def sentence_to_token_ids(sentence, vocabulary, word_level=True):
 
     >>> data_utils.UNK_ID
     3
-    >>> vocabulary = {b'_UNK': 3, b'un': 4, b'deux': 5, b'trois': 6}
-    >>> sentence_to_token_ids(b'un quatre trois', vocabulary)
+    >>> vocabulary = {'_UNK': 3, 'un': 4, 'deux': 5, 'trois': 6}
+    >>> sentence_to_token_ids('un quatre trois', vocabulary)
     [4, 3, 6]
 
-    >>> vocabulary = {b'_UNK': 3, b'1': 4, b'2': 5, b'3': 6}
-    >>> sentence_to_token_ids(b'143', vocabulary, word_level=False)
+    >>> vocabulary = {'_UNK': 3, '1': 4, '2': 5, '3': 6}
+    >>> sentence_to_token_ids('143', vocabulary, word_level=False)
     [4, 3, 6]
     """
     tokens = tokenize(sentence, word_level=word_level)
@@ -307,16 +307,16 @@ def sentence_to_token_ids(sentence, vocabulary, word_level=True):
 def token_ids_to_sentence(token_ids, rev_vocabulary, word_level=True):
     """Decode a sequence back to its string representation
 
-    >>> rev_vocabulary = [b'_PAD', b'_GO', b'_EOS', b'_UNK', b'1', b'2', b'3']
+    >>> rev_vocabulary = ['_PAD', '_GO', '_EOS', '_UNK', '1', '2', '3']
     >>> token_ids = [5, 6, 4, 2, 0, 0, 0, 0, 0]
     >>> token_ids_to_sentence(token_ids, rev_vocabulary, word_level=False)
-    b'231'
+    '231'
 
-    >>> rev_vocabulary = [b'_PAD', b'_GO', b'_EOS', b'_UNK', b'un', b'deux']
+    >>> rev_vocabulary = ['_PAD', '_GO', '_EOS', '_UNK', 'un', 'deux']
     >>> token_ids = [5, 3, 5, 2, 0, 0, 0, 0, 0]
     >>> token_ids_to_sentence(token_ids, rev_vocabulary)
-    b'deux _UNK deux'
+    'deux _UNK deux'
 
     """
-    sep = b" " if word_level else b""
+    sep = " " if word_level else ""
     return sep.join(rev_vocabulary[idx] for idx in token_ids if idx > 2)
