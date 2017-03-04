@@ -8,7 +8,17 @@ from sklearn.model_selection import train_test_split
 # Special integer code to be used in sentences encoded as a zero-padded integer
 # arrays (same convetions as in the official seq2seq tensorflow tutorial):
 # https://www.tensorflow.org/tutorials/seq2seq/
-from tensorflow.models.rnn.translate import data_utils
+_PAD = "_PAD"
+_GO = "_GO"
+_EOS = "_EOS"
+_UNK = "_UNK"
+START_VOCAB = [_PAD, _GO, _EOS, _UNK]
+
+PAD_ID = 0
+GO_ID = 1
+EOS_ID = 2
+UNK_ID = 3
+
 
 # Python 2 / 3 compat helper
 unicode_type = type(u"")
@@ -228,7 +238,7 @@ def save_sentences(sentences, vocab, token_filename, text_filename,
             text_f.write(sentence)
             text_f.write(b'\n')
             tokens = tokenize(sentence, word_level=word_level)
-            token_ids = [vocab.get(t, data_utils.UNK_ID) for t in tokens]
+            token_ids = [vocab.get(t, UNK_ID) for t in tokens]
             token_f.write(b" ".join(str(t).encode(encoding)
                                     for t in token_ids))
             token_f.write(b"\n")
@@ -251,7 +261,7 @@ def load_vocabulary(filename, encoding='utf-8'):
     return vocab, rev_vocab
 
 
-def build_vocabulary(sentences, word_level=True, encoding="utf-8"):
+def build_vocabulary(sentences, word_level=True):
     """Extract a sorted vocabulary from a set of sentences
 
     Word level (split on whitespaces and lexicographic order):
@@ -270,11 +280,9 @@ def build_vocabulary(sentences, word_level=True, encoding="utf-8"):
     ['_PAD', '_GO', '_EOS', '_UNK', 'cinq', 'deux', 'sept', 'trois', 'un']
 
     """
-    rev_vocabulary = [t.decode(encoding) for t in data_utils._START_VOCAB[:]]
+    rev_vocabulary = START_VOCAB[:]
     unique_tokens = set()
     for sentence in sentences:
-        if isinstance(sentence, bytes_type):
-            sentence = sentence.decode('utf-8')
         tokens = tokenize(sentence, word_level=word_level)
         unique_tokens.update(tokens)
     rev_vocabulary += sorted(unique_tokens)
@@ -290,7 +298,7 @@ def sentence_to_token_ids(sentence, vocabulary, word_level=True):
     The meaning of the integer codes depends on the vocabulary.
     Unknown tokens are replaced by the _UNK code.
 
-    >>> data_utils.UNK_ID
+    >>> UNK_ID
     3
     >>> vocabulary = {'_UNK': 3, 'un': 4, 'deux': 5, 'trois': 6}
     >>> sentence_to_token_ids('un quatre trois', vocabulary)
@@ -301,7 +309,7 @@ def sentence_to_token_ids(sentence, vocabulary, word_level=True):
     [4, 3, 6]
     """
     tokens = tokenize(sentence, word_level=word_level)
-    return [vocabulary.get(token, data_utils.UNK_ID) for token in tokens]
+    return [vocabulary.get(token, UNK_ID) for token in tokens]
 
 
 def token_ids_to_sentence(token_ids, rev_vocabulary, word_level=True):
