@@ -21,6 +21,7 @@ labs/04_conv_nets_2/voc_representaions.h5
 labs/04_conv_nets_2/voc_representations.h5
 glove100*
 simple_seq2seq_pretrained.h5
+simple_seq2seq_partially_pretrained.h5
 
 # generated data
 results
