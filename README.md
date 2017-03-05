@@ -3,8 +3,10 @@
 This class is currently being given at [Master Datascience Paris
 Saclay](http://datascience-x-master-paris-saclay.fr)
 
-<img src="slides/04_conv_nets_2/images/Logo_Master_Datascience.png"
-  align="center" width="300"/>
+<p style="text-align: center">
+<a href="http://datascience-x-master-paris-saclay.fr/"><img
+  src="slides/04_conv_nets_2/images/Logo_Master_Datascience.png" width="300"/></a>
+</p>
 
 ## Table of contents
 
