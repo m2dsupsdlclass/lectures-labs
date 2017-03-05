@@ -20,11 +20,12 @@ labs/04_conv_nets_2/VOCtrainval_06-Nov-2007.tar
 labs/04_conv_nets_2/voc_representaions.h5
 labs/04_conv_nets_2/voc_representations.h5
 glove100*
-
+simple_seq2seq_pretrained.h5
 
 # generated data
 results
 tsne.png
+simple_seq2seq_checkpoint.h5
 
 # editors crap
 .vscode
