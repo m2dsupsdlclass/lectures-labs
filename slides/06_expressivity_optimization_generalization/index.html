@@ -30,7 +30,7 @@
     <textarea id="source">
 class: center, middle
 
-# Deep Networks: Expressivity, Optimization &amp; Generalization
+# Learning with Deep Networks: Expressivity, Optimization &amp; Generalization
 
 Charles Ollion - Olivier Grisel
 
@@ -40,10 +40,163 @@ Charles Ollion - Olivier Grisel
   ![UPS](images/Logo_Master_Datascience.png)
 ]
 
+---
+# Decomposition of the Error
+
+.left-column[
+$$\begin{eqnarray}
+E\_n(f\_n) - E(f^\star) & = & E(f\_{\mathcal{F}}^\star) - E(f^\star) \\\\
+& + & E\_n(f\_n) - E(f\_{\mathcal{F}}^\star)
+\end{eqnarray}$$
+]
+
+.right-column[.small[
+- Approximation error
+- Estimation error
+]]
+
+.reset-column[
+]
+
+--
+
+Ground truth function: $f^\star$
+
+--
+
+Hypothesis class: $\mathcal{F}$, best hypothesis: $f\_\mathcal{F}^\star \in \mathcal{F}$
+
+--
+
+Expected Risk: $E(f) = \int l(f(x), y).dP(x, y)$ (but $P$ is unknown)
+
+--
+
+Empirical Risk: $E_n(f) = \frac{1}{n} \sum_i l(f(x\_i), y\_i)$
+
+--
+
+Empirical Risk Minimization:
+
+$$ f\_n = argmin\_{f \in \mathcal{F}} E\_n(f) $$
+
+
+???
+Question: how is the approximation error impacted by:
+          - a larger hypothesis class $\mathcal{F}$?
+
+Question: how is the estimation error impacted by:
+          - a larger training set $n$?
+          - a larger hypothesis class $\mathcal{F}$?
 
 ---
 # Decomposition of the Error
 
+.left-column[
+$$\begin{eqnarray}
+E\_n(\tilde{f}\_n) - E(f^\star) & = & E(f\_{\mathcal{F}}^\star) - E(f^\star) \\\\
+& + & E\_n(f\_n) - E(f\_{\mathcal{F}}^\star) \\\\
+& + & E\_n(\tilde{f}\_n) - E\_n(f\_n)
+\end{eqnarray}$$
+]
+
+.right-column[.small[
+- Approximation error
+- Estimation error
+- Optimization error
+]]
+
+.reset-column[
+]
+
+.footnote.small[
+Learning using Large Datasets, L. Bottou &amp; O. Bousquet, 2008.
+]
+
+--
+
+Computing $f\_n = argmin\_{f \in \mathcal{F}} E\_n(f)$ can be too costly...
+
+--
+
+or even untractable e.g. for non-convex objective: $\theta \rightarrow
+l(f\_{\theta}(x\_i), y\_i)$
+
+--
+
+In practice: approximate optimizer with tolerance $\rho$ that finds
+$\tilde{f}\_n$:
+
+$$ E\_n(\tilde{f}\_n) < E\_n(f\_n) + \rho $$
+
+Examples: `max_iter` and `tol` in sklearn, `nb_epoch` in keras, SGD with
+constant step size and early stopping...
+
+
+???
+**Question**: Where do Underfitting and Overfitting problem fit in this
+             framework?
+
+**Question**: Which error(s) do you expect to dominate when fitting
+              linear (logistic regression) model for image
+              classification?
+
+---
+# Decomposition of the Error: Linear Image Classifier
+
+Assume we are fitting a **Logistic Regression** model on a small
+**sub-sample of ImageNet**:
+
+--
+
+**Approximation error** can be **high**: $f^\star \notin \mathcal{F}$
+
+--
+
+**Estimation error** can also be **high** if $n \ll p$ (high resolution
+images)
+
+--
+
+**Optimizer error** can be made **low** if $n$ is small: very efficient
+convex solvers with good asymptotic convergence rates (e.g. l-BFGS).
+
+--
+
+Our linear image classifier would **both overfit and underfit at the same
+time** even if the optimization problem is well-posed.
+
+???
+
+If $n$ is larger we could also run SGD with constant learning and early
+stopping yielding a large optimization error but would not impact error
+measured on a test set: the other approximations would dominate.
+
+---
+# Decomposition of the Error
+
+**Approximation error**:
+- decreases when $\mathcal{F}$ increases;
+- but typically bounded by computational constraints.
+
+--
+
+**Estimation error**:
+- decreases when $n$ increases;
+- can increase when $\mathcal{F}$ increases (according to VC theory).
+
+--
+
+**Approximation error**:
+- can increases when tolerance $\rho$ increases;
+- can increase when $\mathcal{F}$ gets more complex (non-convex obj.).
+
+???
+Examples of computational constraints: training time, size of the model
+parameters and activations in GPU RAM or mobile phone RAM, prediction
+latency...
+
+**Question** how do rho, n and F impact the compute time?
 
 ---
 # Outline
@@ -51,7 +204,7 @@ Charles Ollion - Olivier Grisel
 <br/>
 
 
-### Function Approximation
+### Expressivity and Universal Function Approximation
 
 --
 
@@ -60,11 +213,6 @@ Charles Ollion - Olivier Grisel
 --
 
 ### Generalization
-
----
-class: middle, center
-
-# Learning with Deep Networks
 
 ---
 class: middle, center
