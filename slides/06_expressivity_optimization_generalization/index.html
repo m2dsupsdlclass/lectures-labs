@@ -209,6 +209,33 @@ K. Hornik, 1991
 ]
 
 ---
+# Problem solved?
+
+UFA **does not tell us**:
+
+- The number $n$ units is small enough to have the network fit in RAM.
+
+- The optimal function parameters can be found by minimizing the
+  Empirical Risk with SGD.
+
+???
+A finite smple version of the theorem is constructive enough to fit a
+MLP with $2n + d$ parameters where $n$ is the number of points in the
+dataset. That requires running a $n$ by $n$ system though.
+
+https://arxiv.org/abs/1611.03530
+
+---
+# Approximation with ReLU
+
+https://www.quora.com/Is-a-single-layered-ReLu-network-still-a-universal-approximator
+
+---
+# Depth can help reduce $n$
+
+There exists functions that can be approximated by a deep MLP with **TODO**
+
+---
 # Expressivity (DRAFT)
 
 - Universal Continuous Function Approximation
