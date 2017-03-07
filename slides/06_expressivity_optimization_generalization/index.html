@@ -134,10 +134,10 @@ constant step size and early stopping...
  
 
 ???
- **Question**: Where do Underfitting and Overfitting problem fit in this
-             framework?
+**Question**: Where do Underfitting and Overfitting problems fit in this
+              framework?
 
- **Question**: Which error(s) do you expect to dominate when fitting
+**Question**: Which error(s) do you expect to dominate when fitting
               linear (logistic regression) model for image
               classification?
 
@@ -187,6 +187,26 @@ latency...
 class: middle, center
 
 # Expressivity and Universal Function Approximation
+
+---
+## Universal Function Approximation
+
+Let $\sigma$ be a nonconstant, bounded, and monotonically-increasing
+continuous function. For any $f \in C([0, 1]^{m})$ and $\varepsilon >
+0$, there exists $n \in \mathbb{N}$ real constants $v\_i, b\_i \in
+\mathbb{R}$ and real vectors $w_i \in \mathbb{R}^m$ such that:
+
+$$ | \sum\_i^n v\_i \sigma(w\_i^Tx + b\_i) - f (x) | < \varepsilon  $$
+
+that is: neural nets are dense $C([0, 1]^{m})$.
+
+This still holds for any compact subset of $\mathbb{R}^m$ and when
+$\sigma$ is the ReLU function (Sonoda &amp; Murata, 2015).
+
+.footnote.small[
+Approximation Capabilities of Multilayer Feedforward Networks,
+K. Hornik, 1991
+]
 
 ---
 # Expressivity (DRAFT)
