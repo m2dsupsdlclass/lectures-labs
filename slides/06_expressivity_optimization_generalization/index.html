@@ -142,37 +142,6 @@ constant step size and early stopping...
               classification?
 
 ---
-# Decomposition of the Error: Linear Image Classifier
-
-Assume we are fitting a **Logistic Regression** model on a small
-**sub-sample of ImageNet**:
-
---
-
-**Approximation error** can be **high**: $f^\star \notin \mathcal{F}$
-
---
-
-**Estimation error** can also be **high** if $n \ll p$ (high resolution
-images)
-
---
-
-**Optimizer error** can be made **low** if $n$ is small: very efficient
-convex solvers with good asymptotic convergence rates (e.g. l-BFGS).
-
---
-
-Our linear image classifier would **both overfit and underfit at the same
-time** even if the optimization problem is well-posed.
-
-???
-
-If $n$ is larger we could also run SGD with constant learning and early
-stopping yielding a large optimization error but would not impact error
-measured on a test set: the other approximations would dominate.
-
----
 # Decomposition of the Error
 
 **Approximation error**:
