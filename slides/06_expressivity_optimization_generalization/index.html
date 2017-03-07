@@ -125,19 +125,19 @@ l(f\_{\theta}(x\_i), y\_i)$
 --
 
 In practice: approximate optimizer with tolerance $\rho$ that finds
-$\tilde{f}\_n$:
+ $\tilde{f}\_n$:
 
 $$ E\_n(\tilde{f}\_n) < E\_n(f\_n) + \rho $$
 
 Examples: `max_iter` and `tol` in sklearn, `nb_epoch` in keras, SGD with
 constant step size and early stopping...
-
+ 
 
 ???
-**Question**: Where do Underfitting and Overfitting problem fit in this
+ **Question**: Where do Underfitting and Overfitting problem fit in this
              framework?
 
-**Question**: Which error(s) do you expect to dominate when fitting
+ **Question**: Which error(s) do you expect to dominate when fitting
               linear (logistic regression) model for image
               classification?
 
@@ -225,6 +225,115 @@ class: middle, center
   - Still slow on large vision problems: e.g.
 
   - RL with Policy Gradient: too much noise: no training
+
+
+---
+# Batch Normalization
+
+Normalize activations in each **mini-batch** before activation function: **speeds up** and **stabilizes** training (less dependant on initialization)
+
+.footnote.small[
+Ioffe, Sergey, and Christian Szegedy. "Batch normalization: Accelerating deep network training by reducing internal covariate shift." ICML 2015
+]
+
+--
+.center[
+<img src="images/batchnorm.png" style="width: 450px;" />
+]
+
+---
+# Batch Normalization
+
+At **inference time**, use average and standard deviation computed on **the whole dataset** instead of batch
+
+--
+
+Widely used in **ConvNets**, but requires the mini-batch to be large enough to compute statistics in the minibatch
+
+--
+
+Much less effective in RNNs (but variants exist)
+
+--
+
+In **Keras**: use it as a layer, before activation	
+	
+```python
+x = Convolution2D(64, 1, 1)(input_tensor)
+x = BatchNormalization()(x)
+x = Activation('relu')(x)
+```
+
+--
+
+- Introduces new parameters: `2 x size_of_activation` (here 128)
+
+--
+- Keras keeps track of a **running average/std** of activations for inference, no need to have specific inference code.
+
+---
+# Layer Normalizations
+
+Normalize on the statistics of the **layer activations** instead of mini-batch
+
+.center[
+<img src="images/layernorm.png" style="width: 400px;" />
+]
+
+.footnote.small[
+Ba, Jimmy Lei, Jamie Ryan Kiros, and Geoffrey E. Hinton. "Layer normalization." 2016.<br/>
+]
+
+--
+
+The algorithm is then similar as Batch Normalization
+
+--
+
+Suited for **RNNs**, degrades performance of **CNNs**
+
+---
+# Weight Normalization
+
+Reparametrize weights of neurons, to decouple **direction** and **norm** of the weight:
+
+$$
+\mathbf{w}  = \frac{g}{||\mathbf{v}||}\mathbf{v}
+$$
+
+.footnote.small[
+Salimans, Tim, and Diederik P. Kingma. "Weight normalization: A simple reparameterization to accelerate training of deep neural networks." NIPS 2016.	
+]
+
+--
+
+
+One new parameter $g$ to learn per neuron
+
+--
+
+Careful **data-based** initialization of $g$ and neuron bias $b$ is better (not applicable to RNNs)
+
+---
+# Reparametrizations and Normalizations
+
+**Significant impact** on results
+
+.footnote.small[
+Ren, Mengye, et al. "Normalizing the Normalizers: Comparing and Extending Network Normalization Schemes." 2017
+]
+
+- Convergence speed and better optimum on CNNs (BN mostly used)
+
+--
+- Layer Norm strongly impacts LSTM in language modelling tasks
+
+--
+- Most generative models are almost impossible to train without Batch Normalization
+
+--
+
+Active area of research - See "Normalizing the Normalizers"
 
 ---
 class: middle, center
