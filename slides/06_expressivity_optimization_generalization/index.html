@@ -192,15 +192,15 @@ class: middle, center
 ## Universal Function Approximation
 
 Let $\sigma$ be a nonconstant, bounded, and monotonically-increasing
-continuous function. For any $f \in C([0, 1]^{m})$ and $\varepsilon >
-0$, there exists $n \in \mathbb{N}$ real constants $v\_i, b\_i \in
-\mathbb{R}$ and real vectors $w_i \in \mathbb{R}^m$ such that:
+continuous function. For any $f \in C([0, 1]^{d})$ and $\varepsilon >
+0$, there exists $h \in \mathbb{N}$ real constants $v\_i, b\_i \in
+\mathbb{R}$ and real vectors $w_i \in \mathbb{R}^d$ such that:
 
-$$ | \sum\_i^n v\_i \sigma(w\_i^Tx + b\_i) - f (x) | < \varepsilon  $$
+$$ | \sum\_i^h v\_i \sigma(w\_i^Tx + b\_i) - f (x) | < \varepsilon  $$
 
-that is: neural nets are dense $C([0, 1]^{m})$.
+that is: neural nets are dense in $C([0, 1]^{d})$.
 
-This still holds for any compact subset of $\mathbb{R}^m$ and when
+This still holds for any compact subset of $\mathbb{R}^d$ and if
 $\sigma$ is the ReLU function (Sonoda &amp; Murata, 2015).
 
 .footnote.small[
@@ -213,7 +213,8 @@ K. Hornik, 1991
 
 UFA theorems **do not tell us**:
 
-- The number $n$ units is small enough to have the network fit in RAM.
+- The number $h$ of hidden units is small enough to have the network fit
+  in RAM.
 
 - The optimal function parameters can be found in finite time by
   minimizing the Empirical Risk with SGD and the usual random
@@ -232,9 +233,36 @@ https://arxiv.org/abs/1611.03530
 https://www.quora.com/Is-a-single-layered-ReLu-network-still-a-universal-approximator
 
 ---
-# Depth can help reduce $n$
+# Depth can help reduce $h$
 
-There exists functions that can be approximated by a deep MLP with **TODO**
+[Matus Telgarsky, 2016](https://arxiv.org/abs/1602.04485): There exists
+functions that can be approximated by a deep ReLU network with
+$\Theta(k^3)$ layers with a $\Theta(1)$ units that cannot be
+approximated by shallower networks with $\Theta(k)$ layers unless they
+have $\Omega(2^k)$ units.
+
+
+???
+
+This also holds for ReLU convnets with max pooling layers and other
+polynomial-based architectures.
+
+---
+# For a fixed param budget, deeper is better
+
+.center[
+<img alt="depth 2 vs depth 1 net" src="images/depth-2-vs-depth-1.png"
+ width="90%" />
+]
+
+Note: deeper is better might be true from an approximation point of
+view, not necessarily from an optimization point of view.
+
+.footnote.small[
+[On the Number of Linear Regions of Deep Neural Networks](
+  https://arxiv.org/abs/1402.1869), G. Montúfar, R. Pascanu, K. Cho,
+  Y. Bengio, 2014.
+]
 
 ---
 # Expressivity (DRAFT)
