@@ -289,9 +289,9 @@ def rect(x, a, b, h, eps=1e-7):
 
 
 x = np.linspace(-3, 3, 1000)
-y = (  rect(x, -1, 0, 0.4)
-     + rect(x,  0, 1, 1.3)
-     + rect(x,  1, 2, 0.8))
+*y = (  rect(x, -1, 0, 0.4)
+*    + rect(x,  0, 1, 1.3)
+*    + rect(x,  1, 2, 0.8))
 
 plt.plot(x, y)
 ```
@@ -309,26 +309,6 @@ plt.plot(x, y)
 approximator?](https://www.quora.com/Is-a-single-layered-ReLu-network-still-a-universal-approximator),
 Conner Davis
 ]
-
----
-# Depth and Parametric Cost
-
-[Matus Telgarsky, 2016](https://arxiv.org/abs/1602.04485): There exists
-functions that can be approximated by a deep ReLU network with
-$\Theta(k^3)$ layers with a $\Theta(1)$ units that cannot be
-approximated by shallower networks with $\Theta(k)$ layers unless they
-have $\Omega(2^k)$ units.
-
-Note: the number of parameters of a deep network is typically quadratic
-with the number of units.
-
-???
-
-This also holds for ReLU convnets with max pooling layers and
-polynomial architectures.
-
-Example of such functions are functions with a large number of local
-oscillations.
 
 ---
 # Efficient Oscillations with Composition
@@ -387,7 +367,7 @@ def tri(x):
 
 
 x = np.linspace(-3, 3, 1000)
-y = tri(tri(x))
+*y = tri(tri(x))
 
 plt.plot(x, y)
 ```
@@ -425,7 +405,7 @@ def tri(x):
 
 
 x = np.linspace(-3, 3, 1000)
-y = tri(tri(tri(x)))
+*y = tri(tri(tri(x)))
 
 plt.plot(x, y)
 ```
@@ -443,6 +423,66 @@ plt.plot(x, y)
   https://www.youtube.com/watch?v=ssaXJqG9Dz4),
 Matus Telgarsky, 2016
 ]
+
+---
+# Efficient Oscillations with Composition
+
+.left-column[
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+def relu(x):
+    return np.maximum(x, 0)
+
+
+def tri(x):
+    return relu(  relu(2 * x)
+                - relu(4 * x - 2))
+
+
+x = np.linspace(-3, 3, 1000)
+*y = tri(tri(tri(tri(x))))
+
+plt.plot(x, y)
+```
+]
+
+.right-column[
+<img src="images/triangle_triangle_triangle_triangle_x.svg"
+     width="100%" />
+]
+
+.resetl-column[
+]
+
+.footnote.small[
+[Benefits of depth in neural networks](
+  https://www.youtube.com/watch?v=ssaXJqG9Dz4),
+Matus Telgarsky, 2016
+]
+
+---
+# Depth and Parametric Cost
+
+[Matus Telgarsky, 2016](https://arxiv.org/abs/1602.04485): There exists
+functions that can be approximated by a deep ReLU network with
+$\Theta(k^3)$ layers with a $\Theta(1)$ units that cannot be
+approximated by shallower networks with $\Theta(k)$ layers unless they
+have $\Omega(2^k)$ units.
+
+Note: the number of parameters of a deep network is typically quadratic
+with the number of units.
+
+???
+
+This also holds for ReLU convnets with max pooling layers and
+polynomial architectures.
+
+Example of such functions are functions with a large number of local
+oscillations.
+
 
 ---
 # For a fixed param budget, deeper is better
