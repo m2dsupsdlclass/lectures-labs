@@ -129,7 +129,7 @@ l(f\_{\theta}(x\_i), y\_i)$
 In practice: approximate optimizer with tolerance $\rho$ that finds
  $\tilde{f}\_n$:
 
-$$ E\_n(\tilde{f}\_n) < E\_n(f\_n) + \rho $$
+$$ E\_n(\tilde{f}\_n) < E\_n(f\_n) + \rho \quad s.t. \quad E(\tilde{f}\_n) \approx E(f\_n) $$
 
 Examples: `max_iter` and `tol` in sklearn, `nb_epoch` in keras, SGD with
 constant step size and early stopping...
