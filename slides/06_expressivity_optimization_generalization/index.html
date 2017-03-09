@@ -631,14 +631,128 @@ l /= len(x)
 
   - RL with Policy Gradient: too much noise: no training
 
+---
+# Non-convex Optimization
+
+
+No global minimum convergence guarantee but FF nets are often easy to
+train:
+
+.left-column[
+
+- Different random seeds yield similar final train losses.
+- When wide enough, training error can often reach zero:
+  no bad local minima.
+- SGD (with momentum) seem to be able to evade saddle structures quite
+  easily.
+
+]
+.right-column[
+.center[
+<img src="images/saddle-point-optimizers.gif" width="90%" />
+
+.small[
+Credits: Alec Radford
+]
+
+]
+]
+
+???
+
+Interesting empirical study:
+
+- [Qualitatively characterizing neural network optimization problems](
+   https://arxiv.org/abs/1412.6544)
+
+
+---
+# Training Deeper ConvNets
+
+.center[
+<img src="images/deep_mlp_training_error.png" width="75%" />
+]
+
+.footnote.small[
+[Deep Residual Learning for Image Recognition](
+  https://arxiv.org/abs/1512.03385), K. He et al., 2015.
+]
+
+---
+# Conditioning Issues
+
+Vanishing gradients:
+
+- Deep FF Network: smaller gradient components in first layers;
+- Vanilla RNN with many time steps.
+
+--
+
+Text model with word embeddings as input:
+
+ - Some words are much less frequent than others;
+ - Rare non-zero gradient for matching columns in embedding.
+
+--
+
+Optimal learning rate should be higher for some gradient components:
+
+  - Bad conditioning of the Hessian matrix.
+
+---
+# Fixing Conditioning Issues
+
+Fixing the optimizer:
+
+ - AdaGrad, RMSProp, AdaDelta, ADAM
+ - Cheap rescaling of the gradient components by the square root of the
+   (moving) average of $g_i^2$
+
+--
+
+Fixing the architecture:
+
+  - Skip, Residual connections (e.g. ResNets) and HighWay networks;
+  - LSTM and GRU with additive lanes from activations $h_{t-1}$ to $h_t$;
+  - Normalization layers.
+
+???
+ADAM and co cannot fix curvature issues in directions that are not
+aligned with parameter axis: diagonal preconditioner.
+
+More advanced second-order optimizers are often too costly (per-step)
+to be able to be used on large neural networks.
+
+---
+# Residual Networks
+
+.center[
+<img src="images/resnet-vs-plain-imagenet.png" width="95%" />
+]
+
+.footnote.small[
+[Deep Residual Learning for Image Recognition](
+  https://arxiv.org/abs/1512.03385), K. He et al., 2015.
+]
+
+???
+ResNets break symmetries in the optimization problem:
+
+[Skip Connections as Effective Symmetry-Breaking](
+  https://arxiv.org/abs/1701.09175), A. Emin Orhan, 2017.
 
 ---
 # Batch Normalization
 
-Normalize activations in each **mini-batch** before activation function: **speeds up** and **stabilizes** training (less dependant on initialization)
+Normalize activations in each **mini-batch** before activation function:
+**speeds up** and **stabilizes** training (less dependent on init)
+
+Used successfully in conjunction to residual connection.
 
 .footnote.small[
-Ioffe, Sergey, and Christian Szegedy. "Batch normalization: Accelerating deep network training by reducing internal covariate shift." ICML 2015
+Ioffe, Sergey, and Christian Szegedy. "Batch normalization:
+Accelerating deep network training by reducing internal covariate
+shift." ICML 2015
 ]
 
 --
@@ -649,15 +763,13 @@ Ioffe, Sergey, and Christian Szegedy. "Batch normalization: Accelerating deep ne
 ---
 # Batch Normalization
 
-At **inference time**, use average and standard deviation computed on **the whole dataset** instead of batch
+At **inference time**, use average and standard deviation computed on
+**the whole dataset** instead of batch
 
 --
 
-Widely used in **ConvNets**, but requires the mini-batch to be large enough to compute statistics in the minibatch
-
---
-
-Much less effective in RNNs (but variants exist)
+Widely used in **ConvNets**, but requires the mini-batch to be large
+enough to compute statistics in the minibatch.
 
 --
 
@@ -674,7 +786,12 @@ x = Activation('relu')(x)
 - Introduces new parameters: `2 x size_of_activation` (here 128)
 
 --
-- Keras keeps track of a **running average/std** of activations for inference, no need to have specific inference code.
+- Keras keeps track of a **running average/std** of activations for
+  inference, no need to have specific inference code.
+
+--
+
+Much less effective in RNNs (but variants exist)
 
 ---
 # Layer Normalizations
@@ -732,9 +849,6 @@ Ren, Mengye, et al. "Normalizing the Normalizers: Comparing and Extending Networ
 
 --
 - Layer Norm strongly impacts LSTM in language modelling tasks
-
---
-- Most generative models are almost impossible to train without Batch Normalization
 
 --
 
