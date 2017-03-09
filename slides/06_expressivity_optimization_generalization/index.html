@@ -656,6 +656,31 @@ Ren, Mengye, et al. "Normalizing the Normalizers: Comparing and Extending Networ
 Active area of research - See "Normalizing the Normalizers"
 
 ---
+# BTW: why minibatch SGD?
+
+High capacity Deep Networks require a **large number of training
+samples** (typically at least 10,000).
+
+--
+
+Samples contribute **redundant gradient information**. Otherwise
+generalization would not be possible and no learning would ever happen.
+
+--
+
+SGD is more computationally efficient when dealing with redundant
+samples:
+- many updates per-epoch for SGD, one for full-batch GD
+- doubling the size of the training with copies of samples would double
+  the training time with full-batch GD
+- no impact on training time of SGD.
+
+???
+Note: small batch SGD also has good generalization characteristics, see:
+Bottou and Bousquet, 2008 for the convex case and the next slides for
+the DL case.
+
+---
 class: middle, center
 
 # Generalization
@@ -678,38 +703,68 @@ class: middle, center
 
 What makes deep network generalize so well?
 
-- Intrinsic to the piecewise linear nature of the ReLU NN decision
-  function?
+- Intrinsic to the piecewise linear nature of the ReLU NN?
 
-- Depth as a strong inductive prior?
+--
+- Deep compositional architectures = strong inductive prior?
 
+--
 - SGD with large step sizes, small minibatches and early stopping?
 
+--
 - A combination of all of the above?
 
-Is it always possible to trade more compute for less overfitting?
+--
 
-- Advances in stochastic regularizers are promising.
+Is it very often possible to trade more compute for less overfitting
+with **data augmentation** and **stochastic regularizers** (e.g.
+dropout).
+
+--
+
+Collecting **more labelled data** is still the most effective way to
+avoid overfitting.
 
 ---
 # Conclusions
 
-- A strong optimizer is not necessarily a strong learner
+A strong optimizer is not necessarily a strong learner.
 
-- How can we **learn** faster?
+DL optimization is non-convex but bad local minima and saddle
+structures are rarely a problem (on common DL tasks).
 
-- Neural Networks are non-convex but local minima are rarely a problem
+Neural Networks are always over-parametrized but can still generalize.
 
-- Neural Networks are over-parametrized but can still generalize
+Stochastic Gradient is a strong implicit regularizer.
 
-- Stochastic Gradient solvers is a strong implicit regularizer
+Variance in gradient can help with generalization but can hurt final
+convergence.
 
-- Open area of research
+We need more theory to guide the design of architectures and
+optimizers that make **learning** faster with fewer labels.
+
+---
+# Practical Takeaways
+
+Overparametrize deep architectures
+
+Design architectures to limit conditioning issues:
+  - Use skip / residual connections
+  - Internal normalization layers
+
+Use stochastic optimizers that are robust to bad conditioning
+
+Favor data augmentation and stochastic regularization to combat
+overfitting
+
+Use small minibatches (at least at the beginning of optimization)
+
+Use validation set to anneal learning rate and do early stopping
 
 ---
 class: middle, center
 
-# Lab #6: Room C48 and C49 in 15min!
+# Lab #6: Room F503 and F900 in 15min!
 
     </textarea>
     <style TYPE="text/css">
