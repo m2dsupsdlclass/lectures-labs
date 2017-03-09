@@ -796,14 +796,16 @@ Much less effective in RNNs (but variants exist)
 ---
 # Layer Normalizations
 
-Normalize on the statistics of the **layer activations** instead of mini-batch
+Normalize on the statistics of the **layer activations** instead of
+mini-batch.
 
 .center[
 <img src="images/layernorm.png" style="width: 400px;" />
 ]
 
 .footnote.small[
-Ba, Jimmy Lei, Jamie Ryan Kiros, and Geoffrey E. Hinton. "Layer normalization." 2016.<br/>
+Ba, Jimmy Lei, Jamie Ryan Kiros, and Geoffrey E. Hinton.
+"Layer normalization." 2016.
 ]
 
 --
@@ -817,14 +819,17 @@ Suited for **RNNs**, degrades performance of **CNNs**
 ---
 # Weight Normalization
 
-Reparametrize weights of neurons, to decouple **direction** and **norm** of the weight:
+Reparametrize weights of neurons, to decouple **direction** and **norm**
+of the weight:
 
 $$
 \mathbf{w}  = \frac{g}{||\mathbf{v}||}\mathbf{v}
 $$
 
 .footnote.small[
-Salimans, Tim, and Diederik P. Kingma. "Weight normalization: A simple reparameterization to accelerate training of deep neural networks." NIPS 2016.	
+Salimans, Tim, and Diederik P. Kingma. "Weight normalization: A simple
+reparameterization to accelerate training of deep neural networks." NIPS
+2016.
 ]
 
 --
@@ -834,7 +839,8 @@ One new parameter $g$ to learn per neuron
 
 --
 
-Careful **data-based** initialization of $g$ and neuron bias $b$ is better (not applicable to RNNs)
+Careful **data-based** initialization of $g$ and neuron bias $b$ is
+better (not applicable to RNNs)
 
 ---
 # Reparametrizations and Normalizations
@@ -842,7 +848,8 @@ Careful **data-based** initialization of $g$ and neuron bias $b$ is better (not 
 **Significant impact** on results
 
 .footnote.small[
-Ren, Mengye, et al. "Normalizing the Normalizers: Comparing and Extending Network Normalization Schemes." 2017
+Ren, Mengye, et al. "Normalizing the Normalizers: Comparing and
+Extending Network Normalization Schemes." 2017
 ]
 
 - Convergence speed and better optimum on CNNs (BN mostly used)
@@ -885,6 +892,39 @@ class: middle, center
 # Generalization
 
 ---
+# Overfitting?
+
+Using L2 penalty on weights rarely helps.
+
+--
+
+Reducing width can cause optimization issues.
+
+--
+
+Early stopping mostly avoids wasting compute optimizing for nothing.
+
+--
+
+Data augmentation and stochastic regularization (dropout) often help
+but:
+  - it also makes training (much) slower,
+  - too much gradient variance can prevent training completely.
+
+--
+
+Ensembling models can help and can be reasonably cheap with SGD
+restarts ("snapshot ensembles").
+
+???
+
+Stochastic Regularization all-in: Stochastic Depth, Shakeout, Whiteout,
+Shake-Shake.
+
+Clever noise injection on the input:
+https://arxiv.org/abs/1703.02573
+
+---
 # Generalization (DRAFT)
 
 - Memorization vs Generalization
@@ -898,9 +938,10 @@ class: middle, center
   - Computational constraints as implicit regularization
 
 ---
-# Generalization Takeaways
+# The Mistery of Generalization
 
 What makes deep network generalize so well?
+
 
 - Intrinsic to the piecewise linear nature of the ReLU NN?
 
@@ -913,16 +954,6 @@ What makes deep network generalize so well?
 --
 - A combination of all of the above?
 
---
-
-Is it very often possible to trade more compute for less overfitting
-with **data augmentation** and **stochastic regularizers** (e.g.
-dropout).
-
---
-
-Collecting **more labelled data** is still the most effective way to
-avoid overfitting.
 
 ---
 # Conclusions
@@ -953,12 +984,15 @@ Design architectures to limit conditioning issues:
 
 Use stochastic optimizers that are robust to bad conditioning
 
-Favor data augmentation and stochastic regularization to combat
-overfitting
-
 Use small minibatches (at least at the beginning of optimization)
 
 Use validation set to anneal learning rate and do early stopping
+
+Is it very often possible to trade more compute for less overfitting
+with **data augmentation** and **stochastic regularizers** (e.g.
+dropout).
+
+Collecting **more labelled data** is best way to avoid overfitting.
 
 ---
 class: middle, center
