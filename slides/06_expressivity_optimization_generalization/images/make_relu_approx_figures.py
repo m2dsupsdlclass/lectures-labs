@@ -1,5 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import os
+
+# Generate the figures in the same folder
+os.chdir(os.path.dirname(__file__))
 
 
 def relu(x):
