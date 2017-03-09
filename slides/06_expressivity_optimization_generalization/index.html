@@ -82,12 +82,14 @@ $$ f\_n = argmin\_{f \in \mathcal{F}} E\_n(f) $$
 
 
 ???
-Question: how is the approximation error impacted by:
-          - a larger hypothesis class $\mathcal{F}$?
 
-Question: how is the estimation error impacted by:
-          - a larger training set $n$?
-          - a larger hypothesis class $\mathcal{F}$?
+
+**Questions**: how is the approximation error impacted by:
+  - a larger hypothesis class $\mathcal{F}$?
+
+**Questions**: how is the estimation error impacted by:
+  - a larger training set $n$?
+  - a larger hypothesis class $\mathcal{F}$?
 
 ---
 # Decomposition of the Error
@@ -140,7 +142,6 @@ constant step size and early stopping...
 **Question**: Which error(s) do you expect to dominate when fitting
               linear (logistic regression) model for image
               classification?
-
 ---
 # Decomposition of the Error
 
@@ -304,6 +305,19 @@ plt.plot(x, y)
 approximator?](https://www.quora.com/Is-a-single-layered-ReLu-network-still-a-universal-approximator),
 Conner Davis
 ]
+
+???
+**Question**: why would it be a bad idea to deterministically set the
+weights of a single the network to carve tiny n-dimensional rectangular
+boxes around each sample in the training set?
+
+**Question**: how many parameters would it be required to naively carve
+rectangular boxes around each training sample in MNIST?
+
+**Question**: Assume that instead of hard / vertical recangular boxes we
+used a smoother slope to carve the boxes around the samples. How would
+that relate to kernelized logistic / ridge regression? How such a
+network would differ from a fixed kernel machine?
 
 ---
 # Efficient Oscillations with Composition
@@ -479,11 +493,8 @@ with the number of units.
 
 ???
 
-This also holds for ReLU convnets with max pooling layers and
+This also **holds for ReLU convnets with max pooling layers** and
 polynomial architectures.
-
-Example of such functions are functions with a large number of local
-oscillations.
 
 
 ---
@@ -503,8 +514,8 @@ oscillations.
 ???
 
 Note: deeper is better is true from a function approximation point of
-view and probably from a generalization point of view but not
-necessarily from an optimization point of view.
+view and probably from a generalization point of view but **not
+necessarily from an optimization point of view**.
 
 ---
 class: middle, center
