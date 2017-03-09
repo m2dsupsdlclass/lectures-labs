@@ -606,31 +606,6 @@ l /= len(x)
   <img src="images/sgd_mlp_loss_landscape.gif" width="100%" />
 ]
 
-
----
-# Optimization (DRAFT)
-
-- Saddle points
-
-- Local Minima
-
-  - Intuition: overparametrization => easy overfitting => all minima
-    have zero training cost and are therefore global
-
-- Optimization issues related to depth
-
-  - Initialization / Residual Connections
-
-- Conditioning / Natural Gradient
-
-  - Adam / Batch Normalization
-
-- Remaining optimization problems:
-
-  - Still slow on large vision problems: e.g.
-
-  - RL with Policy Gradient: too much noise: no training
-
 ---
 # Non-convex Optimization
 
@@ -925,17 +900,28 @@ Clever noise injection on the input:
 https://arxiv.org/abs/1703.02573
 
 ---
-# Generalization (DRAFT)
+# Small Batch Sizes
 
-- Memorization vs Generalization
 
-- Importance of small batch sizes
+---
+# Deep Nets Generalize Better than They Should
 
-- Dropout and Gradient noise
+.center[
+<img src="images/rethinking-generalization.png" width="95%" />
+]
 
-- Early stopping as implicit regularization
+.footnote.small[
+[Understanding deep learning requires rethinking generalization](
+  https://arxiv.org/abs/1611.03530), C. Zhang et al., 2016.
+]
 
-  - Computational constraints as implicit regularization
+???
+Related work:
+
+[Overfitting in Neural Nets: Backpropagation, Conjugate Gradient, and
+ Early Stopping](
+  https://papers.nips.cc/paper/1895-overfitting-in-neural-nets-backpropagation-conjugate-gradient-and-early-stopping)
+  R. Caruana et al, 2010.
 
 ---
 # The Mistery of Generalization
@@ -956,14 +942,19 @@ What makes deep network generalize so well?
 
 
 ---
-# Conclusions
+class: middle, center
+
+# Conclusion
+
+---
+# Conclusion
 
 A strong optimizer is not necessarily a strong learner.
 
 DL optimization is non-convex but bad local minima and saddle
 structures are rarely a problem (on common DL tasks).
 
-Neural Networks are always over-parametrized but can still generalize.
+Neural Networks are over-parametrized but can still generalize.
 
 Stochastic Gradient is a strong implicit regularizer.
 
