@@ -528,7 +528,7 @@ class: middle, center
 .left-column[
 ```python
 import numpy as np
-
+rng = np.random.RandomState(42)
 
 def relu(x):
     return np.maximum(x, 0)
@@ -577,6 +577,7 @@ No bad local minima.
 .left-column[
 ```python
 import numpy as np
+rng = np.random.RandomState(42)
 
 
 def relu(x):
@@ -900,10 +901,6 @@ Clever noise injection on the input:
 https://arxiv.org/abs/1703.02573
 
 ---
-# Small Batch Sizes
-
-
----
 # Deep Nets Generalize Better than They Should
 
 .center[
@@ -940,6 +937,18 @@ What makes deep network generalize so well?
 --
 - A combination of all of the above?
 
+---
+# Small Batch vs Large Batch
+
+.center[
+<image src="images/small-batch-vs-large-batch.png" width="90%" />
+]
+
+.footnote.small[
+
+[On Large-Batch Training for Deep Learning: Generalization Gap and Sharp
+Minima](https://arxiv.org/abs/1609.04836), N. S. Keskar et al., 2016
+]
 
 ---
 class: middle, center
