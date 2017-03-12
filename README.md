@@ -10,7 +10,9 @@ Saclay](http://datascience-x-master-paris-saclay.fr)
 
 ## Table of contents
 
-The course covers the basics of Deep Learning, with a focus on applications:
+The course covers the basics of Deep Learning, with a focus on applications.
+
+### Lecture slides
 
   - Neural Networks and Backpropagation ([slides](https://m2dsupsdlclass.github.io/lectures-labs/slides/01_intro_to_deep_learning/index.html))
   - Embeddings and Recommender Systems ([slides](https://m2dsupsdlclass.github.io/lectures-labs/slides/02_recommender_systems/index.html))
@@ -19,10 +21,17 @@ The course covers the basics of Deep Learning, with a focus on applications:
   - Recurrent Neural Networks and NLP ([slides](https://m2dsupsdlclass.github.io/lectures-labs/slides/05_deep_nlp/index.html))
   - Expressivity, Optimization and Generalization ([slides](https://m2dsupsdlclass.github.io/lectures-labs/slides/06_expressivity_optimization_generalization/index.html))
 
+### Lab and Home Assignment Notebooks
+
 The jupyter notebooks for the labs can be found in the `labs` folder of
 the [github repository](https://github.com/m2dsupsdlclass/lectures-labs/):
 
     git clone https://github.com/m2dsupsdlclass/lectures-labs
+
+Direct links to the rendered notebooks including solutions:
+
+  - [Intro to MLP with Keras, Numpy and TensorFlow](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/01_backprop/Intro_MLP_keras_numpy_tensorflow_rendered.ipynb)
+
 
 ## Acknowledgments
 
