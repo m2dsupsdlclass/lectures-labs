@@ -14,12 +14,12 @@ The course covers the basics of Deep Learning, with a focus on applications.
 
 ### Lecture slides
 
-  - Neural Networks and Backpropagation ([slides](https://m2dsupsdlclass.github.io/lectures-labs/slides/01_intro_to_deep_learning/index.html))
-  - Embeddings and Recommender Systems ([slides](https://m2dsupsdlclass.github.io/lectures-labs/slides/02_recommender_systems/index.html))
-  - Convolutional Neural Networks for Image Classification ([slides](https://m2dsupsdlclass.github.io/lectures-labs/slides/03_conv_nets/index.html))
-  - Deep Learning for Object Dection and Image Segmentation ([slides](https://m2dsupsdlclass.github.io/lectures-labs/slides/04_conv_nets_2/index.html))
-  - Recurrent Neural Networks and NLP ([slides](https://m2dsupsdlclass.github.io/lectures-labs/slides/05_deep_nlp/index.html))
-  - Expressivity, Optimization and Generalization ([slides](https://m2dsupsdlclass.github.io/lectures-labs/slides/06_expressivity_optimization_generalization/index.html))
+  - [Neural Networks and Backpropagation](https://m2dsupsdlclass.github.io/lectures-labs/slides/01_intro_to_deep_learning/index.html)
+  - [Embeddings and Recommender Systems](https://m2dsupsdlclass.github.io/lectures-labs/slides/02_recommender_systems/index.html)
+  - [Convolutional Neural Networks for Image Classification](https://m2dsupsdlclass.github.io/lectures-labs/slides/03_conv_nets/index.html)
+  - [Deep Learning for Object Dection and Image Segmentation](https://m2dsupsdlclass.github.io/lectures-labs/slides/04_conv_nets_2/index.html)
+  - [Recurrent Neural Networks and NLP](https://m2dsupsdlclass.github.io/lectures-labs/slides/05_deep_nlp/index.html)
+  - [Expressivity, Optimization and Generalization](https://m2dsupsdlclass.github.io/lectures-labs/slides/06_expressivity_optimization_generalization/index.html)
 
 ### Lab and Home Assignment Notebooks
 
@@ -30,10 +30,22 @@ the [github repository](https://github.com/m2dsupsdlclass/lectures-labs/):
 
 Direct links to the rendered notebooks including solutions:
 
+#### Lab #1
+
   - [Intro to MLP with Keras, Numpy and TensorFlow](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/01_backprop/Intro_MLP_keras_numpy_tensorflow_rendered.ipynb)
+
+#### Lab #2
+
   - [Short Intro to Embeddings with Keras](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/02_neural_recsys/Short_Intro_to_Embeddings_with_Keras_rendered.ipynb)
   - [Neural Recommender Systems with Explicit Feedback](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/02_neural_recsys/Explicit_Feedback_Neural_Recommender_System_rendered.ipynb)
   - [Neural Recommender Systems with Implicit Feedback and the Triplet Loss](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/02_neural_recsys/Implicit_Feedback_Recsys_with_the_triplet_loss_rendered.ipynb)
+
+#### Lab #3
+
+  - [Convolution and ConvNets with TensorFlow](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/03_conv_nets/ConvNets_with_TensorFlow_rendered.ipynb)
+  - [Pretrained ConvNets with Keras](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/03_conv_nets/Pretrained_ConvNets_with_Keras_rendered.ipynb)
+  - [Fine Tuning a pretrained ConvNet with Keras (GPU required)](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/03_conv_nets/Fine_Tuning_Deep_CNNs_with_GPU_rendered.ipynb)
+
 
 
 ## Acknowledgments
