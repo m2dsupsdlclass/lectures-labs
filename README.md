@@ -31,6 +31,9 @@ the [github repository](https://github.com/m2dsupsdlclass/lectures-labs/):
 Direct links to the rendered notebooks including solutions:
 
   - [Intro to MLP with Keras, Numpy and TensorFlow](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/01_backprop/Intro_MLP_keras_numpy_tensorflow_rendered.ipynb)
+  - [Short Intro to Embeddings with Keras] (https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/02_neural_recsys/Short_Intro_to_Embeddings_with_Keras_rendered.ipynb)
+  - [Neural Recommender Systems with Explicit Feedback](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/02_neural_recsys/Explicit_Feedback_Neural_Recommender_System_rendered.ipynb)
+  - [Neural Recommender Systems with Implicit Feedback and the Triplet Loss](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/02_neural_recsys/Implicit_Feedback_Recsys_with_the_triplet_loss_rendered)
 
 
 ## Acknowledgments
