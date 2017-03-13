@@ -61,6 +61,7 @@ Direct links to the rendered notebooks including solutions:
 
 #### Lab 6: Sequence to Sequence for Machine Translation
 
+  - [Translation of Numeric Phrases with Seq2Seq](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/06_seq2seq/Translation_of_Numeric_Phrases_with_Seq2Seq_rendered.ipynb)
 
 ## Acknowledgments
 
