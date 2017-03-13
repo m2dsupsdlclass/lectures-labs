@@ -1,4 +1,4 @@
-from keras.layers import LSTM
+from keras.layers import LSTM, Conv1D, MaxPooling1D
 
 # input: a sequence of MAX_SEQUENCE_LENGTH integers
 sequence_input = Input(shape=(MAX_SEQUENCE_LENGTH,), dtype='int32')

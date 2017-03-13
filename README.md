@@ -33,34 +33,33 @@ the [github repository](https://github.com/m2dsupsdlclass/lectures-labs/):
 
 Direct links to the rendered notebooks including solutions:
 
-#### Lab #1: Neural Networks and Backpropagation
+#### Lab 1: Neural Networks and Backpropagation
 
   - [Intro to MLP with Keras, Numpy and TensorFlow](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/01_backprop/Intro_MLP_keras_numpy_tensorflow_rendered.ipynb)
 
-#### Lab #2: Embeddings and Recommender Systems
+#### Lab 2: Embeddings and Recommender Systems
 
   - [Short Intro to Embeddings with Keras](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/02_neural_recsys/Short_Intro_to_Embeddings_with_Keras_rendered.ipynb)
   - [Neural Recommender Systems with Explicit Feedback](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/02_neural_recsys/Explicit_Feedback_Neural_Recommender_System_rendered.ipynb)
   - [Neural Recommender Systems with Implicit Feedback and the Triplet Loss](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/02_neural_recsys/Implicit_Feedback_Recsys_with_the_triplet_loss_rendered.ipynb)
 
-#### Lab #3: Convolutional Neural Networks for Image Classification
+#### Lab 3: Convolutional Neural Networks for Image Classification
 
   - [Convolution and ConvNets with TensorFlow](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/03_conv_nets/ConvNets_with_TensorFlow_rendered.ipynb)
   - [Pretrained ConvNets with Keras](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/03_conv_nets/Pretrained_ConvNets_with_Keras_rendered.ipynb)
   - [Fine Tuning a pretrained ConvNet with Keras (GPU required)](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/03_conv_nets/Fine_Tuning_Deep_CNNs_with_GPU_rendered.ipynb)
 
-#### Lab #4: Deep Learning for Object Dection and Image Segmentation
+#### Lab 4: Deep Learning for Object Dection and Image Segmentation
 
   - [Fully Convolutional Neural Networks](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/04_conv_nets_2/Fully_Convolutional_Neural_Networks_rendered.ipynb)
   - [ConvNets for Classification and Localization](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/04_conv_nets_2/ConvNets_for_Classification_and_Localization_rendered.ipynb)
 
+#### Lab 5: Text Classification, Word Embeddings and Language Models
 
+  - [Text Classification and Word Vectors](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/05_deep_nlp/NLP_word_vectors_classification_rendered.ipynb)
+  - [Character Level Language Model (GPU required)](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/05_deep_nlp/Character_Level_Language_Model_rendered.ipynb)
 
-#### Lab #5: Text Classification, Word Embeddings and Language Models
-
-
-
-#### Lab #6: Sequence to Sequence for Machine Translation
+#### Lab 6: Sequence to Sequence for Machine Translation
 
 
 ## Acknowledgments
