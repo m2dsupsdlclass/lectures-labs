@@ -1,6 +1,6 @@
-## Slides and Jupyter notebooks for the Deep Learning class
+# Deep Learning course: lecture slides and lab notebooks
 
-This class is currently being given at [Master Datascience Paris
+This course is being taught at as part of [Master Datascience Paris
 Saclay](http://datascience-x-master-paris-saclay.fr)
 
 <p style="text-align: center">
@@ -21,9 +21,12 @@ The course covers the basics of Deep Learning, with a focus on applications.
   - [Recurrent Neural Networks and NLP](https://m2dsupsdlclass.github.io/lectures-labs/slides/05_deep_nlp/index.html)
   - [Expressivity, Optimization and Generalization](https://m2dsupsdlclass.github.io/lectures-labs/slides/06_expressivity_optimization_generalization/index.html)
 
+Note: press "P" to display the presenter's notes that include some comments and
+additional references.
+
 ### Lab and Home Assignment Notebooks
 
-The jupyter notebooks for the labs can be found in the `labs` folder of
+The Jupyter notebooks for the labs can be found in the `labs` folder of
 the [github repository](https://github.com/m2dsupsdlclass/lectures-labs/):
 
     git clone https://github.com/m2dsupsdlclass/lectures-labs
