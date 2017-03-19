@@ -31,6 +31,11 @@ the [github repository](https://github.com/m2dsupsdlclass/lectures-labs/):
 
     git clone https://github.com/m2dsupsdlclass/lectures-labs
 
+**WARNING**: these notebooks only work with `tensorflow==0.12.1 keras==1.2.2`.
+Please follow the [installation\_instructions.md](
+https://github.com/m2dsupsdlclass/lectures-labs/blob/master/installation_instructions.md)
+to get started.
+
 Direct links to the rendered notebooks including solutions:
 
 #### Lab 1: Neural Networks and Backpropagation
