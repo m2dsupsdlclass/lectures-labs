@@ -1,6 +1,12 @@
 # Improvements for next time we run this class
 
 
+## Technical Improvements
+
+- Update code to work with TF 1.0+ and Keras 2.0+
+- Reduce the size of the repo by compressing png better and reducing
+  the resolution of very large images.
+- (Semi)-automate the rendering of the notebooks somehow...
 
 ## General improvements
 
@@ -22,6 +28,18 @@
   fact that embedding matrices holds model parameters and not training
   data (the training sample is the one-hot vector representation of the
   user / item).
+
+
+## Lab #3 (convolutions)
+
+- Introduce convolution using the Keras API only. This can be done
+  by using using the following test construct:
+  `Sequential([Convolution2D(**conv_params)]).predict(test_img)`
+
+- Add exercises that ask to estimate the parameter size and shape of
+  the output of a stack of Conv + Pooling layers and then ask to use
+  keras to write a program to empirically check the results.
+
 
 ## Lab #4 (advanced convnets)
 
