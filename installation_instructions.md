@@ -12,7 +12,7 @@ on your laptop.
 
 Open a console / terminal and update the following packages with conda:
 
-    conda install numpy scikit-learn=0.18.1 jupyter matplotlib pip
+    conda install python=3.5 numpy scikit-learn=0.18.1 jupyter matplotlib pip
     conda install pandas h5py pillow lxml
 
 Install the tensorflow (without GPU support) and keras deep learning
