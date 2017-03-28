@@ -72,7 +72,7 @@ Direct links to the rendered notebooks including solutions:
 
 This lecture is built and maintained by Olivier Grisel and Charles Ollion
 
-Charles Ollion, head of research at [Heuritech](www.heuritech.com) -
+Charles Ollion, head of research at [Heuritech](http://www.heuritech.com) -
 Olivier Grisel, software engineer at
 [Inria](https://team.inria.fr/parietal/en)
 
