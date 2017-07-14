@@ -19,7 +19,7 @@ h = tf.nn.sigmoid(tf.matmul(X,W_h)+b_h)
 out_act = tf.matmul(h, W_o)+b_o
 
 # build the loss, predict, and train operator
-cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(out_act, y)
+cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=out_act, labels=y)
 loss = tf.reduce_sum(cross_entropy)
 
 optimizer = tf.train.GradientDescentOptimizer(learning_rate)
