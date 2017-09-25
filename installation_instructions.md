@@ -12,22 +12,19 @@ on your laptop.
 
 Open a console / terminal and update the following packages with conda:
 
-    conda install python=3.5 numpy scikit-learn=0.18.1 jupyter matplotlib pip
+    conda install python=3.5 numpy scikit-learn=0.19.0 jupyter matplotlib pip
     conda install pandas h5py pillow lxml
 
-Install the tensorflow (without GPU support) and keras deep learning
-libraries:
+Install the tensorflow (without GPU support) library:
 
-    pip install tensorflow==0.12.1 keras==1.2.1
+    pip install tensorflow==1.2.1
 
-Check that you can import keras with the python from anaconda:
-
-    python -c "import keras; print(keras.__version__)"
-    Using TensorFlow backend.
+Check that you can import tensorflow with the python from anaconda:
+    python3 -c "import tensorflow as tf; print(tf.__version__)"
     1.2.1
 
 Ideally: create a new jupyter notebook and check that you can import
-the numpy, matplotlib, tensforflow and keras modules.
+the numpy, matplotlib, tensforflow  modules.
 
 
 # Troubleshooting 

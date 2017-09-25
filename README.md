@@ -17,7 +17,7 @@ The course covers the basics of Deep Learning, with a focus on applications.
   - [Neural Networks and Backpropagation](https://m2dsupsdlclass.github.io/lectures-labs/slides/01_intro_to_deep_learning/index.html)
   - [Embeddings and Recommender Systems](https://m2dsupsdlclass.github.io/lectures-labs/slides/02_recommender_systems/index.html)
   - [Convolutional Neural Networks for Image Classification](https://m2dsupsdlclass.github.io/lectures-labs/slides/03_conv_nets/index.html)
-  - [Deep Learning for Object Dection and Image Segmentation](https://m2dsupsdlclass.github.io/lectures-labs/slides/04_conv_nets_2/index.html)
+  - [Deep Learning for Object Detection and Image Segmentation](https://m2dsupsdlclass.github.io/lectures-labs/slides/04_conv_nets_2/index.html)
   - [Recurrent Neural Networks and NLP](https://m2dsupsdlclass.github.io/lectures-labs/slides/05_deep_nlp/index.html)
   - [Expressivity, Optimization and Generalization](https://m2dsupsdlclass.github.io/lectures-labs/slides/06_expressivity_optimization_generalization/index.html)
 
