@@ -15,9 +15,9 @@ Open a console / terminal and update the following packages with conda:
     conda install python=3.5 numpy scikit-learn=0.19.0 jupyter matplotlib pip
     conda install pandas h5py pillow lxml
 
-Install the tensorflow (without GPU support) library:
+Install the tensorflow and keras (without GPU support) library:
 
-    pip install tensorflow==1.2.1
+    pip install tensorflow==1.3 keras==1.2.1
 
 Check that you can import tensorflow with the python from anaconda:
     python3 -c "import tensorflow as tf; print(tf.__version__)"
