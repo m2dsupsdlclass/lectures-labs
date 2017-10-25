@@ -19,15 +19,15 @@ item_embedding = Embedding(output_dim=embedding_size, input_dim=max_item_id + 1,
 user_vecs = Flatten()(user_embedding)
 item_vecs = Flatten()(item_embedding)
 
-input_vecs = merge([user_vecs, item_vecs], mode='concat')
+input_vecs = concatenate([user_vecs, item_vecs])
 input_vecs = Dropout(dropout_embedding)(input_vecs)
 
 x = Dense(dense_size, activation='relu')(input_vecs)
 x = Dropout(dropout_hidden)(x)
 x = Dense(dense_size, activation='relu')(x)
-y = Dense(output_dim=5, activation='softmax')(x)
+y = Dense(5, activation='softmax')(x)
 
-model = Model(input=[user_id_input, item_id_input], output=y)
+model = Model(inputs=[user_id_input, item_id_input], outputs=y)
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy')
 
 initial_train_preds = model.predict([user_id_train, item_id_train]).argmax(axis=1) + 1
@@ -36,7 +36,7 @@ print("Random init MAE: %0.3f" % mean_absolute_error(initial_train_preds, rating
 
 
 history = model.fit([user_id_train, item_id_train], rating_train - 1,
-                    batch_size=64, nb_epoch=6, validation_split=0.1,
+                    batch_size=64, epochs=6, validation_split=0.1,
                     shuffle=True)
 
 plt.plot(history.history['loss'], label='train')

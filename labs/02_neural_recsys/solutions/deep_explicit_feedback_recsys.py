@@ -15,7 +15,7 @@ item_embedding = Embedding(output_dim=embedding_size, input_dim=max_item_id + 1,
 user_vecs = Flatten()(user_embedding)
 item_vecs = Flatten()(item_embedding)
 
-input_vecs = merge([user_vecs, item_vecs], mode='concat')
+input_vecs = concatenate([user_vecs, item_vecs])
 ## Error 1: Dropout was too high, preventing any training
 input_vecs = Dropout(0.5)(input_vecs)
 
@@ -26,7 +26,7 @@ x = Dense(64, activation='relu')(input_vecs)
 ## when we want to predict values between 1 and 5
 y = Dense(1)(x)
 
-model = Model(input=[user_id_input, item_id_input], output=y)
+model = Model(inputs=[user_id_input, item_id_input], outputs=y)
 ## Error 4: A binary crossentropy loss is only useful for binary
 ## classification, while we are in regression (use mse or mae)
 model.compile(optimizer='adam', loss='mae')

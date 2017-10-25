@@ -1,5 +1,5 @@
-squared_differences = np.square(initial_train_preds - rating_train.values)
-absolute_differences = np.abs(initial_train_preds - rating_train.values)
+squared_differences = np.square(initial_train_preds[:,0] - rating_train.values)
+absolute_differences = np.abs(initial_train_preds[:,0] - rating_train.values)
 
 print("Random init MSE: %0.3f" % np.mean(squared_differences))
 print("Random init MAE: %0.3f" % np.mean(absolute_differences))
