@@ -8,6 +8,8 @@ Saclay](http://datascience-x-master-paris-saclay.fr)
   src="slides/04_conv_nets_2/images/Logo_Master_Datascience.png" width="300"/></a>
 </p>
 
+### Note: We're adding content to this lecture for early 2018, expect a few broken things in the notebooks and slides during this process
+
 ## Table of contents
 
 The course covers the basics of Deep Learning, with a focus on applications.
