@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Deep Learning Lectures</title>
+    <meta charset="utf-8">
+    <style>
+     .left-column {
+       width: 50%;
+       float: left;
+     }
+     .reset-column {
+       overflow: auto;
+        width: 100%;
+     }
+     .small { font-size: 0.2em; }
+     .right-column {
+       width: 50%;
+       float: right;
+     }
+     .right{
+       float:right;
+     }
+     .left{
+       float:left;
+     }
+     .footnote {
+        position: absolute;
+        bottom: 2em;
+        margin: 0em 2em;
+     }
+     .red { color: #ee1111; }
+     .grey { color: #bbbbbb; }
+      </style>
+    <link rel="stylesheet" type="text/css" href="slides.css">
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle
+
+# Natural Language Processing with Deep Learning
+
+Charles Ollion - Olivier Grisel
+
+.affiliations[
+  ![Heuritech](images/logo heuritech v2.png)
+  ![Inria](images/inria-logo.png)
+  ![UPS](images/Logo_Master_Datascience.png)
+]
+
+
+---
+class: center,middle
+
+# Encoder-Decoder and Attention Mechanism
+
+---
+# Encoder-Decoder
+
+.center[
+<img src="images/encoder_decoder_1.svg" style="width: 680px;" />
+]
+
+.footnote.small[
+Cho, Kyunghyun, et al. "Learning phrase representations using RNN encoder-decoder for statistical machine translation." 2014
+]
+---
+# Encoder-Decoder
+
+.center[
+<img src="images/encoder_decoder_2.svg" style="width: 680px;" />
+]
+
+.footnote.small[
+Cho, Kyunghyun, et al. "Learning phrase representations using RNN encoder-decoder for statistical machine translation." 2014
+]
+---
+# Encoder-Decoder
+
+.center[
+<img src="images/encoder_decoder.svg" style="width: 680px;" />
+]
+
+.footnote.small[
+Cho, Kyunghyun, et al. "Learning phrase representations using RNN encoder-decoder for statistical machine translation." 2014
+]
+---
+# Encoder-Decoder
+
+.center[
+<img src="images/encoder_decoder_forcing.svg" style="width: 680px;" />
+]
+
+.footnote.small[
+Cho, Kyunghyun, et al. "Learning phrase representations using RNN encoder-decoder for statistical machine translation." 2014
+]
+
+---
+# Sequence to Sequence
+
+.center[
+<img src="images/basic_seq2seq.png" style="width: 760px;" />
+]
+
+.footnote.small[
+Sutskever, Ilya, Oriol Vinyals, and Quoc V. Le. "Sequence to sequence learning with neural networks." NIPS 2014
+]
+
+- Encoder-Decoder architecture
+
+--
+- **Reverse input sequence** for translation
+- Special symbols for starting decoding and end of sentence
+
+--
+- Encoder and decoder can **share weights** (but more common to have separate weights)
+
+---
+# Attention Mechanism
+
+Main problem with Encoder-Decoder:
+- A sentence may have different parts with different concepts
+- The **whole sentence** is represented as a **single vector**
+
+.center[
+*I like cats but I don't like dogs*
+]
+
+.footnote.small[
+In depth explanation on https://blog.heuritech.com/2016/01/20/attention-mechanism/
+]
+--
+
+<br/> 
+ Solution: 
+
+- Use all outputs of the encoder $\{h_i\}$ to compute the outputs
+- Build an **Attention Mechanism** to determine which output(s) to attend to
+
+---
+# Attention Mechanism
+
+.center[
+<img src="images/attention_0.png" style="width: 670px;" />
+]
+
+.footnote.small[
+Neural machine translation by jointly learning to align and translate, D Bahdanau, K Cho, Y Bengio 2014
+]
+---
+# Attention Mechanism
+
+.center[
+<img src="images/attention_1.png" style="width: 670px;" />
+]
+
+.footnote.small[
+Neural machine translation by jointly learning to align and translate, D Bahdanau, K Cho, Y Bengio 2014
+]
+---
+# Attention Mechanism
+
+.center[
+<img src="images/attention_2.png" style="width: 670px;" />
+]
+
+.footnote.small[
+Neural machine translation by jointly learning to align and translate, D Bahdanau, K Cho, Y Bengio 2014
+]
+---
+# Attention Mechanism
+
+.center[
+<img src="images/attention_3.png" style="width: 670px;" />
+]
+
+.footnote.small[
+Neural machine translation by jointly learning to align and translate, D Bahdanau, K Cho, Y Bengio 2014
+]
+---
+# Visualizing Attention 
+
+.center[
+<img src="images/align.png" style="width: 670px;" />
+]
+
+
+.footnote.small[
+Neural machine translation by jointly learning to align and translate, D Bahdanau, K Cho, Y Bengio 2014
+]
+---
+
+# Image Captioning
+
+.center[
+<img src="images/captioning_model.png" style="width: 500px;" />
+]
+
+.footnote.small[
+Xu, Kelvin, et al. "Show, Attend and Tell: Neural Image Caption Generation with Visual Attention." ICML. 2015
+]
+
+--
+
+.center[
+<img src="images/visual_attention.png" style="width: 500px;" />
+]
+
+
+
+
+---
+# Large Vocabulary Size
+
+**Softmax** computation becomes **intractable** both at training and
+inference time (sum over $|V|$).
+
+--
+
+**Negative Sampling** works well to learn word embeddings but is **not a
+good approximation** for **language modeling** and machine translation.
+
+--
+
+Approximate softmax with **sampled softmax** (a.k.a. bucketing):
+
+  - Accumulate train sequences in buckets $i \in B$ with $|V_i| ~= 50k$;
+  - Sample bucket $i$ at random and train with regular softmax on $V_i$;
+  - Share softmax parameters for words in common across buckets;
+  - Iterate untill the end of the training set.
+
+???
+Sampled softmax (https://arxiv.org/abs/1412.2007):
+  - Biased estimate, but works reasonably well in practice;
+  - Also useful to train item embedding in RecSys.
+
+---
+# Alternative to Word Embeddings
+
+Character-level Embedding (possibly with a CNN layer)
+- Pros:
+  - Much smaller vocabulary size
+  - No need for language specific segmentation (e.g. Chinese);
+  - Robust to spelling mistakes and out-of-vocabulary words;
+  - Can deal with mixed language contents.
+- Cons:
+  - Need to learn word structure from data;
+  - Decoding more complex and expensive.
+
+Better: sub-word representations and **Byte Pair Embedding** (BPE)
+
+???
+
+BPE (https://arxiv.org/abs/1508.07909):
+
+- Start with a vocabulary of characters (encoded as bytes);
+- Scan training set to compute most frequent char bigrams and replace
+  them with a new single byte symbol;
+- Recurse until target vocabulary size is reached (hyper-parameter).
+
+---
+# The GNMT architecture
+
+.center[
+<img src="images/gnmt-architecture.png" style="width: 600px;" />
+]
+
+.footnote.small[
+Yonghui Wu et al. "Google's Neural Machine Translation System: Bridging
+the Gap between Human and Machine Translation"
+]
+
+???
+- bi LSTM
+- stack LSTM GPU
+- reLU
+- inference TPU
+
+---
+class: middle, center
+
+# Lab 5: Room F503 and F900 in 15min!
+
+    </textarea>
+    <style TYPE="text/css">
+      code.has-jax {font: inherit; font-size: 100%; background: inherit; border: inherit;}
+    </style>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+      tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'] // removed 'code' entry
+      }
+      });
+      MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i = 0; i < all.length; i += 1) {
+		     all[i].SourceElement().parentNode.className += ' has-jax';
+		     }
+		     });
+		     </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../remark.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create({
+        highlightStyle: 'github',
+        highlightSpans: true,
+        highlightLines: true
+      });
+    </script>
+  </body>
+</html>
