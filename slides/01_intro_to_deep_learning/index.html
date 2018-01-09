@@ -17,7 +17,7 @@
     <link rel="stylesheet" type="text/css" href="slides.css">
   </head>
   <body>
-    <textarea id="source">
+      <textarea id="source">
 class: center, middle
 
 # Introduction to Deep Learning
@@ -31,8 +31,25 @@ Charles Ollion - Olivier Grisel
 ]
 
 ---
+# Goal of the class
+
+## Overview
+
+- When and where to use DL
+- "How" it works
+- Frontiers of DL
+
+--
+
+## Arcanes of DL
+
+- Implement using `Numpy`, and `Keras`
+- Engineering knowledge for building and training DL
+
+---
 # What is Deep Learning
-<br/>
+
+TODO: improve this section
 
 ### Good old Neural networks, with more layer/modules
 
@@ -46,38 +63,79 @@ Charles Ollion - Olivier Grisel
 
 ---
 # Typical ML system
-<br/></br>
+
 .center[
-<img src="images/image_ml.png" style="width: 670px;" />
+          <img src="images/image_ml.png" style="width: 670px;" />
 ]
 ---
 # Typical ML system
-<br/></br>
+
 .center[
-<img src="images/image_ml_2.png" style="width: 670px;" />
+          <img src="images/image_ml_2.png" style="width: 670px;" />
 ]
 
 ---
 # Deep Learning system
 
-<br/></br>
 .center[
-<img src="images/image_dl.png" style="width: 700px;" />
+          <img src="images/image_dl.png" style="width: 700px;" />
+]
+---
+# Why Deep Learning Now?
+
+- Better algorithms &amp; understanding 
+
+- .grey[Computing power (GPUs, TPUs, ...)]
+
+- .grey[Data with labels]
+
+- .grey[Open source tools and models]
+
+---
+# Why Deep Learning Now?
+
+- Better algorithms &amp; understanding 
+
+- Computing power (GPUs, TPUs, ...)
+
+- .grey[Data with labels]
+
+- .grey[Open source tools and models]
+
+.center[
+<img src="images/gpu_tpu.png" style="width: 450px;" /><br/><br/>
+<small>_GPU and TPU_</small>
 ]
 
 ---
 # Why Deep Learning Now?
 
-- Better algorithms &amp; understanding
-- Computing power (GPUs)
-- Data with labels
-- Open source tools and models
+- Better algorithms &amp; understanding 
 
---
+- Computing power (GPUs, TPUs, ...)
+
+- Data with labels
+
+- .grey[Open source tools and models]
 
 .center[
 <img src="images/ng_data_perf.svg" style="width: 400px;" /><br/><br/>
 <small>_Adapted from Andrew Ng_</small>
+]
+
+---
+# Why Deep Learning Now?
+
+- Better algorithms &amp; understanding 
+
+- Computing power (GPUs, TPUs, ...)
+
+- Data with labels
+
+- Open source tools and models
+
+.center[
+<img src="images/frameworks.png" style="width: 500px;" /><br/><br/>
 ]
 
 ---
@@ -169,23 +227,6 @@ Most of chatbots claiming "AI" do not use Deep Learning (yet?)
 <small> AlphaGo/Zero: Monte Carlo Tree Search, Deep Reinforcement Learning, self-play </small>
 
 ---
-# Goal of the class
-
-## Overview
-
-- When and where to use DL
-- "How" it works
-- Frontiers of DL
-
---
-
-## Arcanes of DL
-
-- Implement using `Numpy`, `TensorFlow` and `Keras`
-- Engineering knowledge for building and training DL
-
-
----
 # Outline of the class
 
 ### Backpropagation
@@ -204,7 +245,7 @@ Most of chatbots claiming "AI" do not use Deep Learning (yet?)
 
 --
 
-### Optimization: theory, methods and tricks
+### Optimization: theory, methods and tricks (2)
 
 --
 
@@ -233,26 +274,75 @@ Recommended reading: [deeplearningbook.org](http://www.deeplearningbook.org/)
 Francois Chollet's Deep learning book
 
 ---
-## Libraries & Frameworks
+# Libraries & Frameworks
 
-- Automatic differentiation
-   - **TensorFlow**
-   - MXnet
-   - CNTK
-   - (Theano)
+.center[
+<img src="images/frameworks.png" style="width: 600px;" /><br/><br/>
+]
 
---
-- Higher level
-   - **Keras**
-   - Lasagne
+ Automatic differentiation: **TensorFlow**, MXnet, CNTK, _Theano_
 
 --
-- Dynamic and high level
-   - Torch &amp; ** PyTorch **
-   - Chainer
-   - MinPy
-   ...
 
+ Dynamic and high level: Torch &amp; ** PyTorch **, Chainer, MinPy, DyNet...
+
+--
+
+**keras**: high level frontend for TensorFlow, mxnet, theano, cntk
+
+---
+# Computation Graph
+
+.center[
+<img src="images/computation_graph_simple_f.png" style="width: 600px;" /><br/><br/>
+]
+
+Neural network = parametrized, non-linear function
+
+---
+# Computation Graph
+
+.center[
+<img src="images/computation_graph_simple.png" style="width: 600px;" /><br/><br/>
+]
+
+Computation graph: Directed graph of functions, depending on parameters (neuron weights)
+---
+# Computation Graph
+
+.center[
+<img src="images/computation_graph_simple_expl.png" style="width: 600px;" /><br/><br/>
+]
+
+Combination of linear (parametrized) and non-linear functions
+---
+# Computation Graph
+
+.center[
+<img src="images/computation_graph_complicated.png" style="width: 600px;" /><br/><br/>
+]
+
+Not only sequential application of functions
+---
+# Computation Graph
+
+.center[
+<img src="images/computation_graph_backprop.png" style="width: 600px;" /><br/><br/>
+]
+
+Automatic computation of gradients: all modules are *differentiable*!
+
+--
+
+*Tensorflow*, *theano*, etc. build a static computation graph
+
+--
+
+*Torch*, *pytorch*, etc. rely on dynamic differentiable modules
+
+--
+
+All frameworks enable parallel computation on *CPU* and *GPU*
 
 ---
 class: middle, center
