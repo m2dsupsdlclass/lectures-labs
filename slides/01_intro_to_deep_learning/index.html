@@ -199,12 +199,36 @@ Most of chatbots claiming "AI" do not use Deep Learning (yet?)
 <img src="images/nvidia_celeb.jpg" style="width: 350px;" />
 <br/>Sampled celebrities [Nvidia 2017] 
 ]
-<br/>
---
 
+--
+<br/>
+
+.center[
+<img src="images/stackgan.jpg" style="width: 600px;" />
+<br/>StackGAN v2 [Zhang 2017] 
+]
+
+
+---
+# DL Today: Generative models
 .center[
 <img src="images/WaveNet.gif" style="width: 400px;" />
 <br/>Sound generation with WaveNet [DeepMind 2017]
+]
+
+--
+
+<br/>
+
+Guess which one is generated?
+
+.center[
+
+<audio controls><source src="images/columbia_gen.wav"></audio> <br/> 
+
+<audio controls><source src="images/columbia_gt.wav"></audio>
+
+<small>_Tacotron 2 Natural TTS Synthesis by Conditioning WaveNet on Mel Spectrogram Predictions, 2017_</small>
 ]
 
 ---
@@ -270,8 +294,10 @@ Most of chatbots claiming "AI" do not use Deep Learning (yet?)
 
 --
 
-Recommended reading: [deeplearningbook.org](http://www.deeplearningbook.org/)
-Francois Chollet's Deep learning book
+Recommended reading: [deeplearningbook.org](http://www.deeplearningbook.org/), [Francois Chollet's book](https://www.manning.com/books/deep-learning-with-python)
+---
+class: center,middle
+# Frameworks and Computation Graphs
 
 ---
 # Libraries & Frameworks
@@ -330,19 +356,19 @@ Not only sequential application of functions
 <img src="images/computation_graph_backprop.png" style="width: 600px;" /><br/><br/>
 ]
 
-Automatic computation of gradients: all modules are *differentiable*!
+Automatic computation of gradients: all modules are **differentiable**!
 
 --
 
-*Tensorflow*, *theano*, etc. build a static computation graph
+**Tensorflow**, *theano*, etc. build a static computation graph
 
 --
 
-*Torch*, *pytorch*, etc. rely on dynamic differentiable modules
+**Torch**, **pytorch**, etc. rely on dynamic differentiable modules
 
 --
 
-All frameworks enable parallel computation on *CPU* and *GPU*
+All frameworks enable parallel computation on **CPU** and **GPU**
 
 ---
 class: middle, center
