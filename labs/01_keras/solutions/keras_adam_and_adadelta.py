@@ -8,7 +8,7 @@ model.add(Activation("softmax"))
 model.compile(optimizer="adam", loss='categorical_crossentropy',
               metrics=['accuracy'])
 
-model.fit(X_train, Y_train, nb_epoch=15, batch_size=32)
+model.fit(X_train, Y_train, epochs=15, batch_size=32)
 
 # Analysis:
 #
