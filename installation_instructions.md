@@ -4,7 +4,7 @@ Download the Anaconda distribution for your Operating System
 (Windows, macOS or Linux):
 
    - https://www.continuum.io/downloads (~400 MB)
-   - Choose **Python 3.5**
+   - Choose **Python 3.6**
    - Choose "64-bit installer"
 
 Follow the instructions of the Anaconda page to install anaconda
@@ -12,7 +12,7 @@ on your laptop.
 
 Open a console / terminal and update the following packages with conda:
 
-    conda install python=3.5 numpy scikit-learn=0.19.0 jupyter matplotlib pip
+    conda install python=3.6 numpy scikit-learn jupyter matplotlib pip
     conda install pandas h5py pillow lxml
 
 Install the tensorflow and keras (without GPU support) library:
@@ -35,7 +35,7 @@ your PATH:
     conda info
 
 Read the output of that command to verify that your conda command is
-associated with Python 3.5.
+associated with Python 3.6.
 
 
 Check that the pip command in your PATH is the one installed by conda:
