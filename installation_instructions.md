@@ -17,14 +17,17 @@ Open a console / terminal and update the following packages with conda:
 
 Install the tensorflow and keras (without GPU support) library:
 
-    pip install tensorflow==1.3 keras==1.2.1
+    pip install -U tensorflow keras
 
 Check that you can import tensorflow with the python from anaconda:
+
     python3 -c "import tensorflow as tf; print(tf.__version__)"
-    1.2.1
+    1.4.1
+
+We tested the notebooks with keras 2.1.2 and tensoflow 1.4.1.
 
 Ideally: create a new jupyter notebook and check that you can import
-the numpy, matplotlib, tensforflow  modules.
+the numpy, matplotlib, keras and tensorflow  modules.
 
 
 # Troubleshooting 
