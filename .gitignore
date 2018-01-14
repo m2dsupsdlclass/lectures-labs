@@ -38,3 +38,7 @@ tensorflow_summaries
 # VS Code jupyter temp files
 kernel-*.json
 tags
+
+maskrcnn
+Mask_RCNN-master.zip
+mask_rcnn_coco.h5
