@@ -7,7 +7,7 @@ model.add(Activation("softmax"))
 optimizer = optimizers.SGD(lr=0.1, momentum=0.9, nesterov=True)
 model.compile(optimizer=optimizer, loss='categorical_crossentropy',
               metrics=['accuracy'])
-model.fit(X_train, Y_train, nb_epoch=15, batch_size=32)
+model.fit(X_train, Y_train, epochs=15, batch_size=32)
 
 
 # Analysis:
