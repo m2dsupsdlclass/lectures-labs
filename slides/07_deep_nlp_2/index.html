@@ -34,10 +34,10 @@
     <link rel="stylesheet" type="text/css" href="slides.css">
   </head>
   <body>
-    <textarea id="source">
+      <textarea id="source">
 class: center, middle
 
-# Natural Language Processing with Deep Learning
+# Sequences, Attention and memory
 
 Charles Ollion - Olivier Grisel
 
@@ -47,11 +47,37 @@ Charles Ollion - Olivier Grisel
   ![UPS](images/Logo_Master_Datascience.png)
 ]
 
+---
+## Reminder: Recurrent Neural Networks
+
+.center[
+          <img src="../06_deep_nlp/images/unrolled_rnn_one_output_2.svg" style="width: 600px;" />
+]
+
+--
+
+takes a sequence as input
+
+may output a single value, or a value for each time-step of the input
+
+---
+
+## Outline
+
+Encoder-decoder for machine translation
+
+--
+
+Attention mechanisms
+
+--
+
+Towards memory and reasoning
 
 ---
 class: center,middle
 
-# Encoder-Decoder and Attention Mechanism
+# Encoder-Decoder for machine translation
 
 ---
 # Encoder-Decoder
@@ -113,6 +139,61 @@ Sutskever, Ilya, Oriol Vinyals, and Quoc V. Le. "Sequence to sequence learning w
 
 --
 - Encoder and decoder can **share weights** (but more common to have separate weights)
+---
+## Large Vocabulary Size
+
+**Softmax** computation becomes **intractable** both at training and
+inference time (sum over $|V|$).
+
+--
+
+**Negative Sampling** works well to learn word embeddings but is **not a
+good approximation** for **language modeling** and machine translation.
+
+--
+
+Approximate softmax with **sampled softmax** (a.k.a. bucketing):
+
+  - Accumulate train sequences in buckets $i \in B$ with $|V_i| ~= 50k$;
+  - Sample bucket $i$ at random and train with regular softmax on $V_i$;
+  - Share softmax parameters for words in common across buckets;
+  - Iterate untill the end of the training set.
+
+???
+Sampled softmax (https://arxiv.org/abs/1412.2007):
+  - Biased estimate, but works reasonably well in practice;
+  - Also useful to train item embedding in RecSys.
+
+---
+## Alternative to Word Embeddings
+
+Character-level Embedding (possibly with a CNN layer)
+
+- (+) Much smaller vocabulary size
+- (+) No need for language specific segmentation (e.g. Chinese);
+- (+) Robust to spelling mistakes and out-of-vocabulary words;
+- (+) Can deal with mixed language contents.
+
+--
+
+however
+
+- (-) Need to learn word structure from data;
+- (-) Decoding more complex and expensive.
+
+--
+
+Sub-word representations and **Byte Pair Embedding** (BPE) are better
+
+???
+
+BPE (https://arxiv.org/abs/1508.07909):
+
+- Start with a vocabulary of characters (encoded as bytes);
+- Scan training set to compute most frequent char bigrams and replace
+  them with a new single byte symbol;
+- Recurse until target vocabulary size is reached (hyper-parameter).
+
 
 ---
 # Attention Mechanism
@@ -135,6 +216,11 @@ In depth explanation on https://blog.heuritech.com/2016/01/20/attention-mechanis
 
 - Use all outputs of the encoder $\{h_i\}$ to compute the outputs
 - Build an **Attention Mechanism** to determine which output(s) to attend to
+
+---
+class: center,middle
+
+# Attention Mechanism
 
 ---
 # Attention Mechanism
@@ -205,58 +291,6 @@ Xu, Kelvin, et al. "Show, Attend and Tell: Neural Image Caption Generation with 
 <img src="images/visual_attention.png" style="width: 500px;" />
 ]
 
-
-
-
----
-# Large Vocabulary Size
-
-**Softmax** computation becomes **intractable** both at training and
-inference time (sum over $|V|$).
-
---
-
-**Negative Sampling** works well to learn word embeddings but is **not a
-good approximation** for **language modeling** and machine translation.
-
---
-
-Approximate softmax with **sampled softmax** (a.k.a. bucketing):
-
-  - Accumulate train sequences in buckets $i \in B$ with $|V_i| ~= 50k$;
-  - Sample bucket $i$ at random and train with regular softmax on $V_i$;
-  - Share softmax parameters for words in common across buckets;
-  - Iterate untill the end of the training set.
-
-???
-Sampled softmax (https://arxiv.org/abs/1412.2007):
-  - Biased estimate, but works reasonably well in practice;
-  - Also useful to train item embedding in RecSys.
-
----
-# Alternative to Word Embeddings
-
-Character-level Embedding (possibly with a CNN layer)
-- Pros:
-  - Much smaller vocabulary size
-  - No need for language specific segmentation (e.g. Chinese);
-  - Robust to spelling mistakes and out-of-vocabulary words;
-  - Can deal with mixed language contents.
-- Cons:
-  - Need to learn word structure from data;
-  - Decoding more complex and expensive.
-
-Better: sub-word representations and **Byte Pair Embedding** (BPE)
-
-???
-
-BPE (https://arxiv.org/abs/1508.07909):
-
-- Start with a vocabulary of characters (encoded as bytes);
-- Scan training set to compute most frequent char bigrams and replace
-  them with a new single byte symbol;
-- Recurse until target vocabulary size is reached (hyper-parameter).
-
 ---
 # The GNMT architecture
 
@@ -275,6 +309,78 @@ the Gap between Human and Machine Translation"
 - reLU
 - inference TPU
 
+---
+### Alternative Machine Translation architecture
+
+.center[
+<img src="images/transformer.png" style="width: 350px;" />
+]
+
+.footnote.small[
+Attention Is All You Need Ashish Vaswani et al. NIPS 2017
+]
+---
+# Intro memory and question answering tasks
+
+---
+# Memory Networks
+
+Embed a collection of data (i.e. sentences)
+Compute an attention depending on a query (i.e. a question)
+
+.center[
+<img src="images/memadressing.png" style="width: 650px;" />
+]
+
+.footnote.small[
+Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, Rob Fergus al. NIPS 2015
+]
+---
+# Memory Networks
+
+.center[
+<img src="images/memoutput.png" style="width: 650px;" />
+]
+
+.footnote.small[
+Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, Rob Fergus al. NIPS 2015
+]
+---
+# Memory Networks
+
+.center[
+<img src="images/memend.png" style="width: 650px;" />
+]
+
+.footnote.small[
+Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, Rob Fergus al. NIPS 2015
+]
+---
+# Memory Networks
+
+.center[
+<img src="images/memfull.png" style="width: 650px;" />
+]
+
+.footnote.small[
+Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, Rob Fergus al. NIPS 2015
+]
+---
+# Key-Value Networks
+
+.center[
+<img src="images/keyvalue.png" style="width: 720px;" />
+]
+
+Globally the same architecture
+
+--
+
+Interpreted as soft RAM or soft hashmap (soft ~ differentiable and learnable)
+
+.footnote.small[
+Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, Rob Fergus al. NIPS 2017
+]
 ---
 class: middle, center
 
