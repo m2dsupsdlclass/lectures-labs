@@ -16,12 +16,16 @@ The course covers the basics of Deep Learning, with a focus on applications.
 
 ### Lecture slides
 
-  - [Neural Networks and Backpropagation](https://m2dsupsdlclass.github.io/lectures-labs/slides/01_intro_to_deep_learning/index.html)
-  - [Embeddings and Recommender Systems](https://m2dsupsdlclass.github.io/lectures-labs/slides/02_recommender_systems/index.html)
+  - [Intro to Deep Learning](https://m2dsupsdlclass.github.io/lectures-labs/slides/01_intro_to_deep_learning/index.html)
+  - [Neural Networks and Backpropagation](https://m2dsupsdlclass.github.io/lectures-labs/slides/02_backprop/index.html)
+  - [Embeddings and Recommender Systems](https://m2dsupsdlclass.github.io/lectures-labs/slides/04_recsys/index.html)
   - [Convolutional Neural Networks for Image Classification](https://m2dsupsdlclass.github.io/lectures-labs/slides/03_conv_nets/index.html)
-  - [Deep Learning for Object Detection and Image Segmentation](https://m2dsupsdlclass.github.io/lectures-labs/slides/04_conv_nets_2/index.html)
-  - [Recurrent Neural Networks and NLP](https://m2dsupsdlclass.github.io/lectures-labs/slides/05_deep_nlp/index.html)
-  - [Expressivity, Optimization and Generalization](https://m2dsupsdlclass.github.io/lectures-labs/slides/06_expressivity_optimization_generalization/index.html)
+  - [Deep Learning for Object Detection and Image Segmentation](https://m2dsupsdlclass.github.io/lectures-labs/slides/05_conv_nets_2/index.html)
+  - [Recurrent Neural Networks and NLP](https://m2dsupsdlclass.github.io/lectures-labs/slides/06_deep_nlp/index.html)
+  - [Sequence to sequence, attention and memory](https://m2dsupsdlclass.github.io/lectures-labs/slides/07_deep_nlp_2/index.html)
+  - [Expressivity, Optimization and Generalization](https://m2dsupsdlclass.github.io/lectures-labs/slides/08_expressivity_optimization_generalization/index.html)
+  - [Imbalanced classification and metric learning](https://m2dsupsdlclass.github.io/lectures-labs/slides/09_imbalanced_classif_metric_learning/index.html)
+  - [Unsupervised Deep Learning and Generative models](https://m2dsupsdlclass.github.io/lectures-labs/slides/10_unsupervised_generative_models/index.html)
 
 Note: press "P" to display the presenter's notes that include some comments and
 additional references.
@@ -33,12 +37,12 @@ the [github repository](https://github.com/m2dsupsdlclass/lectures-labs/):
 
     git clone https://github.com/m2dsupsdlclass/lectures-labs
 
-**WARNING**: these notebooks only work with `tensorflow==0.12.1 keras==1.2.2`.
+These notebooks only work with `keras and tensorflow`
 Please follow the [installation\_instructions.md](
 https://github.com/m2dsupsdlclass/lectures-labs/blob/master/installation_instructions.md)
 to get started.
 
-Direct links to the rendered notebooks including solutions:
+Direct links to the rendered notebooks including solutions (to be updated): 
 
 #### Lab 1: Neural Networks and Backpropagation
 
