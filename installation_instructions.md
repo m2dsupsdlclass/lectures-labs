@@ -17,7 +17,7 @@ Open a console / terminal and update the following packages with conda:
 
 Install the tensorflow and keras (without GPU support) library:
 
-    pip3 install -U tensorflow keras
+    python3 -m pip install -U tensorflow keras
 
 Check that you can import tensorflow with the python from anaconda:
 
@@ -31,7 +31,7 @@ the numpy, matplotlib, keras and tensorflow  modules.
 
 To take pictures with the webcam we will also need opencv-python:
 
-    pip3 install opencv-python
+    python3 -m pip install opencv-python
 
 If your laptop does not have a webcam or if opencv does not work, don't worry
 this is note mandatory.
@@ -50,7 +50,11 @@ associated with Python 3.6.
 
 Check that the pip command in your PATH is the one installed by conda:
 
-    pip3 show pip
+    pip show pip
+
+and check that it matches:
+
+    python3 -m pip show pip
 
 In particular, look at the "Location:" line of pip is a subfolder
 of the "environment root:" line from "conda info".
