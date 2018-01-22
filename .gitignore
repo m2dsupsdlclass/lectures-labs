@@ -15,10 +15,10 @@ ml-100k
 ml-100k.zip
 MNIST_data/
 images_resize
-labs/04_conv_nets_2/VOCdevkit/
-labs/04_conv_nets_2/VOCtrainval_06-Nov-2007.tar
-labs/04_conv_nets_2/voc_representaions.h5
-labs/04_conv_nets_2/voc_representations.h5
+labs/05_conv_nets_2/VOCdevkit/
+labs/05_conv_nets_2/VOCtrainval_06-Nov-2007.tar
+labs/05_conv_nets_2/voc_representaions.h5
+labs/05_conv_nets_2/voc_representations.h5
 glove100*
 simple_seq2seq_pretrained.h5
 simple_seq2seq_partially_pretrained.h5
