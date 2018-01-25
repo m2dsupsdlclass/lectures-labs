@@ -513,7 +513,7 @@ in the joint objective function.
 ## SGD learning rate
 
 - Very sensitive:
-  - Too high $\rightarrow$ divergence
+  - Too high $\rightarrow$ early plateau or even divergence
   - Too low $\rightarrow$ slow convergence
 
 --
@@ -522,10 +522,11 @@ in the joint objective function.
 
 --
 - Large constant LR prevents final convergence
-  - multiply $\eta_{t}$ by $\beta < 1$ after each update
+  - multiply $\eta_{t}$ by $\beta &lt; 1$ after each update
 
 --
-  - or monitor validation loss and divide $\eta_{t}$  by 2 or 10 when no progress
+  - or monitor validation loss and divide $\eta_{t}$ by 2 or 10 when no progress
+  - See [ReduceLROnPlateau](https://keras.io/callbacks/#reducelronplateau) in Keras
  
 ---
 ## Momentum
