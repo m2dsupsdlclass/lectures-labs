@@ -528,6 +528,13 @@ in the joint objective function.
   - or monitor validation loss and divide $\eta_{t}$ by 2 or 10 when no progress
   - See [ReduceLROnPlateau](https://keras.io/callbacks/#reducelronplateau) in Keras
  
+???
+Overview of recent research and empirical tricks:
+
+https://towardsdatascience.com/understanding-learning-rates-and-how-it-improves-performance-in-deep-learning-d0d4059c1c10
+
+Increase LR linearly when increasing batch-size.
+
 ---
 ## Momentum
 
@@ -554,7 +561,39 @@ m\_t &=& \gamma m\_{t-1} + \eta \nabla\_{\theta} L\_{B\_t}(\theta\_{t-1} - \gamm
 \end{eqnarray}$$
 				    
 Better at handling changes in gradient direction.
-				    
+
+---
+
+.center[
+<img src="images/momentum-00.png" style="width: 800px;" />
+
+[Why Momentum Really Works](https://distill.pub/2017/momentum/)
+]
+
+---
+
+.center[
+<img src="images/momentum-06.png" style="width: 800px;" />
+
+[Why Momentum Really Works](https://distill.pub/2017/momentum/)
+]
+
+---
+
+.center[
+<img src="images/momentum-08.png" style="width: 800px;" />
+
+[Why Momentum Really Works](https://distill.pub/2017/momentum/)
+]
+
+---
+
+.center[
+<img src="images/momentum-09.png" style="width: 800px;" />
+
+[Why Momentum Really Works](https://distill.pub/2017/momentum/)
+]
+
 ---
 ## Alternative optimizers
 
@@ -569,11 +608,33 @@ Better at handling changes in gradient direction.
   - Good default choice of optimizer (often)
 
 --
-- Well-tuned SGD can generalize better than Adam...
+- But well-tuned SGD with LR scheduling can generalize better than Adam...
 
 --
-- Active area of research
-<br/>
+- Active area of research: [K-FAC](https://arxiv.org/abs/1503.05671) stochastic
+  second-order method based on an invertible approximation of the Fisher
+  information matrix of the network.
+
+???
+Contrary to penalized models with a convex loss function, the learning problem
+(generalization) is strongly coupled to the optimization problem (training).
+
+---
+## Optimizers around a saddle point
+
+.center[
+<img src="images/contours_evaluation_optimizers.gif" style="width: 500px;" />
+
+Credits: Alec Radford
+]
+
+
+???
+Beware of toy 2D examples though.
+
+Also this example loss is not stochastic.
+
+Dealing with variations in curvatures might be a tougher problem.
 
 ---
 class: middle, center
