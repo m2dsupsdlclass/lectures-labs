@@ -8,6 +8,7 @@ from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout
+from keras.optimizers import SGD
 from keras.utils.np_utils import to_categorical
 
 
@@ -52,9 +53,9 @@ def make_curves(random_state=42):
         model.add(Dense(K))
         model.add(Activation("softmax"))
 
-        model.compile(optimizer='sgd', loss='categorical_crossentropy')
+        model.compile(optimizer=SGD(lr=0.1), loss='categorical_crossentropy')
 
-        history = model.fit(X_train, Y_train, batch_size=32, nb_epoch=250,
+        history = model.fit(X_train, Y_train, batch_size=128, nb_epoch=150,
                             validation_split=0.5, shuffle=True)
         curve_data[(dropout, 'train')] = history.history['loss']
         curve_data[(dropout, 'validation')] = history.history['val_loss']
