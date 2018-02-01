@@ -18,11 +18,11 @@ def euclidean_distances(x):
 # Computes top_n most similar items to an idx, 
 def most_similar(idx, top_n=10, mode='euclidean'):
     sorted_indexes=0
-    if mode=='euclidean':
+    if mode == 'euclidean':
         dists = euclidean_distances(item_embeddings[idx])
         sorted_indexes = np.argsort(dists)
         idxs = sorted_indexes[0:top_n]
-        return list(zip(items["name"][idxs], dists[idxs]))
+        return list(zip(items["title"][idxs], dists[idxs]))
     else:
         sims = cosine_similarities(item_embeddings[idx])
         # [::-1] makes it possible to reverse the order of a numpy
@@ -30,11 +30,11 @@ def most_similar(idx, top_n=10, mode='euclidean'):
         # a larger cosine similarity value
         sorted_indexes = np.argsort(sims)[::-1]
         idxs = sorted_indexes[0:top_n]
-        return list(zip(items["name"][idxs], sims[idxs]))
+        return list(zip(items["title"][idxs], sims[idxs]))
 
 # sanity checks:
-print("cosine of item 1 and item 1: "
-      + str(cosine(item_embeddings[1], item_embeddings[1])))
+print("cosine of item 1 and item 1: %0.3f"
+      % cosine(item_embeddings[1], item_embeddings[1]))
 euc_dists = euclidean_distances(item_embeddings[1])
 print(euc_dists.shape)
 print(euc_dists[1:5])
@@ -54,4 +54,6 @@ for title, dist in most_similar(181, mode="euclidean"):
 
 # The reason for that is that the number of ratings is low and the embedding
 # does not automatically capture semantic relationships in that context. 
-# Better representations arise with higher number of ratings, and less overfitting models
+# Better representations arise with higher number of ratings, and less overfitting
+# in models or maybe better loss function, such as those based on implicit
+# feedback.

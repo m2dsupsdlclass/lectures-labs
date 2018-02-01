@@ -19,7 +19,7 @@ item_embedding = Embedding(output_dim=embedding_size, input_dim=max_item_id + 1,
 user_vecs = Flatten()(user_embedding)
 item_vecs = Flatten()(item_embedding)
 
-input_vecs = concatenate([user_vecs, item_vecs])
+input_vecs = Concatenate()([user_vecs, item_vecs])
 input_vecs = Dropout(dropout_embedding)(input_vecs)
 
 x = Dense(dense_size, activation='relu')(input_vecs)
@@ -36,7 +36,7 @@ print("Random init MAE: %0.3f" % mean_absolute_error(initial_train_preds, rating
 
 
 history = model.fit([user_id_train, item_id_train], rating_train - 1,
-                    batch_size=64, epochs=6, validation_split=0.1,
+                    batch_size=64, epochs=15, validation_split=0.1,
                     shuffle=True)
 
 plt.plot(history.history['loss'], label='train')
