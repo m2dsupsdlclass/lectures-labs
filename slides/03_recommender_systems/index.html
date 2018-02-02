@@ -144,10 +144,15 @@ Embedding(output_dim=d, input_dim=n, input_length=1)
 ```
 
 --
-
 - Equivalent to one-hot encoding multiplied by a weight matrix $\mathbf{W} \in \mathbb{R}^{n \times d}$:
 
 $$embedding(x) = onehot(x) . \mathbf{W}$$
+
+--
+- $\mathbf{W}$ is typically **randomly initialized**, then **tuned by backprop**
+
+--
+- $\mathbf{W}$ are trainable parameters of the model
 
 ---
 # Distance and similarity in Embedding space
