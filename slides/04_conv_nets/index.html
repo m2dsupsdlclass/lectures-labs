@@ -110,7 +110,7 @@ class: middle, center
 
 Standard Dense Layer for an image input:
 
-```
+```python
 x = Input((640, 480, 3), dtype='float32')
 x = Flatten()(x) #shape of x is now (None,640,480,3)
 z = Dense(1000)(x) 
@@ -136,7 +136,7 @@ We never use Dense layers directly on large images. Most standard solution is **
 - Each output neuron is parametrized with the $3 \times 3$ weight matrix $\mathbf{w}$ _(small numbers)_
 
 .footnote.small[
-          <br/><br/> These slides extensively use convolution visualisation by V.
+<br/><br/> These slides extensively use convolution visualisation by V.
 Dumoulin available at https://github.com/vdumoulin/conv_arithmetic
 ]
 ---
@@ -346,6 +346,7 @@ Activation shapes:
 
 $W^o = (W^i - F + 2P) / S + 1$
 
+
 ---
 ## Pooling
 
@@ -402,7 +403,6 @@ class:middle, center
 
 - Fully connected layers
 - Softmax
-
 
 ---
 # AlexNet
@@ -465,6 +465,40 @@ FC8:       [1000]      1000 neurons (softmax logits)
 .footnote.small[
 Simonyan, Karen, and Zisserman. "Very deep convolutional networks for large-scale image recognition." (2014)
 ]
+---
+## VGG in Keras
+
+```python
+    model.add(Convolution2D(64, 3, 3, activation='relu',input_shape=(3,224,224)))
+    model.add(Convolution2D(64, 3, 3, activation='relu'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(Convolution2D(128, 3, 3, activation='relu'))
+    model.add(Convolution2D(128, 3, 3, activation='relu'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(Convolution2D(256, 3, 3, activation='relu'))
+    model.add(Convolution2D(256, 3, 3, activation='relu'))
+    model.add(Convolution2D(256, 3, 3, activation='relu'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(Convolution2D(512, 3, 3, activation='relu'))
+    model.add(Convolution2D(512, 3, 3, activation='relu'))
+    model.add(Convolution2D(512, 3, 3, activation='relu'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(Convolution2D(512, 3, 3, activation='relu'))
+    model.add(Convolution2D(512, 3, 3, activation='relu'))
+    model.add(Convolution2D(512, 3, 3, activation='relu'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(Flatten())
+    model.add(Dense(4096, activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(4096, activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(1000, activation='softmax'))
+```
 
 ---
 ## Memory and Parameters
