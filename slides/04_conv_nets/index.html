@@ -27,7 +27,7 @@
     <link rel="stylesheet" type="text/css" href="slides.css">
   </head>
   <body>
-    <textarea id="source">
+      <textarea id="source">
 class: center, middle
 
 # Convolutional Neural Networks
@@ -45,13 +45,13 @@ Charles Ollion - Olivier Grisel
 ## Used everywhere for Vision
 
 .center[
-<img src="images/vision.png" style="width: 600px;" />
+          <img src="images/vision.png" style="width: 600px;" />
 ]
 
 ---
-# Many other applications
+## Many other applications
 
-<br/>
+          <br/>
 
 ### Speech recognition
 
@@ -72,22 +72,22 @@ Charles Ollion - Olivier Grisel
 
 CNN = Convolutional Neural Networks = ConvNet
 
-<br/>
+          <br/>
 
 --
 
 .center[
-<img src="images/lenet.png" style="width: 760px;" />
+          <img src="images/lenet.png" style="width: 760px;" />
 ]
 
 .footnote.small[
-LeCun, Y., Bottou, L., Bengio, Y., and Haffner, P. (1998). Gradient-based learning applied to document recognition. 
+LeCun, Y., Bottou, L., Bengio, Y., and Haffner, P. (1998). Gradient-based learning applied to document recognition.
 ]
 
 ---
 # Outline
 
-<br/>
+          <br/>
 
 ### Convolutions
 
@@ -106,7 +106,77 @@ class: middle, center
 # Convolutions
 
 ---
-# Convolution
+## Motivations
+
+Standard Dense Layer for an image input:
+
+```
+x = Input((640, 480, 3), dtype='float32')
+x = Flatten()(x) #shape of x is now (None,640,480,3)
+z = Dense(1000)(x) 
+```
+
+How many parameters in the Dense layer?
+--
+
+          <br/>
+
+$640 \times 480 \times 3 \times 1000 + 1000 = 922M !$
+
+We never use Dense layers directly on large images. Most standard solution is **convolution** layers
+
+---
+## Convolution in a neural network
+
+.center[
+          <img src="images/numerical_no_padding_no_strides_00.png" style="width: 360px;" />
+]
+
+- $x$ is a $3 \times 3$ chunk (dark area) of the image _(blue array)_
+- Each output neuron is parametrized with the $3 \times 3$ weight matrix $\mathbf{w}$ _(small numbers)_
+
+.footnote.small[
+          <br/><br/> These slides extensively use convolution visualisation by V.
+Dumoulin available at https://github.com/vdumoulin/conv_arithmetic
+]
+---
+## Convolution in a neural network
+
+.center[
+          <img src="images/numerical_no_padding_no_strides.gif" style="width: 360px;" />
+]
+
+- $x$ is a $3 \times 3$ chunk (dark area) of the image _(blue array)_
+- Each output neuron is parametrized with the $3 \times 3$ weight matrix $\mathbf{w}$ _(small numbers)_
+
+The activation obtained by sliding the $3 \times 3$ window and computing:
+
+$$
+z(x) = relu(\mathbf{w}^T x + b)
+$$
+
+---
+## Motivations
+
+### Local connectivity
+- A neuron depends only on a few local input neurons
+- Translation invariance
+
+--
+
+### Comparison to Fully connected
+- Parameter sharing
+- Make use of spatial structure
+
+--
+
+### Animal Vision Analogy 
+.small[
+Hubel & Wiesel, RECEPTIVE FIELDS OF SINGLE NEURONES IN THE CAT'S STRIATE CORTEX (1959)
+]
+
+---
+## Why Convolution
 
 Discrete convolution (actually cross-correlation) between two functions
 $f$ and $g$:
@@ -117,8 +187,7 @@ $$
 
 --
 
-In computer vision, we typically use 2D-convolutions (actually 2D
-cross-correlation):
+2D-convolutions (actually 2D cross-correlation):
 
 $$
 (f \star g) (x, y) = \sum_n \sum_m f(n, m) . g(x + n, y + m)
@@ -126,26 +195,19 @@ $$
 
 --
 
-$f$ is a convolution **kernel** applied to the 2-d map $g$ (think image)
+$f$ is a convolution **kernel** applied to the 2-d map $g$ (our image)
 
 ---
-# A convolution on an image
+## Example: convolution image
 
 - Image: $im$ of dimensions $5 \times 5$
 - Kernel: $k$ of dimensions $3 \times 3$
 
-.center[
-<img src="images/numerical_no_padding_no_strides.gif" style="width: 360px;" />
-]
-
-.footnote.small[
-<br/><br/> These slides extensively use convolution visualisation by V.
-Dumoulin available at https://github.com/vdumoulin/conv_arithmetic
-]
-
---
-
 $ (k \star im) (x, y) = \sum\limits\_{n=0}^2 \sum\limits\_{m=0}^2 k(n, m) . im(x + n - 1, y + m - 1) $
+
+.center[
+          <img src="images/numerical_no_padding_no_strides.gif" style="width: 360px;" />
+]
 
 ???
 This formula actually implements a cross-correlation instead of a true
@@ -167,76 +229,57 @@ randomly and are trained to minimize the loss on the training set in
 both cases.
 
 ---
-# Kernels as neural networks
-
-.center[
-<img src="images/numerical_no_padding_no_strides_00.png" style="width: 360px;" />
-]
-
-- $x$ is a $3 \times 3$ chunk of the image
-- Each output neuron is parametrized with the kernel weights $\mathbf{w}$
-
---
-
-The activation obtained by sliding the $3 \times 3$ window and computing:
-
-$$
-z(x) = relu(\mathbf{w}^T x + b)
-$$
-
-
----
-# Channels
+## Channels
 
 Colored image = tensor of shape `(height, width, channels)`
 
 --
 
-Convolutions can be computed across channels:
+Convolutions are usually computed for each channel and summed:
 
 .center[
-<img src="images/convmap1_dims.svg" style="width: 300px;" />
+          <img src="images/convmap1_dims.svg" style="width: 300px;" />
 ]
 
 --
 
 $$
-(k \star im) (x, y) = \sum\limits\_{c=0}^2 \sum\limits\_{n=0}^4 \sum\limits\_{m=0}^4 k(n, m, c) . im(x + n - 2, y + m - 2, c)
+(k \star im^{color}) = \sum\limits\_{c=0}^2 k^c \star im^c
 $$
 
 ---
-# Multiple convolutions
+## Multiple convolutions
 
 .center[
-<img src="images/convmap1.svg" style="width: 400px;" />
+          <img src="images/convmap1.svg" style="width: 400px;" />
 ]
 
 ---
-# Multiple convolutions
+## Multiple convolutions
 
 .center[
-<img src="images/convmap2.svg" style="width: 400px;" />
+          <img src="images/convmap2.svg" style="width: 400px;" />
 ]
 
 ---
-# Multiple convolutions
+## Multiple convolutions
 
 .center[
-<img src="images/convmap3.svg" style="width: 400px;" />
+          <img src="images/convmap3.svg" style="width: 400px;" />
 ]
 
 ---
-# Multiple convolutions
+## Multiple convolutions
 
 .center[
-<img src="images/convmap4.svg" style="width: 400px;" />
+          <img src="images/convmap4.svg" style="width: 400px;" />
 ]
 
 ---
-# Multiple convolutions
+## Multiple convolutions
 
 .center[
-<img src="images/convmap_dims.svg" style="width: 400px;" />
+          <img src="images/convmap_dims.svg" style="width: 400px;" />
 ]
 
 --
@@ -245,20 +288,20 @@ $$
 
 
 ---
-# Strides
+## Strides
 
 - Strides: increment step size for the convolution operator
 - Reduces the size of the ouput map
 
 .center[
-<img src="images/no_padding_strides.gif" style="width: 260px;" />
+          <img src="images/no_padding_strides.gif" style="width: 260px;" />
 ]
 
 .center.small[
 Example with kernel size $3 \times 3$ and a stride of $2$ (image in blue)
 ]
 ---
-# Padding
+## Padding
 
 - Padding: artifically fill borders of image
 - Useful to keep spatial dimension constant across filters
@@ -266,11 +309,11 @@ Example with kernel size $3 \times 3$ and a stride of $2$ (image in blue)
 - Usually: fill with 0s
 
 .center[
-<img src="images/same_padding_no_strides.gif" style="width: 260px;" />
+          <img src="images/same_padding_no_strides.gif" style="width: 260px;" />
 ]
 
 ---
-# Dealing with shapes
+## Dealing with shapes
 
 Kernel shape $(F, F, C^i, C^o)$
 
@@ -282,7 +325,7 @@ Kernel shape $(F, F, C^i, C^o)$
 
 .right-column[
 .center[
-<img src="images/kernel.svg" style="width: 100px;" />
+          <img src="images/kernel.svg" style="width: 100px;" />
 ]
 ]
 
@@ -304,7 +347,7 @@ Activation shapes:
 $W^o = (W^i - F + 2P) / S + 1$
 
 ---
-# Pooling
+## Pooling
 
 - Spatial dimension reduction
 - Local invariance
@@ -312,28 +355,34 @@ $W^o = (W^i - F + 2P) / S + 1$
 
 --
 
-<br/><br/>
+          <br/><br/>
 .center[
-<img src="images/pooling.png" style="width: 560px;" />
+          <img src="images/pooling.png" style="width: 560px;" />
 ]
 
 .footnote.small[
 Schematic from Stanford http://cs231n.github.io/convolutional-networks
 ]
 ---
-# Pooling
+## Pooling
 
 - Spatial dimension reduction
 - Local invariance
 - No parameters: max or average of 2x2 units
 
 .center[
-<img src="images/maxpool.svg" style="width: 380px;" />
+          <img src="images/maxpool.svg" style="width: 380px;" />
 ]
+
+---
+
+class:middle, center
+
+# Architectures
 
 
 ---
-# ConvNet
+## Classic ConvNet Architecture
 
 ### Input
 
@@ -353,37 +402,12 @@ Schematic from Stanford http://cs231n.github.io/convolutional-networks
 - Fully connected layers
 - Softmax
 
----
-# Motivations
-
-
-### Local connectivity
-- A neuron depends only on a few local neurons 
-- Translation invariance
-
---
-
-### Comparison to Fully connected
-- Parameter sharing
-- Make use of spatial structure
-
---
-
-### Animal Vision Analogy 
-.small[
-Hubel & Wiesel, RECEPTIVE FIELDS OF SINGLE NEURONES IN THE CAT'S STRIATE CORTEX (1959)
-]
----
-
-class:middle, center
-
-# Architectures
 
 ---
 # AlexNet
 
 .center[
-<img src="images/alexnet.png" style="width: 600px;" />
+          <img src="images/alexnet.png" style="width: 600px;" />
 ]
 
 .footnote.small[
@@ -403,10 +427,10 @@ First conv layer: kernel 11x11x3x96 stride 4
 - Equivalent MLP parameters: `43.7 x 1e9`
 
 ---
-# AlexNet
+## AlexNet
 
 .center[
-<img src="images/alexnet.png" style="width: 600px;" />
+          <img src="images/alexnet.png" style="width: 600px;" />
 ]
 
 ```md
@@ -424,17 +448,17 @@ FC7:       [4096]      4096 neurons
 FC8:       [1000]      1000 neurons (softmax logits)
 ```
 ---
-# Hierarchical representation
+## Hierarchical representation
 
 .center[
-<img src="images/lecunconv.png" style="width: 760px;" />
+          <img src="images/lecunconv.png" style="width: 760px;" />
 ]
 
 ---
-# VGG-16
+## VGG-16
 
 .center[
-<img src="images/vgg.png" style="width: 600px;" />
+          <img src="images/vgg.png" style="width: 600px;" />
 ]
 
 .footnote.small[
@@ -442,7 +466,7 @@ Simonyan, Karen, and Zisserman. "Very deep convolutional networks for large-scal
 ]
 
 ---
-# Memory and Parameters
+## Memory and Parameters
 
 ```md
            Activation maps          Parameters
@@ -473,7 +497,7 @@ TOTAL activations: 24M x 4 bytes ~=  93MB / image (x2 for backward)
 TOTAL parameters: 138M x 4 bytes ~= 552MB (x2 for plain SGD, x4 for Adam)
 ```
 ---
-# Memory and Parameters
+## Memory and Parameters
 
 ```md
            Activation maps          Parameters
@@ -505,7 +529,7 @@ TOTAL parameters: 138M x 4 bytes ~= 552MB (x2 for plain SGD, x4 for Adam)
 ```
 ---
 .left-column[
-# ResNet
+## ResNet
 ]
 
 .footnote.small[
@@ -516,7 +540,7 @@ He, Kaiming, et al. "Deep residual learning for image recognition." CVPR. 2016.
 
 .right-column[
 .center[
-<img src="images/resnet.png" style="width: 290px;" />
+          <img src="images/resnet.png" style="width: 290px;" />
 ]
 ]
 
@@ -526,7 +550,7 @@ Even deeper models:
 
 ---
 .left-column[
-# ResNet
+## ResNet
 ]
 
 .footnote.small[
@@ -537,14 +561,14 @@ He, Kaiming, et al. "Deep residual learning for image recognition." CVPR. 2016.
 
 .right-column[
 .center[
-<img src="images/resnet.png" style="width: 290px;" />
+          <img src="images/resnet.png" style="width: 290px;" />
 ]
 ]
 
 A block learns the residual w.r.t. identity 
 
 .center[
-<img src="images/residualblock.png" style="width: 290px;" />
+          <img src="images/residualblock.png" style="width: 290px;" />
 ]
 
 --
@@ -553,7 +577,7 @@ A block learns the residual w.r.t. identity
 
 ---
 .left-column[
-# ResNet
+## ResNet
 ]
 
 .footnote.small[
@@ -564,7 +588,7 @@ He, Kaiming, et al. "Deep residual learning for image recognition." CVPR. 2016.
 
 .right-column[
 .center[
-<img src="images/resnet.png" style="width: 290px;" />
+          <img src="images/resnet.png" style="width: 290px;" />
 ]
 ]
 
@@ -585,50 +609,68 @@ ResNet50 Compared to VGG:
 #### Fully Convolutional until the last layer
 
 ---
-# Deeper is better
+## Deeper is better
 
 .center[
-<img src="images/deeper.png" style="width: 660px;" />
+          <img src="images/deeper.png" style="width: 660px;" />
 ]
 
 .footnote.small[
 from Kaiming He slides "Deep residual learning for image recognition." ICML. 2016.
 ]
 ---
-# Inception-V4 / -ResNet-V2
+## State of the art
 
-Deep, modular and state-of-the-art</br>
-Achieves **3.1% top-5** classification error on imagenet
+- Finding right architectures: Active area or research
+
+--
 
 .center[
-<img src="images/inception1.png" style="width: 480px;" />
+          <img src="images/performanceSOTA.png" style="width: 420px;" />
 ]
 
 .footnote.small[
-Szegedy, et al. "Inception-v4, inception-resnet and the impact of residual connections on learning." (2016)
+Esteban Real, et al. Regularized Evolution for Image Classifier Architecture Search (Feb 2018)
 ]
-
 ---
-# Inception-V4 / -ResNet-V2
+## State of the art
 
-More building blocks engineering...
+- Finding right architectures: Active area or research
 
 .center[
-<img src="images/inception2.png" style="width: 500px;" />
+          <img src="images/inception2.png" style="width: 500px;" />
 ]
 
+Modular building blocks engineering
+
 .footnote.small[
-Szegedy, et al. "Inception-v4, inception-resnet and the impact of residual connections on learning." (2016)
+from  He slides "Deep residual learning for image recognition." ICML. 2016.
 ]
 
 --
 
-- Active area or research
-- See also DenseNets, Wide ResNets, Fractal ResNets, ResNeXts,
-  Pyramidal ResNets...
+see also DenseNets, Wide ResNets, Fractal ResNets, ResNeXts,
+  Pyramidal ResNets
 
 ---
-# Comparison of models
+## State of the art
+
+- Finding right architectures: Active area or research
+
+Automated Architecture search:
+- reinforcement learning
+- evolutionnary algorithms
+
+.center[
+          <img src="images/archievol.png" style="width: 720px;" />
+]
+
+.footnote.small[
+Esteban Real, et al. Regularized Evolution for Image Classifier Architecture Search (Feb 2018)
+]
+
+---
+## Comparison of models
 
 #### Top 1-accuracy, performance and size on ImageNet
 
@@ -646,7 +688,7 @@ class: middle, center
 # Pre-trained models
 
 ---
-# Pre-trained models
+## Pre-trained models
 
 Training a model on ImageNet from scratch takes **days to weeks**.
 
@@ -665,7 +707,7 @@ available!
 - Better than handcrafted feature extraction on natural images
 
 ---
-# Pre-trained models
+## Pre-trained models
 
 Training a model on ImageNet from scratch takes **days or weeks**.
 
@@ -688,7 +730,7 @@ available!
 
 
 ---
-# Data Augmentation
+## Data Augmentation
 
 .center[
 <img src="images/not-augmented-cat.png" style="width: 180px" />
@@ -707,7 +749,7 @@ available!
   images.
 
 ---
-# Data Augmentation
+## Data Augmentation
 
 With Keras:
 
@@ -734,7 +776,7 @@ model.fit_generator(train_flow, train_flow.nb_sample)
 
 class: middle, center
 
-# Lab 3: Room F503 and F900 in 15min!
+# Lab 3: Room B551-553 and C48 in 15min!
 
     </textarea>
     <style TYPE="text/css">
