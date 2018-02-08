@@ -230,7 +230,8 @@ $$
 
 --
 
-$f$ is a convolution **kernel** applied to the 2-d map $g$ (our image)
+$f$ is a convolution **kernel** or **filter** applied to the 2-d map
+$g$ (our image)
 
 ---
 ## Example: convolution image
@@ -350,7 +351,7 @@ Example with kernel size $3 \times 3$ and a stride of $2$ (image in blue)
 ---
 ## Dealing with shapes
 
-Kernel shape $(F, F, C^i, C^o)$
+**Kernel** or **Filter** shape $(F, F, C^i, C^o)$
 
 .left-column[
 - $F \times F$ kernel size,
@@ -373,13 +374,21 @@ Number of parameters: $(F \times F \times C^i + 1) \times C^o$
 
 --
 
-Activation shapes:
+**Activations** or **Feature maps** shape:
 - Input $(W^i, H^i, C^i)$
 - Output $(W^o, H^o, C^o)$
 
 --
 
 $W^o = (W^i - F + 2P) / S + 1$
+
+
+???
+
+The **filters** holds the **trainable parameters** of the model (excluding the biases).
+
+The **feature maps** are the outputs (or **activations**) of convolution
+layers when **applied to a specific batch of images**.
 
 
 ---
