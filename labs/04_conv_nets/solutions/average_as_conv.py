@@ -1,31 +1,33 @@
-inp = Input((None, None, 3), dtype="float32")
-x = AvgPool2D((2,2))(inp)
+avg_pool = Sequential([AvgPool2D(3, strides=3, input_shape=(None, None, 3))])
 
-avg_pool = Model(inputs=inp, outputs=x)
-img_out = avg_pool.predict(np.expand_dims(sample_image, 0))
-show(img_out[0])
+img_in = np.expand_dims(sample_image, 0)
+img_out_avg_pool = avg_pool.predict(img_in)
 
-plt.title("avg_pool")
-plt.show()
+# Same operation implemented with a convolution
 
-# Same with convolution
-
-def my_init(shape, dtype=None):
-    array = np.zeros(shape=(3,3,3,3))
+def my_init(shape=(3, 3, 3, 3), dtype=None):
+    array = np.zeros(shape=shape, dtype=dtype)
     array[:, :, 0, 0] = 1 / 9.
     array[:, :, 1, 1] = 1 / 9.
     array[:, :, 2, 2] = 1 / 9.
     return array
 
 
-inp = Input((None, None, 3), dtype="float32")
-x2 = Conv2D(kernel_size=(3,3), filters=3,
-           padding="same", kernel_initializer=my_init)(inp)
+conv_avg = Sequential([
+    Conv2D(kernel_size=3, filters=3, strides=3,
+           padding="same", kernel_initializer=my_init,
+           input_shape=(None, None, 3))
+])
+img_out_conv = conv_avg.predict(np.expand_dims(sample_image, 0))
 
-conv_avg = Model(inputs=inp, outputs=x2)
-img_out2 = conv_avg.predict(np.expand_dims(sample_image, 0))
-show(img_out2[0])
-plt.title("conv");
+print("input shape:", img_in.shape)
+print("output avg pool shape:", img_out_avg_pool.shape)
+print("output conv shape:", img_out_conv.shape)
+
+fig, (ax0, ax1, ax2) = plt.subplots(ncols=3, figsize=(10, 5))
+ax0.imshow(img_in[0].astype('uint8'))
+ax1.imshow(img_out_avg_pool[0].astype('uint8'))
+ax2.imshow(img_out_conv[0].astype('uint8'));
 
 # Note that the numerical computation/approximation might
 # be slightly different in the two cases
