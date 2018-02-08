@@ -1,5 +1,5 @@
-
-from scipy.misc import imread, imresize
+from skimage.io import imread
+from skimage.transform import resize
 from keras.applications.imagenet_utils import preprocess_input
 from keras.applications.imagenet_utils import decode_predictions
 
@@ -8,7 +8,7 @@ path = "images_resize/000007.jpg"
 img = imread(path)
 plt.imshow(img)
 
-img = imresize(img, (224,224)).astype("float32")
+img = resize(img, (224, 224), mode='reflect', preserve_range=True)
 # add a dimension for a "batch" of 1 image
 img_batch = preprocess_input(img[np.newaxis]) 
 
