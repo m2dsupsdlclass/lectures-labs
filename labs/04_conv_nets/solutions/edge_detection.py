@@ -1,33 +1,30 @@
-image = tf.placeholder(tf.float32, [None, None, None, 1])
-kernel = tf.placeholder(tf.float32, [3, 3])
-
-def conv(x, k):
-    k = tf.reshape(k, shape=[3, 3, 1, 1])
-    return tf.nn.conv2d(x, k, strides=[1, 1, 1, 1],
-                        padding='SAME')
-    
-output_image = conv(image, kernel)
-
-kernel_data = np.array([
+def my_init(shape, dtype=None):
+    array = np.array([
         [0.0,  0.2, 0.0],
         [0.0, -0.2, 0.0],
         [0.0,  0.0, 0.0],
     ])
-# kernel_data = np.array([
-#         [ 0.1,  0.2,  0.1],
-#         [ 0.0,  0.0,  0.0],
-#         [-0.1, -0.2, -0.1],
-#     ])
-print(kernel_data)
+    # adds two axis to match the required shape (3,3,1,1)
+    return np.expand_dims(np.expand_dims(array,-1),-1)
 
-with tf.Session() as sess:
-    feed_dict={image:[grey_sample_image], 
-               kernel: kernel_data}
-    conv_img = sess.run(output_image, feed_dict=feed_dict)
-    print("Resulting image shape:", conv_img.shape)
-    show(conv_img[0])
+
+
+inp = Input((None, None, 1), dtype="float32")
+x = Conv2D(kernel_size=(3,3), filters=1,
+           padding="same", kernel_initializer=my_init)(inp)
+
+conv_edge = Model(inputs=inp, outputs=x)
+img_out = conv_edge.predict(np.expand_dims(grey_sample_image, 0))
+show(img_out[0])
 
 # We only showcase a vertical edge detection here.
 # Many other kernels work, for example differences
 # of centered gaussians (sometimes called mexican-hat
 # connectivity)
+#
+# You may try with this filter as well
+# np.array([
+#         [ 0.1,  0.2,  0.1],
+#         [ 0.0,  0.0,  0.0],
+#         [-0.1, -0.2, -0.1],
+#     ])

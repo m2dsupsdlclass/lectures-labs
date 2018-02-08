@@ -1,31 +1,31 @@
-image = tf.placeholder(tf.float32, [None, None, None, 3])
-kernel = tf.placeholder(tf.float32, [3, 3, 3, 3])
+inp = Input((None, None, 3), dtype="float32")
+x = AvgPool2D((2,2))(inp)
 
-def conv(x, k):
-    return tf.nn.conv2d(x, k, strides=[1, 3, 3, 1],
-                        padding='SAME')
+avg_pool = Model(inputs=inp, outputs=x)
+img_out = avg_pool.predict(np.expand_dims(sample_image, 0))
+show(img_out[0])
 
-output_image = conv(image, kernel)
-output_pool = tf.nn.avg_pool(image, ksize=[1, 3, 3, 1],
-                             strides=[1, 3, 3, 1],
-                             padding='SAME')
+plt.title("avg_pool")
+plt.show()
 
-kernel_data = np.zeros(shape=(3, 3, 3, 3)).astype(np.float32)
-kernel_data[:, :, 0, 0] = 1 / 9.
-kernel_data[:, :, 1, 1] = 1 / 9.
-kernel_data[:, :, 2, 2] = 1 / 9.
+# Same with convolution
 
-with tf.Session() as sess:
-    feed_dict = {image: [sample_image], kernel: kernel_data}
-    conv_img, pool_img = sess.run([output_image, output_pool],
-                                  feed_dict=feed_dict)
-    print(conv_img.shape, pool_img.shape)
-    plt.subplot(1, 2, 1)
-    show(conv_img[0])
-    plt.title("conv")
-    plt.subplot(1, 2, 2)
-    show(pool_img[0])
-    plt.title("avg_pool")
+def my_init(shape, dtype=None):
+    array = np.zeros(shape=(3,3,3,3))
+    array[:, :, 0, 0] = 1 / 9.
+    array[:, :, 1, 1] = 1 / 9.
+    array[:, :, 2, 2] = 1 / 9.
+    return array
+
+
+inp = Input((None, None, 3), dtype="float32")
+x2 = Conv2D(kernel_size=(3,3), filters=3,
+           padding="same", kernel_initializer=my_init)(inp)
+
+conv_avg = Model(inputs=inp, outputs=x2)
+img_out2 = conv_avg.predict(np.expand_dims(sample_image, 0))
+show(img_out2[0])
+plt.title("conv");
 
 # Note that the numerical computation/approximation might
 # be slightly different in the two cases

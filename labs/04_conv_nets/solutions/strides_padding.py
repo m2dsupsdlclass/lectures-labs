@@ -1,33 +1,26 @@
-image = tf.placeholder(tf.float32, [None, None, None, 3])
-kernel = tf.placeholder(tf.float32, [3, 3, 3])
 
-def conv(x, k):
-    k = tf.reshape(k, shape=[3, 3, 3, 1])
-    return tf.nn.depthwise_conv2d(x, k, strides=[1,2,2,1],
-                                  padding='SAME')
+def my_init(shape, dtype=None):
+    array = np.zeros(shape=(5,5,3,3))
+    array[2,2] = np.eye(3) 
+    return array
 
-def conv_valid(x, k):
-    k = tf.reshape(k, shape=[3, 3, 3, 1])
-    return tf.nn.depthwise_conv2d(x, k, strides=[1,2,2,1],
-                                  padding='VALID')
+inp = Input((None, None, 3), dtype="float32")
+x = Conv2D(kernel_size=(5,5), filters=3, strides=2,
+           padding="same", kernel_initializer=my_init)(inp)
 
-output_image = conv(image, kernel)
-output_image_valid = conv_valid(image, kernel)
-kernel_data = np.zeros(shape=(3, 3, 3)).astype(np.float32)
+conv_strides_same = Model(inputs=inp, outputs=x)
+x2 = Conv2D(kernel_size=(5,5), filters=3, strides=2,
+           padding="valid", kernel_initializer=my_init)(inp)
 
-# identity kernel: ones only in the center of the filter
-kernel_data[1, 1, :] = 1
-print('Identity 3x3x3 kernel:')
-print(np.transpose(kernel_data, (2, 0, 1)))
+conv_strides_valid = Model(inputs=inp, outputs=x2)
 
-with tf.Session() as sess:
-    feed_dict = {image: [sample_image], kernel: kernel_data}
-    conv_img, conv_img_valid = sess.run([output_image, output_image_valid],
-                                        feed_dict=feed_dict)
+img_out = conv_strides_same.predict(np.expand_dims(sample_image, 0))
+img_out2 = conv_strides_valid.predict(np.expand_dims(sample_image, 0))
+show(img_out[0])
 
-    print("Shape of result with SAME padding:", conv_img.shape)
-    print("Shape of result with VALID padding:", conv_img_valid.shape)
-    show(conv_img[0])
+print("Shape of result with SAME padding:", img_out.shape)
+print("Shape of result with VALID padding:", img_out2.shape)
+
 
 # We observe that the stride divided the size of the image by 2
 # In the case of 'VALID' padding mode, no padding is added, so 
