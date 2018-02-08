@@ -848,7 +848,7 @@ image_gen = ImageDataGenerator(
 )
 
 train_flow = image_gen.flow_from_directory(train_folder)
-model.fit_generator(train_flow, train_flow.nb_sample)
+model.fit_generator(train_flow, train_flow.n)
 ```
 
 ---
