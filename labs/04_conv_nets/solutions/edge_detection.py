@@ -8,14 +8,21 @@ def my_init(shape, dtype=None):
     return np.expand_dims(np.expand_dims(array,-1),-1)
 
 
+conv_edge = Sequential([
+    Conv2D(kernel_size=(3,3), filters=1,
+           padding="same", kernel_initializer=my_init,
+           input_shape=(None, None, 1))   
+])
 
-inp = Input((None, None, 1), dtype="float32")
-x = Conv2D(kernel_size=(3,3), filters=1,
-           padding="same", kernel_initializer=my_init)(inp)
 
-conv_edge = Model(inputs=inp, outputs=x)
-img_out = conv_edge.predict(np.expand_dims(grey_sample_image, 0))
-show(img_out[0])
+img_in = np.expand_dims(grey_sample_image, 0)
+img_out = conv_edge.predict(img_in)
+
+fig, (ax0, ax1) = plt.subplots(ncols=2, figsize=(10, 5))
+ax0.imshow(np.squeeze(img_in[0]).astype(np.uint8),
+           cmap=plt.cm.gray);
+ax1.imshow(np.squeeze(img_out[0]).astype(np.uint8),
+           cmap=plt.cm.gray);
 
 # We only showcase a vertical edge detection here.
 # Many other kernels work, for example differences
