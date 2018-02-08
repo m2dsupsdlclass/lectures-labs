@@ -2,7 +2,7 @@ from IPython.display import Image, display
 
 predicted_batches = []
 label_batches = []
-n_batches = val_flow.nb_sample // batch_size
+n_batches = val_flow.n // batch_size
 for i, (X, y) in zip(range(n_batches), val_flow):
     predicted_batches.append(model.predict(X).ravel())
     label_batches.append(y)
