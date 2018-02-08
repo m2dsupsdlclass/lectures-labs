@@ -112,7 +112,9 @@ Standard Dense Layer for an image input:
 
 ```python
 x = Input((640, 480, 3), dtype='float32')
-x = Flatten()(x) #shape of x is now (None,640,480,3)
+# shape of x is: (None, 640, 480, 3)
+x = Flatten()(x)
+# shape of x is: (None, 640 x 480 x 3)
 z = Dense(1000)(x) 
 ```
 
@@ -123,7 +125,40 @@ How many parameters in the Dense layer?
 
 $640 \times 480 \times 3 \times 1000 + 1000 = 922M !$
 
+--
+
+Spatial organization of the input is destroyed by `Flatten`
+
+--
+
 We never use Dense layers directly on large images. Most standard solution is **convolution** layers
+
+---
+### Fully Connected Network: MLP
+
+```python
+input_image = Input(shape=(28, 28, 1))
+x = Flatten()(input_image)
+x = Dense(256, activation='relu')(x)
+x = Dense(10, activation='softmax')(x)
+mlp = Model(inputs=input_image, outputs=x)
+```
+--
+### Convolutional Network
+
+```python
+input_image = Input(shape=(28, 28, 1))
+*x = Conv2D(32, 5, activation='relu')(input_image)
+*x = MaxPool2D(2, strides=2)(x)
+*x = Conv2D(64, 3, activation='relu')(x)
+*x = MaxPool2D(2, strides=2)(x)
+x = Flatten()(x)
+x = Dense(256, activation='relu')(x)
+x = Dense(10, activation='softmax')(x)
+convnet = Model(inputs=input_image, outputs=x)
+```
+--
+2D spatial organization of features preserved untill `Flatten`.
 
 ---
 ## Convolution in a neural network
@@ -165,8 +200,8 @@ $$
 --
 
 ### Comparison to Fully connected
-- Parameter sharing
-- Make use of spatial structure
+- Parameter sharing: reduce overfitting
+- Make use of spatial structure: **strong prior** for vision!
 
 --
 
