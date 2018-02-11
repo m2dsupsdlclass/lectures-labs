@@ -45,3 +45,10 @@ mask_rcnn_coco.h5
 
 # offline one
 slides/02_backprop/index_offline.html
+
+# Fashion-MNIST
+t10k-images-idx3-ubyte.gz
+t10k-labels-idx1-ubyte.gz
+train-images-idx3-ubyte.gz
+train-labels-idx1-ubyte.gz
+
