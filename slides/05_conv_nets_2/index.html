@@ -64,50 +64,59 @@ Charles Ollion - Olivier Grisel
 ---
 # Beyond Image Classification
 
-          <br/>
 
 .center[
+          <br/>
           <img src="images/cls_1.png" style="width: 800px;" />
 ]
 
 ---
 # Beyond Image Classification
 
-          <br/>
 
 .center[
+          <br/>
           <img src="images/cls_2.png" style="width: 800px;" />
 ]
 ---
 # Beyond Image Classification
 
-          <br/>
-
 .center[
+          <br/>
           <img src="images/cls_3.png" style="width: 800px;" />
 ]
 ---
 # Beyond Image Classification
 
-          <br/>
 
 .center[
-          <img src="images/cls_4.png" style="width: 800px;" />
+          <br/>
+          <img src="images/cls_4_2.png" style="width: 800px;" />
+]
+---
+# Beyond Image Classification
+
+.center[
+          <br/>
+          <img src="images/cls_4_3.png" style="width: 800px;" />
 ]
 ---
 # Outline
 
-          <br/>
 
-### Localisation
-
---
-
-### Segmentation
+### Simple Localisation as regression
 
 --
 
-### Weak supervision
+### Detection Algorithms
+
+--
+
+### Fully convolutional Networks
+
+--
+
+### Semantic & Instance Segmentation
 
 ---
 class: middle, center
@@ -193,8 +202,6 @@ We don't know in advance the number of objects in the image. Object detection re
 **Object classification:** classify the object in these regions
 
 --
-
-          <br/>
 
 ### Two main families:
 
@@ -472,7 +479,6 @@ Noh, Hyeonwoo, et al. "Learning deconvolution network for semantic segmentation.
 
 --
 
-          <br/>
 - "Deconvolution": transposed convolutions
 
 .center[
@@ -490,7 +496,6 @@ Noh, Hyeonwoo, et al. "Learning deconvolution network for semantic segmentation.
 Noh, Hyeonwoo, et al. "Learning deconvolution network for semantic segmentation." ICCV 2015
 ]
 
-          <br/>
 - **skip connections** between corresponding convolution and deconvolution layers
 
 --
@@ -568,6 +573,7 @@ Detectron https://github.com/facebookresearch/Detectron
 
 - Mask-RCNN and other architectures
 - Focal loss, Feature Pyramid Networks, etc.
+- Retina Net
 
 --
 
