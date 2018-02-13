@@ -51,6 +51,128 @@ Charles Ollion - Olivier Grisel
 ---
 class: middle, center
 
+# Weak supervision
+
+---
+# Weak supervision
+
+.center[
+<img src="images/flickr.png" style="width: 300px;" />
+]
+
+.footnote.small[
+Joulin, Armand, et al. "Learning visual features from large weakly supervised data." ECCV, 2016
+]
+
+--
+
+- **Output dimension** (vocabulary) is huge: ~100 000
+
+--
+- After stopword removal, **importance sampling** of positive labels
+
+--
+- Do not compute the full softmax, **randomly sample negatives**
+
+---
+# Weak supervision
+
+Object localisation with only global image label data
+
+.center[
+<img src="images/weaklocalisation.png" style="width: 650px;" />
+]
+
+.footnote.small[
+Oquab, Maxime, "Is object localization for free? – Weakly-supervised learning with convolutional neural networks", 2015
+]
+
+- Fully convolutional network at different image scales
+
+--
+- Loss: $- \max C\_{i,j}^{label} + \max C\_{i,j}^{other}$
+
+--
+- Provides good localisation of **center** of objects
+
+--
+- Image-level classification is on par with / better than  object-level classification
+---
+# Self-supervised learning
+
+- **No labels at all**: find smart ways to build supervision
+
+---
+# Self-supervised learning
+
+.center[
+<img src="images/gupta1.png" style="width: 400px;" />
+]
+
+.footnote.small[
+Doersch, Carl, Abhinav Gupta, and Alexei A. Efros. "Unsupervised visual representation learning by context prediction." ICCV 2015.
+]
+
+--
+
+- Predict patches arrangement in images: 8 class classifier
+
+---
+# Labels Take Away
+
+number of *unsupervised* **>>** *Weakly-supervised*  **>>** *Supervised* data
+
+--
+
+number of *class labels* **>>** *bounding boxes* **>>** *segmentation masks*
+
+--
+
+- For most cases, use **ImageNet pre-trained networks**
+
+--
+- Good ongoing research on learning *weakly* supervised features: cover larger spectrum of image domains
+
+--
+- Unsupervised learning of features still inferior to ImageNet features
+
+--
+
+Segmentation and localisation using **weak labels**: very early but promising results
+
+--
+
+Use of **simulations** for localisation / segmentation data (GTA V...)
+
+---
+class: middle, center
+
+# Lab 10: Room B316 and B543 in 15min!
+
+---
+# Bonus: Self-supervised 
+
+.center[
+<img src="images/gupta2.png" style="width: 380px;" />
+]
+
+.footnote.small[
+Wang, Xiaolong, and Abhinav Gupta. "Unsupervised learning of visual representations using videos." ICCV 2015.
+]
+--
+
+- Collect pairs of similar objects from videos
+
+--
+- Train a siamese net with positive pairs = similar objects detected
+
+--
+- Hard negative mining: find objects with large movement
+
+---
+
+class: middle, center
+
 # Lab 1: Room C48-C49 in 15min!
 
     </textarea>

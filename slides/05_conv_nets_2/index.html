@@ -27,7 +27,7 @@
     <link rel="stylesheet" type="text/css" href="slides.css">
   </head>
   <body>
-    <textarea id="source">
+      <textarea id="source">
 class: center, middle
 
 # Convolutional Neural Networks - Part II
@@ -45,7 +45,7 @@ Charles Ollion - Olivier Grisel
 # CNNs for computer Vision
 
 .center[
-<img src="images/vision.png" style="width: 600px;" />
+          <img src="images/vision.png" style="width: 600px;" />
 ]
 
 ---
@@ -64,40 +64,40 @@ Charles Ollion - Olivier Grisel
 ---
 # Beyond Image Classification
 
-<br/>
+          <br/>
 
 .center[
-<img src="images/cls_1.png" style="width: 800px;" />
+          <img src="images/cls_1.png" style="width: 800px;" />
 ]
 
 ---
 # Beyond Image Classification
 
-<br/>
+          <br/>
 
 .center[
-<img src="images/cls_2.png" style="width: 800px;" />
+          <img src="images/cls_2.png" style="width: 800px;" />
 ]
 ---
 # Beyond Image Classification
 
-<br/>
+          <br/>
 
 .center[
-<img src="images/cls_3.png" style="width: 800px;" />
+          <img src="images/cls_3.png" style="width: 800px;" />
 ]
 ---
 # Beyond Image Classification
 
-<br/>
+          <br/>
 
 .center[
-<img src="images/cls_4.png" style="width: 800px;" />
+          <img src="images/cls_4.png" style="width: 800px;" />
 ]
 ---
 # Outline
 
-<br/>
+          <br/>
 
 ### Localisation
 
@@ -118,7 +118,7 @@ class: middle, center
 # Localisation
 
 .center[
-<img src="images/dog.jpg" style="width: 400px;" />
+          <img src="images/dog.jpg" style="width: 400px;" />
 ]
 
 --
@@ -133,28 +133,28 @@ class: middle, center
 # Localisation as regression
 
 .center[
-<img src="images/regression_dog_1.svg" style="width: 700px;" />
+          <img src="images/regression_dog_1.svg" style="width: 700px;" />
 ]
 
 ---
 # Localisation as regression
 
 .center[
-<img src="images/regression_dog.svg" style="width: 700px;" />
+          <img src="images/regression_dog.svg" style="width: 700px;" />
 ]
 
 ---
 # Classification + Localisation
 
 .center[
-<img src="images/doublehead_1.svg" style="width: 600px;" />
+          <img src="images/doublehead_1.svg" style="width: 600px;" />
 ]
 
 ---
 # Classification + Localisation
 
 .center[
-<img src="images/doublehead.svg" style="width: 600px;" />
+          <img src="images/doublehead.svg" style="width: 600px;" />
 ]
 
 --
@@ -172,7 +172,7 @@ class: middle, center
 # Classification + Localisation
 
 .center[
-<img src="images/doublehead.svg" style="width: 600px;" />
+          <img src="images/doublehead.svg" style="width: 600px;" />
 ]
 
 $C$ classes, $4$ output dimensions ($1$ box)
@@ -194,7 +194,7 @@ We don't know in advance the number of objects in the image. Object detection re
 
 --
 
-<br/>
+          <br/>
 
 ### Two main families:
 
@@ -204,7 +204,7 @@ We don't know in advance the number of objects in the image. Object detection re
 ---
 # YOLO
 .center[
-<img src="images/yolo0.png" style="width: 500px;" />
+          <img src="images/yolo0.png" style="width: 500px;" />
 ]
 
 .footnote.small[
@@ -219,7 +219,7 @@ For each cell of the $S \times S$ predict:
 ---
 # YOLO
 .center[
-<img src="images/yolo1.png" style="width: 500px;" />
+          <img src="images/yolo1.png" style="width: 500px;" />
 ]
 
 For each cell of the $S \times S$ predict:
@@ -231,7 +231,7 @@ Redmon, Joseph, et al. "You only look once: Unified, real-time object detection.
 ---
 # YOLO
 .center[
-<img src="images/yolo1.png" style="width: 500px;" />
+          <img src="images/yolo1.png" style="width: 500px;" />
 ]
 
 Final detections: $C_j * prob(c) > \text{threshold}$
@@ -253,14 +253,14 @@ Redmon, Joseph, et al. "You only look once: Unified, real-time object detection.
 - The loss is a weighted sum of different regressions
 
 .center[
-<img src="images/yolo_loss.png" style="width: 400px;" />
+          <img src="images/yolo_loss.png" style="width: 400px;" />
 ]
 
 ---
 # SSD: single-shot detector
 
 .center[
-<img src="images/ssd.png" style="width: 600px;" />
+          <img src="images/ssd.png" style="width: 600px;" />
 ]
 
 .footnote.small[
@@ -294,7 +294,7 @@ Instead of having a predefined set of box proposals, find them on the image:
 # Fast-RCNN
 
 .center[
-<img src="images/fastRCNN.png" style="width: 650px;" />
+          <img src="images/fastRCNN.png" style="width: 650px;" />
 ]
 
 
@@ -320,7 +320,7 @@ Girshick, Ross, et al. "Fast r-cnn." ICCV 2015
 # Faster-RCNN
 
 .center[
-<img src="images/fasterrcnn.png" style="width: 300px;" />
+          <img src="images/fasterrcnn.png" style="width: 300px;" />
 ]
 
 .footnote.small[
@@ -343,7 +343,7 @@ Region proposal input is a fully convolutional network: shares weights across sp
 Measures: mean Average Precision **mAP** and Frames per Second **FPS**
 
 .center[
-<img src="images/resultsyolo.png" style="width: 500px;" />
+          <img src="images/resultsyolo.png" style="width: 500px;" />
 ]
 
 .footnote.small[
@@ -351,11 +351,52 @@ Redmon, Joseph, et al. "YOLO9000, Faster, Better, Stronger." 2017
 ]
 
 ---
-# Results
+## State-of-the-art
 
 .center[
-<img src="images/localisationresults.png" style="width: 500px;" />
+          <img src="images/sotaresults2.png" style="width: 720px;" />
 ]
+
+Measures: mean Average Precision **mAP** at given **IoU** thresholds
+
+.footnote.small[
+Zeming Li et al. Light-Head R-CNN: In Defense of Two-Stage Object Detector 2017
+]
+
+--
+
+- AP @0.5 for class "cat": average precision for the class, where $IoU(box^{pred}, box^{true}) > 0.5$
+
+---
+## State-of-the-art - fast methods
+
+.center[
+          <img src="images/sotaresults.png" style="width: 520px;" />
+]
+
+Measures: **mAP** and Frames per Second **FPS**
+
+.footnote.small[
+Zeming Li et al. Light-Head R-CNN: In Defense of Two-Stage Object Detector 2017
+]
+
+--
+
+- Mask RCNN, light-head R-CNN for best accuracy
+- Yolo, SSD, Light-Head R-CNN for fast inference
+
+
+---
+## State-of-the-art
+
+.center[
+          <img src="images/sotaresults2.png" style="width: 500px;" />
+]
+
+--
+
+- Mask RCNN, light-head R-CNN for best accuracy
+- Yolo, SSD, Light-Head R-CNN for fast inference
 
 ---
 class: middle, center
@@ -368,7 +409,7 @@ class: middle, center
 Output a class map for each pixel (here: dog vs background)
 
 .center[
-<img src="images/dog_segment.jpg" style="width: 400px;" />
+          <img src="images/dog_segment.jpg" style="width: 400px;" />
 ]
 
 --
@@ -382,7 +423,7 @@ Output a class map for each pixel (here: dog vs background)
 # Convolutionize
 
 .center[         
-<img src="images/convolutionalization.png" style="width: 400px;" />
+          <img src="images/convolutionalization.png" style="width: 400px;" />
 ]
 
 
@@ -404,7 +445,7 @@ output map upscaled from fully convolutional network
 # Fully Convolutional Network
 
 .center[
-<img src="images/densefc.png" style="width: 500px;" />
+          <img src="images/densefc.png" style="width: 500px;" />
 ]
 
 .footnote.small[
@@ -422,7 +463,7 @@ Long, Jonathan, et al. "Fully convolutional networks for semantic segmentation."
 # Deconvolution
 
 .center[
-<img src="images/deconv.png" style="width: 650px;" />
+          <img src="images/deconv.png" style="width: 650px;" />
 ]
 
 .footnote.small[
@@ -431,25 +472,25 @@ Noh, Hyeonwoo, et al. "Learning deconvolution network for semantic segmentation.
 
 --
 
-<br/>
+          <br/>
 - "Deconvolution": transposed convolutions
 
 .center[
-<img src="images/conv_deconv.png" style="width: 350px;" />
+          <img src="images/conv_deconv.png" style="width: 350px;" />
 ]
 
 ---
 # Deconvolution
 
 .center[
-<img src="images/deconv.png" style="width: 650px;" />
+          <img src="images/deconv.png" style="width: 650px;" />
 ]
 
 .footnote.small[
 Noh, Hyeonwoo, et al. "Learning deconvolution network for semantic segmentation." ICCV 2015
 ]
 
-<br/>
+          <br/>
 - **skip connections** between corresponding convolution and deconvolution layers
 
 --
@@ -463,7 +504,7 @@ Unpooling: switch variables tied to corresponding pooling layers. Remembers whic
 # DeepMask / SharpMask
 
 .center[
-<img src="images/deepmask.png" style="width: 500px;" />
+          <img src="images/deepmask.png" style="width: 500px;" />
 ]
 
 .footnote.small[
@@ -481,27 +522,70 @@ Pinheiro, Pedro O., et al. "Learning to segment object candidates" / "Learning t
 - SharpMask: make use of all conv layers with refinement network
 
 ---
-# Results
+## Mask-RCNN
 
 .center[
-<img src="images/segmentationresults.png" style="width: 760px;" />
+          <img src="images/maskrcnn.png" style="width: 760px;" />
 ]
 
 .footnote.small[
-Li, Yi, et al. "Fully Convolutional Instance-aware Semantic Segmentation." Winner of COCO challenge 2016.
+K. He and al. Mask Region-based Convolutional Network (Mask R-CNN) NIPS 2017
 ]
+
+--
+
+Faster-RCNN architecture with a third, binary mask head
 ---
 # Results
 
 .center[
-<img src="images/segmentationresults2.png" style="width: 760px;" />
+          <img src="images/maskrcnnresults.png" style="width: 760px;" />
 ]
 
 .footnote.small[
-Li, Yi, et al. "Fully Convolutional Instance-aware Semantic Segmentation." Winner of COCO challenge 2016.
+K. He and al. Mask Region-based Convolutional Network (Mask R-CNN) NIPS 2017
+]
+
+--
+
+- Mask results are still coarse (low mask resolution)
+- Excellent instance generalization
+
+---
+## Results
+
+.center[
+          <img src="images/maskrcnnresults2.png" style="width: 760px;" />
+]
+
+.footnote.small[
+He, Kaiming, et al. "Mask r-cnn." Internal Conference on Computer Vision (ICCV), 2017.
 ]
 ---
-# Take away NN for Vision
+## State-of-the-art & links
+
+Detectron https://github.com/facebookresearch/Detectron
+
+- Mask-RCNN and other architectures
+- Focal loss, Feature Pyramid Networks, etc.
+
+--
+
+Megvii (Face++)
+
+
+- MegDet, similar architecture as Mask-RCNN
+
+
+.footnote.small[
+Peng, Chao, et al. "MegDet: A Large Mini-Batch Object Detector." arXiv preprint arXiv:1711.07240 (2017).
+]
+
+
+
+
+---
+## Take away NN for Vision
 
 ### Pre-trained features as a basis
 
@@ -520,123 +604,8 @@ Li, Yi, et al. "Fully Convolutional Instance-aware Semantic Segmentation." Winne
 ---
 class: middle, center
 
-# Weak supervision
+# Lab 5: Room C48 and C49 in 15min!
 
----
-# Weak supervision
-
-.center[
-<img src="images/flickr.png" style="width: 300px;" />
-]
-
-.footnote.small[
-Joulin, Armand, et al. "Learning visual features from large weakly supervised data." ECCV, 2016
-]
-
---
-
-- **Output dimension** (vocabulary) is huge: ~100 000
-
---
-- After stopword removal, **importance sampling** of positive labels
-
---
-- Do not compute the full softmax, **randomly sample negatives**
-
----
-# Weak supervision
-
-Object localisation with only global image label data
-
-.center[
-<img src="images/weaklocalisation.png" style="width: 650px;" />
-]
-
-.footnote.small[
-Oquab, Maxime, "Is object localization for free? – Weakly-supervised learning with convolutional neural networks", 2015
-]
-
-- Fully convolutional network at different image scales
-
---
-- Loss: $- \max C\_{i,j}^{label} + \max C\_{i,j}^{other}$
-
---
-- Provides good localisation of **center** of objects
-
---
-- Image-level classification is on par with / better than  object-level classification
----
-# Self-supervised learning
-
-- **No labels at all**: find smart ways to build supervision
-
----
-# Self-supervised learning
-
-.center[
-<img src="images/gupta1.png" style="width: 400px;" />
-]
-
-.footnote.small[
-Doersch, Carl, Abhinav Gupta, and Alexei A. Efros. "Unsupervised visual representation learning by context prediction." ICCV 2015.
-]
-
---
-
-- Predict patches arrangement in images: 8 class classifier
-
----
-# Labels Take Away
-
-number of *unsupervised* **>>** *Weakly-supervised*  **>>** *Supervised* data
-
---
-
-number of *class labels* **>>** *bounding boxes* **>>** *segmentation masks*
-
---
-
-- For most cases, use **ImageNet pre-trained networks**
-
---
-- Good ongoing research on learning *weakly* supervised features: cover larger spectrum of image domains
-
---
-- Unsupervised learning of features still inferior to ImageNet features
-
---
-
-Segmentation and localisation using **weak labels**: very early but promising results
-
---
-
-Use of **simulations** for localisation / segmentation data (GTA V...)
-
----
-class: middle, center
-
-# Lab 4: Room B316 and B543 in 15min!
-
----
-# Bonus: Self-supervised 
-
-.center[
-<img src="images/gupta2.png" style="width: 380px;" />
-]
-
-.footnote.small[
-Wang, Xiaolong, and Abhinav Gupta. "Unsupervised learning of visual representations using videos." ICCV 2015.
-]
---
-
-- Collect pairs of similar objects from videos
-
---
-- Train a siamese net with positive pairs = similar objects detected
-
---
-- Hard negative mining: find objects with large movement
 
     </textarea>
     <style TYPE="text/css">
