@@ -19,11 +19,11 @@ def classif_and_loc(num_classes):
                   loss_weights=[1., 1/(224*224)]) 
     return model
 
-model = classif_and_loc(5)
 
-history = model.fit(x = inputs, y=[out_cls, out_boxes], 
-                    validation_data=(test_inputs, [test_cls, test_boxes]), 
-                    batch_size=batch_size, epochs=30, verbose=2)
+better_model = classif_and_loc(5)
+history = better_model.fit(x = inputs, y=[out_cls, out_boxes], 
+                           validation_data=(test_inputs, [test_cls, test_boxes]), 
+                           batch_size=batch_size, epochs=30, verbose=2)
 
-compute_acc(train=True)
-compute_acc(train=False)
+compute_acc(better_model, train=True)
+compute_acc(better_model, train=False)
