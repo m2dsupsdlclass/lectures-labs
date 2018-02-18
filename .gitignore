@@ -52,3 +52,12 @@ t10k-labels-idx1-ubyte.gz
 train-images-idx3-ubyte.gz
 train-labels-idx1-ubyte.gz
 
+
+06_deep_nlp/bbc-fulltext.zip
+06_deep_nlp/bbc/
+
+09_triplet_loss/lfw-a.zip
+09_triplet_loss/lfw-a/
+09_triplet_loss/lfw-deepfunneled.tgz
+09_triplet_loss/lfw/
+
