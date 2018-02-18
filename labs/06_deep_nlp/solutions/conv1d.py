@@ -13,9 +13,8 @@ x = Conv1D(64, 5, activation='relu')(x)
 x = MaxPooling1D(5)(x)
 x = Flatten()(x)
 
-predictions = Dense(20, activation='softmax')(x)
+predictions = Dense(5, activation='softmax')(x)
 
 model = Model(sequence_input, predictions)
 model.compile(loss='categorical_crossentropy',
-              optimizer='adam',
-              metrics=['acc'])
+              optimizer='adam', metrics=['acc'])
