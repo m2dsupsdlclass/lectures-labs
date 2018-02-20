@@ -58,24 +58,17 @@ Charles Ollion - Olivier Grisel
 ---
 ## Natural Language Processing
 
-- Topic Classification
+- Sentence/Document level Classification (topic, sentiment)
 
-- Topic modeling
-
-- Sentiment Analysis
+- Topic modeling (LDA, ...)
 
 --
 
-- Google Translate
+- Translation
 
 --
 
-- Chatbots / dialogue systems
-
---
-
-- Natural language query understanding (Google Now, Apple Siri, Amazon
-  Alexa)
+- Chatbots / dialogue systems / assistants (Alexa, ...)
 
 --
 
@@ -91,21 +84,33 @@ Yoav Goldberg
 http://u.cs.biu.ac.il/~yogo/nnlp.pdf
 ]
 
+--
+
+Useful open source projects
+
+.center[
+<img src="images/logolibs.png" style="width: 500px;" />
+]
+
 ---
 # Outline
 
 <br/>
 
 
-### Word representation and Word2Vec
+### Classification and word representation
 
 --
 
-### Recurrent Neural Networks and Language Modelling 
+### Word2Vec
 
 --
 
-### Encoder-Decoder and Attention Mechanism 
+### Language Modelling
+
+--
+
+### Recurrent neural networks
 
 ---
 class: middle, center
@@ -332,7 +337,7 @@ Mikolov, Tomas, et al. "Distributed representations of words and phrases and the
 
 ---
 # Word2Vec: Skip Gram
-
+a
 <br/>
 
 .center[
@@ -395,12 +400,13 @@ computer vision and speech recognition.
 ---
 class:middle, center
 
-# Recurrent Neural Networks and Language Modelling
+# Language Modelling and Recurrent Neural Networks
 
 ---
-# Language Models
+## Language Models
 
-Assign a probability to a sequence of words, e.g:
+Assign a probability to a sequence of words, such that plausible sequences have
+higher probabilities e.g:
 
 - $p(\text{"I like cats"}) > p(\text{"I table cats"})$
 - $p(\text{"I like cats"}) > p(\text{"like I cats"})$
@@ -409,24 +415,45 @@ Assign a probability to a sequence of words, e.g:
 
 **Sequence modelling**
 
-$$
-p\_{\theta}(w\_n | w\_{n-1}, w\_{n-2}, \ldots, w\_0) \cdot p\_{\theta}(w\_{n-1} | w\_{n-2}, \ldots, w\_0) \cdot \ldots \cdot p\_{\theta}(w\_{0})
-$$
+$p\_{\theta}(w\_{0})$
 
---
+$p_{\theta}$ is parametrised by a neural network.
+---
+## Language Models
 
-$p\_{\theta}$ is parameterized by a neural network.
+Assign a probability to a sequence of words, such that plausible sequences have
+higher probabilities e.g:
+
+- $p(\text{"I like cats"}) > p(\text{"I table cats"})$
+- $p(\text{"I like cats"}) > p(\text{"like I cats"})$
+
+**Sequence modelling**
+
+$p\_{\theta}(w\_{0}) \cdot p\_{\theta}(w\_{1} | w\_{0})$
+
+$p_{\theta}$ is parametrised by a neural network.
+---
+## Language Models
+
+Assign a probability to a sequence of words, such that plausible sequences have
+higher probabilities e.g:
+
+- $p(\text{"I like cats"}) > p(\text{"I table cats"})$
+- $p(\text{"I like cats"}) > p(\text{"like I cats"})$
+
+**Sequence modelling**
+
+$p\_{\theta}(w\_{0}) \cdot p\_{\theta}(w\_{1} | w\_{0}) \cdot \ldots \cdot p\_{\theta}(w\_n | w\_{n-1}, w\_{n-2}, \ldots, w\_0)$
+
+$p_{\theta}$ is parametrised by a neural network.
 
 --
 
 The internal representation of the model has to better capture the
 meaning of a sequence than a simple Bag-of-Words.
 
-Much more computationally expensive than Bag-of-Words models.
-
-
 ---
-# Conditional Language Models
+## Conditional Language Models
 
 NLP problems expressed as **Conditional Language Models**:
 
@@ -434,14 +461,34 @@ NLP problems expressed as **Conditional Language Models**:
 - *Source*: "J'aime les chats"
 - *Target*: "I like cats"
 
-???
-
-Question: do you have any idea of those NLP tasks that could be tackled
-with a similar conditional modeling approach?
-
 --
 
-**Question Answering / Dialogue:** $p( Answer | Question , Context )$
+Model the output word by word:
+
+$p\_{\theta}(w\_{0} | Source)$
+
+---
+## Conditional Language Models
+
+NLP problems expressed as **Conditional Language Models**:
+
+**Translation:** $p(Target | Source)$
+- *Source*: "J'aime les chats"
+- *Target*: "I like cats"
+
+
+Model the output word by word:
+
+$p\_{\theta}(w\_{0} | Source) \cdot p\_{\theta}(w\_{1} | w\_{0}, Source) \cdot \ldots $ 
+
+
+---
+## Conditional Language Models
+
+**Question Answering / Dialogue:**
+
+$p( Answer | Question , Context )$
+
 - *Context*: "John put 2 glasses on the table. Bob adds two more glasses"
 - *Question*: "How many glasses are there?"
 - *Answer*: "There are four glasses."
@@ -450,9 +497,15 @@ with a similar conditional modeling approach?
 
 **Image Captionning:** $p( Caption | Image )$
 
+- Image is usually the $2048$-d representation from a CNN
+
+???
+
+Question: do you have any idea of those NLP tasks that could be tackled
+with a similar conditional modeling approach?
 
 ---
-## Fixed sequence size
+## Simple Language Model
 
 .center[
 <img src="images/fixedsize_mlp.svg" style="width: 400px;" />
