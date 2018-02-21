@@ -25,7 +25,7 @@ class: center, middle
 Charles Ollion - Olivier Grisel
 
 .affiliations[
-  ![Heuritech](images/heuritech-logo.png)
+  ![Heuritech](images/logo heuritech v2.png)
   ![Inria](images/inria-logo.png)
   ![UPS](images/Logo_Master_Datascience.png)
 ]
@@ -33,12 +33,14 @@ Charles Ollion - Olivier Grisel
 ---
 ## Classic Deep Learning data setup
 
-Classification with 1 class per sample
-2-1000 classes ; 1000 samples per class
+- Classification with a single label per sample
+- 2-1000 classes ; 1000 samples per class
 
 --
 
-What if I have multiple classes per sample?
+### real life problems
+
+What if I have multiple classes  per sample?
 
 --
 
@@ -49,7 +51,7 @@ What if I have unbalanced or noisy labels?
 what if I have 1M classes and 10 samples / class?
 
 ---
-# Outline
+## Outline
 
 ### Multi-labeling and Sampling strategies
 
@@ -64,20 +66,27 @@ what if I have 1M classes and 10 samples / class?
 ---
 class: middle, center
 
-Multi-labeling and Sampling strategies
+# Multi-labeling and Sampling strategies
 
 ---
 
-# From Classification to multilabel
+## From Classification to multilabel
+
+
+_already seen in Object detection_ 
 
 ### todo
+
+Train in classification scheme
+Replace `softmax` with `sigmoid` activation function
+
 
 training with binary labels
 
 ---
 class: middle, center
 
-Triplet loss and Siamese networks
+# Metric Learning & Siamese networks
 
 ---
 ## Goal: learn systems with few examples
@@ -95,51 +104,151 @@ todo add image face
 
 A verification system = similarity measure. If it's really good, useful for recognition
 ---
-## Metric learning
+## Learning a distance function
 
-d( img1, img2 ) = degree of difference between images.
-We want d result to be low in case of the same faces.
-We use tau T as a threshold for d:
-If d( img1, img2 ) <= T Then the faces are the same.
-Similarity function helps us solving the one shot learning. Also its robust to new inputs.
-Siamese Network
-We will implement the similarity function using a type of NNs called Siamease Network in which we can pass multiple inputs to the two or more networks with the same architecture and parameters.
-Siamese network architecture are as the following:
 
-We make 2 identical conv nets which encodes an input image into a vector. In the above image the vector shape is (128, )
-The loss function will be d(x1, x2) = || f(x1) - f(x2) ||2
-If X1, X2 are the same person, we want d to be low. If they are different persons, we want d to be high.
-[Taigman et. al., 2014. DeepFace closing the gap to human level performance]
-Triplet Loss
-Triplet Loss is one of the loss functions we can use to solve the similarity distance in a Siamese network.
-Our learning objective in the triplet loss function is to get the distance between an Anchor image and a positive or a negative image.
-Positive means same person, while negative means different person.
-The triplet name came from that we are comparing an anchor A with a positive P and a negative N image.
-Formally we want:
-Positive distance to be less than negative distance
-||f(A) - f(P)||2 <= ||f(A) - f(N)||2
-Then
-||f(A) - f(P)||2 - ||f(A) - f(N)||2 <= 0
-To make sure the NN won't get an output of zeros easily:
-||f(A) - f(P)||2 - ||f(A) - f(N)||2 <= -alpha
-Alpha is a small number. Sometimes its called the margin.
-Then
-||f(A) - f(P)||2 - ||f(A) - f(N)||2 + alpha <= 0
-Final Loss function:
-Given 3 images (A, P, N)
-L(A, P, N) = max (||f(A) - f(P)||2 - ||f(A) - f(N)||2 + alpha , 0)
-J = Sum((A[i], P[i], N[i]) , i) for all triplets of images.
-You need multiple images of the same person in your dataset. Then get some triplets out of your dataset. Dataset should be big enough.
-Choosing the triplets A, P, N:
-During training if A, P, N are chosen randomly (Subjet to A and P are the same and A and N aren't the same) then one of the problems this constrain is easily satisfied
-d(A, P) + alpha <= d (A, N)
-So the NN wont learn much
+We want to build $d_{\theta}( x_1, x_2 )$ which indicates degree of difference between images
+
+--
+
+we define $T$ such that if $d_{\theta}( x_1, x_2 ) < T$, we consider $x_1$ and $x_2$ to be of the same class (e.g. identity)
+
+--
+
+**Not a real distance** (no guarantee for triangle inequality)
+
+If you want guarrantees, look towards Metric Learning
+(but works with linear projections, much less useful for images)
+
+--
+
+
+
+---
+## Learning a distance function
+
+$$
+d\_{\theta}( x\_1, x\_2 ) = || f\_{\theta}(x\_1) - f\_{\theta}(x\_2) ||\_2
+$$
+
+--
+
+We build representation space of the data in which a simple metric (e.g.
+euclidean distance) represents semantic similarity.
+
+$f_{\theta}$ is typically a CNN which outputs a fixed dense representation of the image.
+
+--
+
+For other problems (sound, NLP), different networks may be used (RNNs, ...) which
+output a fixed dimension vector representing the data.
+
+--
+
+Alternatively we compute a similarity function instead of a distance:
+
+$cosine(f\_{\theta}(x\_1), f\_{\theta}(x\_2))$
+
+--
+
+Training = representation leanrnig
+
+---
+## Siamese networks
+
+.center[
+          <img src="images/siamese.svg" style="width: 530px;" />
+]
+
+.footnote.small[
+Chopra, Sumit, Raia Hadsell, and Yann LeCun. "Learning a similarity metric discriminatively, with application to face verification." CVPR 2005.
+]
+
+--
+Two absolutely identical networks. They output a fixed dimension, e.g. $128$
+
+---
+## Training
+
+- Dataset
+- build positive and negative pairs
+- Contrastive loss
+- results
+
+.footnote.small[
+Taigman et. al., 2014. DeepFace closing the gap to human level performance
+]
+---
+## Triplet Loss
+
+A triplet: $(x^a, x^{+}, x^{-})$
+- an anchor image
+- positive image (same person as anchor)
+- negative image (different person as enchor)
+
+We compute f_{\theta} of each of these 3 images
+
+--
+We want that:
+
+$||f(x^a) - f(x^{+})||_2 \leq ||f(x^a) - f(x^{-})||_2$
+
+--
+
+$||f(x^a) - f(x^{+})||_2 - ||f(x^a) - f(x^{-})||_2 \leq 0$
+
+--
+
+$||f(x^a) - f(x^{+})||_2 - ||f(x^a) - f(x^{-})||_2 \leq - \alpha$
+
+$\alpha$ margin typically small positive number $(0.2, 0.5, \cdot)$
+???
+
+Although we did not a do direct comparison to other
+losses, e.g. the one using pairs of positives and negatives, as
+used in [14] Eq. (2), we believe that the triplet loss is more
+suitable for face verification. The motivation is that the loss
+from [14] encourages all faces of one identity to be projected
+Z onto a single point in the embedding space. The
+triplet loss, however, tries to enforce a margin between each
+pair of faces from one person to all other faces. This allows
+the faces for one identity to live on a manifold, while
+still enforcing the distance and thus discriminability to other
+identities.
+
+---
+##Triplet Loss
+
+$l(x^a, x^{+}, x^{-}) =$
+
+$max(||f(x^a) - f(x^{+})||_2 -
+                           ||f(x^a) - f(x^{-})||_2 + \alpha, 0)$
+
+--
+
+###Training
+
+- Sample a minibatch of triplets $\{(x^a, x^{+}, x^{-})_i\}$
+- Compute $\sum\_i l((x^a, x^{+}, x^{-})\_i)$
+- Propagate gradients to update the $f_{\theta}$
+
+
+.footnote.small[
+Schroff et al.,2015, FaceNet: A unified embedding for face recognition and clustering
+]
+
+---
+## Hard negative sampling
+
+If anchor, positive and negative are chosen randomly, gradient in one batch quickly go to $0$
+
+--
+
+Schedule and chose triplets that are hard
+
 What we want to do is choose triplets that are hard to train on.
-So for all the triplets we want this to be satisfied:
-d(A, P) + alpha <= d (A, N)
-This can be achieved by for example same poses!
-Find more at the paper.
-Details are in this paper [Schroff et al.,2015, FaceNet: A unified embedding for face recognition and clustering]
+
+???
 Commercial recognition systems are trained on a large datasets like 10/100 million images.
 There are a lot of pretrained models and parameters online for face recognition.
 Face Verification and Binary Classification
@@ -159,7 +268,6 @@ Available implementations for face recognition using deep learning includes:
 Openface
 FaceNet
 DeepFace
-
 
 ---
 class: middle, center
