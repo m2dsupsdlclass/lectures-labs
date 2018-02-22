@@ -794,27 +794,23 @@ In practice
 ---
 ## Vanishing / Exploding Gradients
 
-Passing through $t$ time-steps, the resulting gradient is the **product** of many gradients and activations
+Passing through $t$ time-steps, the resulting gradient is the **product** of many gradients and activations.
 
 --
-- Gradients close to $0$ will soon be $0$
-- Gradients larger than $1$ will explode
+- Gradient messages close to $0$ can shrink be $0$
+- Gradient messages larger than $1$ can explode
 
 --
-
-<br/>
-
 - **LSTM / GRU** mitigate that in RNNs
+- **Additive path** between $c\_t$ and $c\_{t-1}$
 
 --
-- **Gradient clipping** prevents gradient explosion 
+- **Gradient clipping** prevents gradient explosion
 - Well chosen **activation function** is critical (tanh)
 
 --
 
-<br/>
-
-**Skip connections** in ResNet also alleviate this problem
+**Skip connections** in ResNet also alleviate a similar optimization problem.
 
 ---
 class: middle, center
