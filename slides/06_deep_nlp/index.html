@@ -330,10 +330,22 @@ Mikolov, Tomas, et al. "Distributed representations of words and phrases and the
 - Similar as supervised CBoW (e.g. fastText) with |V| classes
 
 --
-- Use **Negative Sampling**: Sample *negative* words at random instead of computing the full softmax. See: <small> http://sebastianruder.com/word-embeddings-softmax/index.html</small>
+- Use **Negative Sampling**: sample *negative* words at random instead of computing the full softmax. See: <small> http://sebastianruder.com/word-embeddings-softmax/index.html</small>
 
 --
 - Large impact of **context size**
+
+???
+
+Softmax is too computationally intensive to be practical: the
+normalization term involves a sum over the full vocabulary of
+cardinality |V| >> 10000 at each gradient step.
+
+Negative Sampling uses k=5 negative words sampled at random instead.
+This is not accurate enough to estimate
+`p(x_t|x_{t-2}, x_{t-1}, x_{t+1}, x_t{t+2})`
+accuractely but it's a good enough approximation to train a
+useful word embedding parameters.
 
 ---
 # Word2Vec: Skip Gram
@@ -346,10 +358,13 @@ a
 
 <br/>
 
-- Given a word, predict context probabilities
+- Given the central word, predict occurence of other words in its context.
 
 --
 - Widely used in practice
+
+--
+- Again **Negative Sampling** is used as a cheaper alternative to full softmax.
 
 ---
 # Evaluation and Related methods
@@ -376,12 +391,12 @@ Pennington, Jeffrey, Richard Socher, and Christopher D. Manning. "Glove: Global 
 
 --
 
-- If you have **little training data**, or wide vocabulary not covered
-  by data, use **pre-trained self-supervised embeddings**
+- If **little training data** and a wide vocabulary not well
+  covered by training data, use **pre-trained self-supervised embeddings**
   (transfer learning from Glove, word2vec or fastText embeddings)
 
 --
-- For **large training data** with labels, learn
+- If **large training data** with labels, directly learn
   task-specific embedding with methods such as **fastText in
   supervised mode**.
 
@@ -390,7 +405,8 @@ Pennington, Jeffrey, Richard Socher, and Christopher D. Manning. "Glove: Global 
   word sequences
 
 --
-- Deep Learning is not that useful for simple BoW text classification.
+- Depth &amp; non-linear activations on hidden layers are not that useful for
+  BoW text classification.
 
 --
 
@@ -413,11 +429,11 @@ higher probabilities e.g:
 
 --
 
-**Sequence modelling**
+**Auto-regressive sequence modelling**
 
 $p\_{\theta}(w\_{0})$
 
-$p_{\theta}$ is parametrised by a neural network.
+$p_{\theta}$ is parametrized by a neural network.
 ---
 ## Language Models
 
@@ -427,11 +443,11 @@ higher probabilities e.g:
 - $p(\text{"I like cats"}) > p(\text{"I table cats"})$
 - $p(\text{"I like cats"}) > p(\text{"like I cats"})$
 
-**Sequence modelling**
+**Auto-regressive sequence modelling**
 
 $p\_{\theta}(w\_{0}) \cdot p\_{\theta}(w\_{1} | w\_{0})$
 
-$p_{\theta}$ is parametrised by a neural network.
+$p_{\theta}$ is parametrized by a neural network.
 ---
 ## Language Models
 
@@ -441,16 +457,16 @@ higher probabilities e.g:
 - $p(\text{"I like cats"}) > p(\text{"I table cats"})$
 - $p(\text{"I like cats"}) > p(\text{"like I cats"})$
 
-**Sequence modelling**
+**Auto-regressive sequence modelling**
 
 $p\_{\theta}(w\_{0}) \cdot p\_{\theta}(w\_{1} | w\_{0}) \cdot \ldots \cdot p\_{\theta}(w\_n | w\_{n-1}, w\_{n-2}, \ldots, w\_0)$
 
-$p_{\theta}$ is parametrised by a neural network.
+$p_{\theta}$ is parametrized by a neural network.
 
 --
 
-The internal representation of the model has to better capture the
-meaning of a sequence than a simple Bag-of-Words.
+The internal representation of the model can better capture the meaning
+of a sequence than a simple Bag-of-Words.
 
 ---
 ## Conditional Language Models
@@ -489,7 +505,10 @@ $p\_{\theta}(w\_{0} | Source) \cdot p\_{\theta}(w\_{1} | w\_{0}, Source) \cdot \
 
 $p( Answer | Question , Context )$
 
-- *Context*: "John put 2 glasses on the table. Bob adds two more glasses"
+- *Context*:
+  - "John puts two glasses on the table."
+  - "Bob adds two more glasses."
+  - "Bob leaves the kitchen to play baseball in the garden."
 - *Question*: "How many glasses are there?"
 - *Answer*: "There are four glasses."
 
@@ -727,11 +746,11 @@ $\mathbf{ f} = \sigma(\mathbf{W^f} \cdot h\_{t-1} + \mathbf{I^f} \cdot x\_t + b^
 
 --
 
-$\mathbf{ \tilde{C}} = \tanh(\mathbf{W^c} \cdot h\_{t-1} + \mathbf{I^c} \cdot x\_t + b^c)$ .right[Cell candidate .red[`H`]]
+$\mathbf{ \tilde{c\_t}} = \tanh(\mathbf{W^c} \cdot h\_{t-1} + \mathbf{I^c} \cdot x\_t + b^c)$ .right[Cell candidate .red[`H`]]
 
 --
 
-$\mathbf{ C\_t} = \mathbf{f} \odot \mathbf{C\_{t-1}} + \mathbf{u} \odot \mathbf{ \tilde{C}}$ .right[Cell output .red[`H`]]
+$\mathbf{ c\_t} = \mathbf{f} \odot \mathbf{c\_{t-1}} + \mathbf{u} \odot \mathbf{ \tilde{c\_t}}$ .right[Cell output .red[`H`]]
 
 --
 
@@ -739,7 +758,7 @@ $\mathbf{ o} = \sigma(\mathbf{W^o} \cdot h\_{t-1} + \mathbf{I^o} \cdot x\_t + b^
 
 --
 
-$\mathbf{ h\_t} = \mathbf{o} \odot \tanh(\mathbf{C\_t})$ .right[Hidden output .red[`H`]]
+$\mathbf{ h\_t} = \mathbf{o} \odot \tanh(\mathbf{c\_t})$ .right[Hidden output .red[`H`]]
 
 --
 
