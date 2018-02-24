@@ -64,15 +64,15 @@ may output a single value, or a value for each time-step of the input
 
 ## Outline
 
-Encoder-decoder for machine translation
+### Encoder-decoder for machine translation
 
 --
 
-Attention mechanisms
+### Attention mechanisms
 
 --
 
-Towards memory and reasoning
+### Towards memory and reasoning
 
 ---
 class: center,middle
@@ -83,7 +83,7 @@ class: center,middle
 # Encoder-Decoder
 
 .center[
-<img src="images/encoder_decoder_1.svg" style="width: 680px;" />
+          <img src="images/encoder_decoder_1.svg" style="width: 680px;" />
 ]
 
 .footnote.small[
@@ -93,7 +93,7 @@ Cho, Kyunghyun, et al. "Learning phrase representations using RNN encoder-decode
 # Encoder-Decoder
 
 .center[
-<img src="images/encoder_decoder_2.svg" style="width: 680px;" />
+          <img src="images/encoder_decoder_2.svg" style="width: 680px;" />
 ]
 
 .footnote.small[
@@ -103,7 +103,7 @@ Cho, Kyunghyun, et al. "Learning phrase representations using RNN encoder-decode
 # Encoder-Decoder
 
 .center[
-<img src="images/encoder_decoder.svg" style="width: 680px;" />
+          <img src="images/encoder_decoder.svg" style="width: 680px;" />
 ]
 
 .footnote.small[
@@ -113,7 +113,7 @@ Cho, Kyunghyun, et al. "Learning phrase representations using RNN encoder-decode
 # Encoder-Decoder
 
 .center[
-<img src="images/encoder_decoder_forcing.svg" style="width: 680px;" />
+          <img src="images/encoder_decoder_forcing.svg" style="width: 680px;" />
 ]
 
 .footnote.small[
@@ -124,7 +124,7 @@ Cho, Kyunghyun, et al. "Learning phrase representations using RNN encoder-decode
 # Sequence to Sequence
 
 .center[
-<img src="images/basic_seq2seq.png" style="width: 760px;" />
+          <img src="images/basic_seq2seq.png" style="width: 760px;" />
 ]
 
 .footnote.small[
@@ -226,7 +226,7 @@ class: center,middle
 # Attention Mechanism
 
 .center[
-<img src="images/attention_0.png" style="width: 670px;" />
+          <img src="images/attention_0.png" style="width: 670px;" />
 ]
 
 .footnote.small[
@@ -236,7 +236,7 @@ Neural machine translation by jointly learning to align and translate, D Bahdana
 # Attention Mechanism
 
 .center[
-<img src="images/attention_1.png" style="width: 670px;" />
+          <img src="images/attention_1.png" style="width: 670px;" />
 ]
 
 .footnote.small[
@@ -246,7 +246,7 @@ Neural machine translation by jointly learning to align and translate, D Bahdana
 # Attention Mechanism
 
 .center[
-<img src="images/attention_2.png" style="width: 670px;" />
+          <img src="images/attention_2.png" style="width: 670px;" />
 ]
 
 .footnote.small[
@@ -256,7 +256,7 @@ Neural machine translation by jointly learning to align and translate, D Bahdana
 # Attention Mechanism
 
 .center[
-<img src="images/attention_3.png" style="width: 670px;" />
+          <img src="images/attention_3.png" style="width: 670px;" />
 ]
 
 .footnote.small[
@@ -266,7 +266,7 @@ Neural machine translation by jointly learning to align and translate, D Bahdana
 # Visualizing Attention 
 
 .center[
-<img src="images/align.png" style="width: 670px;" />
+          <img src="images/align.png" style="width: 670px;" />
 ]
 
 
@@ -278,7 +278,7 @@ Neural machine translation by jointly learning to align and translate, D Bahdana
 # Image Captioning
 
 .center[
-<img src="images/captioning_model.png" style="width: 500px;" />
+          <img src="images/captioning_model.png" style="width: 500px;" />
 ]
 
 .footnote.small[
@@ -288,14 +288,14 @@ Xu, Kelvin, et al. "Show, Attend and Tell: Neural Image Caption Generation with 
 --
 
 .center[
-<img src="images/visual_attention.png" style="width: 500px;" />
+          <img src="images/visual_attention.png" style="width: 500px;" />
 ]
 
 ---
 # The GNMT architecture
 
 .center[
-<img src="images/gnmt-architecture.png" style="width: 600px;" />
+          <img src="images/gnmt-architecture.png" style="width: 600px;" />
 ]
 
 .footnote.small[
@@ -313,15 +313,29 @@ the Gap between Human and Machine Translation"
 ### Alternative Machine Translation architecture
 
 .center[
-<img src="images/transformer.png" style="width: 350px;" />
+          <img src="images/transformer.png" style="width: 350px;" />
 ]
 
 .footnote.small[
 Attention Is All You Need Ashish Vaswani et al. NIPS 2017
 ]
 ---
-# Intro memory and question answering tasks
+class: center, middle
 
+# Reasonning, Attention and Memory
+
+---
+## Question answering tasks
+
+.center[
+          <img src="images/babi.png" style="width: 600px;" />
+]
+
+See also facebook's artificial tasks for reasoning: https://research.fb.com/downloads/babi/
+
+.footnote.small[
+Jason Weston, Antoine Bordes, Sumit Chopra, Alexander M. Rush, Bart van Merriënboer, Armand Joulin and Tomas Mikolov. Towards AI Complete Question Answering: A Set of Prerequisite Toy Tasks, 2015
+]
 ---
 # Memory Networks
 
@@ -329,7 +343,7 @@ Embed a collection of data (i.e. sentences)
 Compute an attention depending on a query (i.e. a question)
 
 .center[
-<img src="images/memadressing.png" style="width: 650px;" />
+          <img src="images/memadressing.png" style="width: 650px;" />
 ]
 
 .footnote.small[
@@ -339,7 +353,7 @@ Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, Rob Fergus al. NIPS 2015
 # Memory Networks
 
 .center[
-<img src="images/memoutput.png" style="width: 650px;" />
+          <img src="images/memoutput.png" style="width: 650px;" />
 ]
 
 .footnote.small[
@@ -349,7 +363,7 @@ Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, Rob Fergus al. NIPS 2015
 # Memory Networks
 
 .center[
-<img src="images/memend.png" style="width: 650px;" />
+          <img src="images/memend.png" style="width: 650px;" />
 ]
 
 .footnote.small[
@@ -359,17 +373,21 @@ Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, Rob Fergus al. NIPS 2015
 # Memory Networks
 
 .center[
-<img src="images/memfull.png" style="width: 650px;" />
+          <img src="images/memfull.png" style="width: 650px;" />
 ]
 
 .footnote.small[
 Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, Rob Fergus al. NIPS 2015
 ]
+
+---
+todo add hops, attention on example
+
 ---
 # Key-Value Networks
 
 .center[
-<img src="images/keyvalue.png" style="width: 720px;" />
+          <img src="images/keyvalue.png" style="width: 720px;" />
 ]
 
 Globally the same architecture
@@ -381,6 +399,35 @@ Interpreted as soft RAM or soft hashmap (soft ~ differentiable and learnable)
 .footnote.small[
 Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, Rob Fergus al. NIPS 2017
 ]
+---
+## Reading comprehension
+
+.center[
+          <img src="images/readandcomprehend.png" style="width: 700px;" />
+]
+
+.footnote.small[
+Hermann, Karl Moritz, et al. "Teaching machines to read and comprehend." NIPS 2015.
+]
+---
+## Neural Turing Machine
+
+.footnote.small[
+Graves, Alex, Greg Wayne, and Ivo Danihelka. "Neural turing machines." NIPS 2014
+Graves, Alex, et al., Hybrid computing using a neural network with dynamic external memory. Nature 2016
+]
+
+.center[
+          <img src="images/ntm.png" style="width: 600px;" />
+]
+
+--
+
+Differentiable Neural Computers,, Stack augmented RNNs, etc.
+
+--
+
+Excellent blog post about attention and augmented RNNs https://distill.pub/2016/augmented-rnns/
 ---
 class: middle, center
 
