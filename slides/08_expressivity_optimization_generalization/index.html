@@ -1196,7 +1196,28 @@ Lei Wu, Zhanxing Zhu, Weinan E
 # Lipschitz constant as a measure of capacity: 
 
 .center[
-<image src="images/.svg" width="80%" />
+<image src="images/lipschitz_width.svg" width="99%" />
+]
+
+---
+# Lipschitz constant as a measure of capacity: 
+
+.center[
+<image src="images/lipschitz_depth.svg" width="99%" />
+]
+
+---
+# Lipschitz constant as a measure of capacity: 
+
+.center[
+<image src="images/lipschitz_optimizer.svg" width="99%" />
+]
+
+---
+# Lipschitz constant as a measure of capacity: 
+
+.center[
+<image src="images/lipschitz_margin_optimizer.svg" width="99%" />
 ]
 
 ---
@@ -1205,12 +1226,12 @@ class: middle, center
 # Conclusion
 
 ---
-# Conclusion
-
-A strong optimizer is not necessarily a strong learner.
+# Conclusions
 
 DL optimization is non-convex but bad local minima and saddle
 structures are rarely a problem (on common DL tasks).
+
+A stronger optimizer is not necessarily a stronger learner.
 
 Neural Networks are over-parametrized but can still generalize.
 
@@ -1230,8 +1251,7 @@ optimizers that make **learning** faster with fewer labels.
 Overparametrize deep architectures
 
 Design architectures to limit conditioning issues:
-  - Use skip / residual connections
-  - Internal normalization layers
+  - Use skip connections &amp; normalization layers
 
 Use stochastic optimizers that are robust to bad conditioning
 
