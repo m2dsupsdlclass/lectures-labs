@@ -78,7 +78,7 @@ class: middle, center
 
 _Object detection is multilabel!_
 
-Classif classification
+Classic classification
 
 ```python
 # ...
@@ -105,7 +105,7 @@ x = Dense(1000, activation="sigmoid")(x)
 
 Similar to having a binary classifier for each class
 
-$y^{\true}$ is a binary vector corresponding to classes present in the image.
+$y^{true}$ is a binary vector corresponding to classes present in the image.
 
 --
 
@@ -142,6 +142,10 @@ Train in weak classification scheme
 
 - build a (smaller) fully labeled test set
 
+.footnote.small[
+Garrigues, P., Farfade, S., Izadinia, H., Boakye, K., & Kalantidis, Y. (2016). Tag prediction at flickr: a view from the darkroom. NIPS workshop on large scale CV 2016
+]
+
 --
 
 **How to interpret the score?**
@@ -152,10 +156,6 @@ Train in weak classification scheme
 --
 
 Compute a biais for each class depending on a fully labeled set
-
-.footnote.small[
-Garrigues, P., Farfade, S., Izadinia, H., Boakye, K., & Kalantidis, Y. (2016). Tag prediction at flickr: a view from the darkroom. NIPS workshop on large scale CV 2016
-]
 
 ---
 class: middle, center
@@ -173,8 +173,8 @@ ex: Face Recognition/Verification
           <img src="images/lfw.png" style="width: 500px;" />
 ]
 
-- Recognition: Given a face, classify among K possible persons
-- Verification: verify that two faces belongs to the same person
+- **Recognition:** Given a face, classify among K possible persons
+- **Verification:** verify that two faces belongs to the same person
 
 --
 
@@ -197,7 +197,7 @@ we define $T$ such that if $d_{\theta}( x_1, x_2 ) < T$, we consider $x_1$ and $
 
 <br/>
 
-To go further Mahalanobis distance Metric Learning
+Also look at: Mahalanobis distance Metric Learning
 .small[(more theoretical framework, but limited to linear projections, much less useful for images)]
 
 .footnote.small[
