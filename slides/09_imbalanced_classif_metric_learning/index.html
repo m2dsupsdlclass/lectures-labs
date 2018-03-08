@@ -45,7 +45,7 @@ Charles Ollion - Olivier Grisel
 
 ### real life problems
 
-What if I have multiple classes  per sample?
+What if I have multiple classes per sample?
 
 --
 
@@ -66,7 +66,7 @@ what if I have 1M classes and 10 samples / class?
 
 --
 
-### Dealing with weak and noisy labels
+### Triplet Loss and advanced techniques
 
 ---
 class: middle, center
@@ -74,19 +74,88 @@ class: middle, center
 # Multi-labeling and Sampling strategies
 
 ---
-
 ## From Classification to multilabel
 
+_Object detection is multilabel!_
 
-_already seen in Object detection_ 
+Classif classification
 
-### todo
+```python
+# ...
+x = Convolution2D(2048, 3)(x)
+x = GlobalAveragePooling2D()(x)
+x = Dense(1000, activation="softmax")(x)
+```
 
-Train in classification scheme
-Replace `softmax` with `sigmoid` activation function
+---
+## From Classification to multilabel
 
+_Object detection is multilabel!_
 
-training with binary labels
+Replace `softmax` with `sigmoid` activation
+
+```python
+# ...
+x = Convolution2D(2048, 3)(x)
+x = GlobalAveragePooling2D()(x)
+x = Dense(1000, activation="sigmoid")(x)
+```
+
+--
+
+Similar to having a binary classifier for each class
+
+$y^{\true}$ is a binary vector corresponding to classes present in the image.
+
+--
+
+**problem** : hard to label images for ALL possible tags!
+
+---
+# Weak supervision
+
+.center[
+          <img src="images/flickr.png" style="width: 300px;" />
+]
+
+.footnote.small[
+Joulin, Armand, et al. "Learning visual features from large weakly supervised data." ECCV, 2016
+]
+
+--
+
+- **Output dimension** (vocabulary) is huge: ~100 000
+
+--
+- After stopword removal, **importance sampling** of positive labels
+
+--
+- Do not compute the full softmax, **randomly sample negatives**
+
+---
+
+## Inference tricks
+
+Train in weak classification scheme
+
+**How to measure precision/recall?**
+
+- build a (smaller) fully labeled test set
+
+--
+
+**How to interpret the score?**
+
+- **Consistent across tags:** A score of 0.8 for “cat” classifier ~ same meaning as score of 0.8 for the “flower” classifier
+- **Interpretable:** Score should reflect the posterior of a tag being present in an image, e.g. p(dog|image)
+
+--
+
+Compute a biais for each class depending on a fully labeled set
+
+.footnote.small[
+Garrigues, P., Farfade, S., Izadinia, H., Boakye, K., & Kalantidis, Y. (2016). Tag prediction at flickr: a view from the darkroom. NIPS workshop on large scale CV 2016
+]
 
 ---
 class: middle, center
@@ -126,7 +195,7 @@ we define $T$ such that if $d_{\theta}( x_1, x_2 ) < T$, we consider $x_1$ and $
 
 --
 
-          <br/>
+<br/>
 
 To go further Mahalanobis distance Metric Learning
 .small[(more theoretical framework, but limited to linear projections, much less useful for images)]
@@ -279,6 +348,11 @@ Typically any dataset with large number of classes
 Any classification dataset (but softmax classification can be better)
 
 ---
+class: middle, center
+
+# Triplet Loss
+
+---
 ## Triplet Loss
 
 A triplet: $(x^a, x^{+}, x^{-})$
@@ -380,12 +454,92 @@ Schroff, Florian, et al. Facenet: A unified embedding for face recognition and c
 ???
 Achieves a validation rate of 87% at false rate 0.001%
 ---
-# Improving Triplets
+## Improving Triplets
 
 
 .footnote.small[
 K. Sohn. Improved deep metric learning with multi-class N-pair loss objective, NIPS 2016 <br/>
 ]
+---
+## Histogram loss
+
+.center[
+          <img src="images/histogram.png" style="width: 460px;" />
+]
+
+Compute all the **positives similarities** and **negatives similarities** within a batch
+
+.footnote.small[
+Ustinova, Evgeniya, et al. Learning deep embeddings with histogram loss, NIPS 2016
+]
+
+--
+
+The loss pushes to **seperate** the two similarity distributions
+
+--
+
+Sample classes intelligently to have representative enough distributions
+---
+## Quadruplet loss
+
+.center[
+          <img src="images/quadruplets.png" style="width: 760px;" />
+]
+
+.footnote.small[
+Huang, Chen, et al. Local similarity-aware deep feature embedding, NIPS 2016
+]
+
+--
+
+**intraclass distance** in a high-density region may be larger than the **interclass distance** in low-density regions
+
+---
+## Quadruplet loss
+
+.center[
+          <img src="images/quadruplets.png" style="width: 760px;" />
+]
+
+.footnote.small[
+Huang, Chen, et al. Local similarity-aware deep feature embedding, NIPS 2016
+]
+
+Position-Dependent Deep Metric (PDDM) depends on two points + position of mean (red triangle)
+
+---
+## Quadruplet loss
+
+.center[
+          <img src="images/quadruplets.png" style="width: 760px;" />
+]
+
+.footnote.small[
+Huang, Chen, et al. Local similarity-aware deep feature embedding, NIPS 2016
+]
+
+Sample a hard quadruplet $(i,j)$ most dissimilar positive sample, and $k$ and $l$ are hard negatives
+
+---
+## Results
+
+.center[
+          <img src="images/resquad.png" style="width: 500px;" />
+]
+
+Metric: Recall @K
+
+--
+
+.center[
+          <img src="images/reshist.png" style="width: 500px;" />
+]
+
+--
+
+ImageNet pretrained is competitive!
+
 ---
 ## Getting started
 
