@@ -880,7 +880,8 @@ Reducing width can cause optimization issues.
 
 --
 
-Early stopping mostly avoids wasting compute optimizing for nothing.
+Early stopping can help a bit but mostly avoids wasting compute
+optimizing for nothing.
 
 --
 
@@ -896,11 +897,170 @@ restarts ("snapshot ensembles").
 
 ???
 
-Stochastic Regularization all-in: Stochastic Depth, Shakeout, Whiteout,
-Shake-Shake.
+Stochastic Regularization all-in: Stochastic Depth, Shakeout,
+Shake-Shake, Shake-Drop...
 
 Clever noise injection on the input:
-https://arxiv.org/abs/1703.02573
+[random blank token in LM](https://arxiv.org/abs/1703.02573),
+[cutout](https://arxiv.org/abs/1708.04552) / [Random Erasing](
+  https://arxiv.org/abs/1708.04896)
+
+
+---
+.center[
+<img src="images/noisy_sin_dataset.svg" width="95%" />
+]
+
+Experiment: regression on 1D data with heteroschedastic noise
+
+---
+# Single Decision Tree
+
+.center[
+<img src="images/noisy_sin_tree_000.svg" width="99%" />
+]
+
+
+---
+# Single Decision Tree
+
+.center[
+<img src="images/noisy_sin_tree_001.svg" width="99%" />
+]
+
+---
+# Single Decision Tree
+
+.center[
+<img src="images/noisy_sin_tree_002.svg" width="99%" />
+]
+
+---
+# Single Decision Tree
+
+.center[
+<img src="images/noisy_sin_tree_003.svg" width="99%" />
+]
+
+
+---
+# Single Decision Tree
+
+.center[
+<img src="images/noisy_sin_tree_004.svg" width="99%" />
+]
+
+---
+# Single Decision Tree
+
+.center[
+<img src="images/noisy_sin_tree_005.svg" width="99%" />
+]
+
+---
+# Polynomial regression
+
+.center[
+<img src="images/noisy_sin_poly_000.svg" width="99%" />
+]
+
+---
+# Polynomial regression
+
+.center[
+<img src="images/noisy_sin_poly_001.svg" width="99%" />
+]
+
+---
+# Polynomial regression
+
+.center[
+<img src="images/noisy_sin_poly_002.svg" width="99%" />
+]
+
+---
+# Polynomial regression
+
+.center[
+<img src="images/noisy_sin_poly_003.svg" width="99%" />
+]
+
+---
+# Polynomial regression
+
+.center[
+<img src="images/noisy_sin_poly_004.svg" width="99%" />
+]
+
+---
+# Polynomial regression
+
+.center[
+<img src="images/noisy_sin_poly_005.svg" width="99%" />
+]
+
+---
+# 1-hidden layer MLP, no regularization
+
+.center[
+<img src="images/noisy_sin_mlp_000.svg" width="99%" />
+]
+
+---
+# 1-hidden layer MLP, no regularization
+
+.center[
+<img src="images/noisy_sin_mlp_001.svg" width="99%" />
+]
+
+---
+# 1-hidden layer MLP, no regularization
+
+.center[
+<img src="images/noisy_sin_mlp_002.svg" width="99%" />
+]
+
+---
+# 1-hidden layer MLP, no regularization
+
+.center[
+<img src="images/noisy_sin_mlp_003.svg" width="99%" />
+]
+
+---
+# 1-hidden layer MLP, no regularization
+
+.center[
+<img src="images/noisy_sin_mlp_004.svg" width="99%" />
+]
+
+---
+# 1-hidden layer MLP, no regularization
+
+.center[
+<img src="images/noisy_sin_mlp_full_learning_curve.svg" width="99%" />
+]
+
+---
+# Non-intuitive behavior of MLP
+
+
+Adding hidden units:
+
+- does not lead to (more) overfitting
+
+- make optimization easier (less steps)
+
+- make computation slower (more FLOPS per pass)
+
+Adding layers:
+
+- does not cause much more overfitting either
+
+- can cause optimization issues (underfitting)
+
+Already known since the [end of the 90s](
+  http://papers.nips.cc/paper/1895-overfitting-in-neural-nets-backpropagation-conjugate-gradient-and-early-stopping.pdf).
 
 ---
 # Deep Nets Generalize Better than They Should
@@ -953,21 +1113,180 @@ Minima](https://arxiv.org/abs/1609.04836), N. S. Keskar et al., 2016
 ]
 
 ---
+# Small Batch vs Large Batch
+
+.center[
+<image src="images/half_moons.svg" width="70%" />
+]
+
+Trained with L-BFGS (large batch)
+
+---
+# Small Batch vs Large Batch
+
+.center[
+<image src="images/high_complexity_decision_function_01.svg" width="70%" />
+]
+
+---
+# Small Batch vs Large Batch
+
+.center[
+<image src="images/high_complexity_decision_function_02.svg" width="70%" />
+]
+
+---
+# Small Batch vs Large Batch
+
+.center[
+<image src="images/high_complexity_decision_function_03.svg" width="70%" />
+]
+
+---
+# Small Batch vs Large Batch
+
+.center[
+<image src="images/high_complexity_decision_function_04.svg" width="70%" />
+]
+
+---
+# Small Batch vs Large Batch
+
+.center[
+<image src="images/low_complexity_decision_function.svg" width="70%" />
+]
+
+Trained with L-BFGS (large batch)!
+
+
+---
+# Small Batch vs Large Batch
+
+.center[
+<image src="images/moons_lbfgs.svg" width="99%" />
+]
+
+---
+# Small Batch vs Large Batch
+
+- Typical model capacity is enough to represent bad global minima.
+
+--
+- But even with large batches, GD avoids those pathological global minima.
+
+--
+- Small-batch / large LR models generalize a bit better but not the main effect.
+
+--
+- Measuring wideness, sharpness of minima is tricky because of reparametrization.
+
+--
+- Good global minimizers have a wide attractor basin for GD
+
+--
+
+.center[
+[Towards Understanding Generalization of Deep Learning: Perspective of
+Loss Landscapes](https://arxiv.org/abs/1706.10239)
+
+Lei Wu, Zhanxing Zhu, Weinan E
+]
+
+---
+# Lipschitz constant as a measure of capacity: 
+
+.center[
+<image src="images/lipschitz_width.svg" width="99%" />
+]
+
+---
+# Lipschitz constant as a measure of capacity: 
+
+.center[
+<image src="images/lipschitz_depth.svg" width="99%" />
+]
+
+---
+# Lipschitz constant as a measure of capacity: 
+
+.center[
+<image src="images/lipschitz_optimizer.svg" width="99%" />
+]
+
+---
+# Lipschitz constant as a measure of capacity: 
+
+.center[
+<image src="images/lipschitz_margin_optimizer.svg" width="99%" />
+]
+
+---
+# Generalization bounds
+
+
+.center[
+<image src="images/bartlett_2017_thm_1.1.png" width="99%" />
+]
+
+Spectral complexity:
+
+.center[
+<image src="images/spectral_complexity.png" width="60%" />
+]
+
+.footnote.small[
+[Spectrally-normalized margin bounds for neural networks](
+  https://arxiv.org/abs/1706.08498
+)
+Peter Bartlett, Dylan J. Foster, Matus Telgarsky
+]
+
+---
+# Generalization bounds
+
+
+.center[
+<image src="images/arora_2018_thm_4.1.png" width="99%" />
+]
+
+
+.footnote.small[
+[Stronger generalization bounds for deep nets via a compression approach](
+  https://arxiv.org/abs/1802.05296
+)
+Sanjeev Arora, Rong Ge, Behnam Neyshabur, Yi Zhang
+]
+
+- Compressible Neural Networks generalize better;
+
+- Compressibility stems from noise stability properties of deep nets.
+
+???
+
+Compressibility of neural networks
+
+[Do Deep Learning Models Have Too Many Parameters? An Information Theory
+ Viewpoint](https://arxiv.org/abs/1802.07044)
+ Léonard Blier, Yann Ollivier
+
+---
 class: middle, center
 
 # Conclusion
 
 ---
-# Conclusion
-
-A strong optimizer is not necessarily a strong learner.
+# Conclusions
 
 DL optimization is non-convex but bad local minima and saddle
 structures are rarely a problem (on common DL tasks).
 
+A stronger optimizer is not necessarily a stronger learner.
+
 Neural Networks are over-parametrized but can still generalize.
 
-Stochastic Gradient is a strong implicit regularizer.
+(Stochastic) Gradient Descent has a built-in implicit regularizer.
+
+Compressible / low Lipschitz networks generalize better.
 
 Variance in gradient can help with generalization but can hurt final
 convergence.
@@ -981,8 +1300,7 @@ optimizers that make **learning** faster with fewer labels.
 Overparametrize deep architectures
 
 Design architectures to limit conditioning issues:
-  - Use skip / residual connections
-  - Internal normalization layers
+  - Use skip connections &amp; normalization layers
 
 Use stochastic optimizers that are robust to bad conditioning
 

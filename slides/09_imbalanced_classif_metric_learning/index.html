@@ -12,6 +12,11 @@
        width: 50%;
        float: right;
      }
+     .footnote {
+        position: absolute;
+        bottom: 2em;
+        margin: 0em 2em;
+     }
      .grey { color: #bbbbbb; }
       </style>
     <link rel="stylesheet" type="text/css" href="slides.css">
@@ -89,16 +94,18 @@ class: middle, center
 # Metric Learning & Siamese networks
 
 ---
-## Goal: learn systems with few examples
+## Few Examples per class
 
 ex: Face Recognition/Verification
 
 --
 
+.center[
+          <img src="images/lfw.png" style="width: 500px;" />
+]
+
 - Recognition: Given a face, classify among K possible persons
 - Verification: verify that two faces belongs to the same person
-
-todo add image face
 
 --
 
@@ -117,12 +124,16 @@ we define $T$ such that if $d_{\theta}( x_1, x_2 ) < T$, we consider $x_1$ and $
 
 **Not a real distance** (no guarantee for triangle inequality)
 
-If you want guarrantees, look towards Metric Learning
-(but works with linear projections, much less useful for images)
-
 --
 
+          <br/>
 
+To go further Mahalanobis distance Metric Learning
+.small[(more theoretical framework, but limited to linear projections, much less useful for images)]
+
+.footnote.small[
+Weinberger, Kilian Q., John Blitzer, and Lawrence K. Saul. "Distance metric learning for large margin nearest neighbor classification." Advances in neural information processing systems. 2006.
+]
 
 ---
 ## Learning a distance function
@@ -133,10 +144,10 @@ $$
 
 --
 
-We build representation space of the data in which a simple metric (e.g.
-euclidean distance) represents semantic similarity.
+$f_{\theta}$ is typically a CNN which outputs a fixed dense  $\mathbb{R}^d$ representation of the image.
 
-$f_{\theta}$ is typically a CNN which outputs a fixed dense representation of the image.
+$f_{\theta}$ maps image space to a **representation space** where a simple metric (e.g.
+euclidean distance) represents **semantic distance**.
 
 --
 
@@ -145,39 +156,128 @@ output a fixed dimension vector representing the data.
 
 --
 
-Alternatively we compute a similarity function instead of a distance:
-
-$cosine(f\_{\theta}(x\_1), f\_{\theta}(x\_2))$
-
---
-
-Training = representation leanrnig
+Training $f_{\theta}$ is also called **representation learning**
 
 ---
 ## Siamese networks
 
 .center[
-          <img src="images/siamese.svg" style="width: 530px;" />
+          <img src="images/siamese.svg" style="width: 500px;" />
 ]
 
 .footnote.small[
 Chopra, Sumit, Raia Hadsell, and Yann LeCun. "Learning a similarity metric discriminatively, with application to face verification." CVPR 2005.
 ]
 
+---
+## Loss function
+
+.center[
+          <img src="images/contrastive.png" style="width: 300px;" />
+]
+
+**Contrastive loss:** Pushes together similar class pairs, and further away different class ones, up to a margin.
+
+.footnote.small[
+Chopra, Sumit, Raia Hadsell, and Yann LeCun. "Learning a similarity metric discriminatively, with application to face verification." CVPR 2005.
+]
+
+---
+## Alternative loss functions
+
+Can derive equivalent contrastive loss for cosine similarity:
+
+
+$$cosine(f\_{\theta}(x\_1), f\_{\theta}(x\_2))$$
+
 --
-Two absolutely identical networks. They output a fixed dimension, e.g. $128$
+
+Alternatively, **absolute difference + Binary classification**:
+
+$$y = sigmoid ( \mathbf{w} \cdot |f\_{\theta}(x\_1) - f\_{\theta}(x\_2)| + b)$$
+
+
+--
+
+Also, **concat + Binary classification**
+
+$$y = sigmoid ( \mathbf{w} \cdot f\_{\theta}(x\_1) ||  f\_{\theta}(x\_2) + b)$$
+
+
+--
+
+Simpler, often less effective: simple regression after cosine similarity
 
 ---
 ## Training
 
-- Dataset
-- build positive and negative pairs
-- Contrastive loss
-- results
+- sample positive pairs $(x_i, x_j)$, with $(i, j)$ of similar class
+- sample negative pairs $(x_i, x_j)$, with $(i, j)$ of different class
 
 .footnote.small[
 Taigman et. al., 2014. DeepFace closing the gap to human level performance
 ]
+
+--
+
+
+Forward pass using both inputs through the two networks
+
+--
+
+backpropagate through the two networks (same weights are updated twice)
+
+--
+
+Important to **craft batches carefully** (balance positive and negative, group positives together)
+
+???
+better to group pairs rather than pick random positive and negatives
+Can be tricky to train, sensible on input
+---
+## Dataset Face verification
+
+**Labeled Faces in the Wild (LFW)**
+
+13,000 pictures, 1680 identities with at least 2 pictures
+
+--
+
+- results http://vis-www.cs.umass.edu/lfw/results.html
+- DeepFace: 0.9735 classification accuracy
+
+.footnote.small[
+Taigman et. al., 2014. DeepFace closing the gap to human level performance
+]
+
+--
+
+**YouTube Faces Database**
+
+3,425 videos of 1,595 different people averaging 181 frames per video
+
+---
+## Cars196, CUB200, Online Products
+
+.center[
+          <img src="images/class_cars.jpg" style="width: 760px;" />
+]
+
+16,185 images of 196 classes of cars
+
+--
+
+.center[
+          <img src="images/onlineproduct.png" style="width: 400px;" />
+]
+
+120,053 images, 22,634 Online Products (classes) from eBay.com. 5.3 images per class
+
+???
+
+Typically any dataset with large number of classes
+Any classification dataset (but softmax classification can be better)
+
 ---
 ## Triplet Loss
 
@@ -224,51 +324,96 @@ $l(x^a, x^{+}, x^{-}) =$
 $max(||f(x^a) - f(x^{+})||_2 -
                            ||f(x^a) - f(x^{-})||_2 + \alpha, 0)$
 
---
-
-###Training
-
-- Sample a minibatch of triplets $\{(x^a, x^{+}, x^{-})_i\}$
-- Compute $\sum\_i l((x^a, x^{+}, x^{-})\_i)$
-- Propagate gradients to update the $f_{\theta}$
-
-
 .footnote.small[
 Schroff et al.,2015, FaceNet: A unified embedding for face recognition and clustering
 ]
 
+--
+
+Training
+
+- Sample a minibatch of triplets $\{(x^a, x^{+}, x^{-})_i\}$
+- Compute $\sum\_i l((x^a, x^{+}, x^{-})\_i)$
+- Propagate gradients to update $f_{\theta}$
+
+--
+Also, L2 normalization of embeddings
+
 ---
 ## Hard negative sampling
 
-If anchor, positive and negative are chosen randomly, gradient in one batch quickly go to $0$
+If anchor, positive and negative are chosen randomly, gradient in one batch quickly become almost $0$
 
 --
 
-Schedule and chose triplets that are hard
+Number of possible triplets is huge, random sampling is inefficient
 
-What we want to do is choose triplets that are hard to train on.
+--
+
+Schedule and choose hard triplets:
+
+- Hard triplet sampling
+
+$||f(x^a) - f(x^{+})||_2 > ||f(x^a) - f(x^{-})||_2 + \alpha$
+
+- Semi Hard triplet sampling
+
+$||f(x^a) - f(x^{+})||_2 > ||f(x^a) - f(x^{-})||_2$
+
+---
+## Triplets results
+
+.center[
+          <img src="images/facenet.png" style="width: 260px;" />
+]
+
+.footnote.small[
+Schroff, Florian, et al. Facenet: A unified embedding for face recognition and clustering, CVPR 2015. = hard negative mining and semi hard
+]
+
+--
+
+- A threshold is computed on test set ($1.2$)
+- Best model achieves 99.6% verification accuracy on LFW
+- Face alignment is critical!
 
 ???
-Commercial recognition systems are trained on a large datasets like 10/100 million images.
-There are a lot of pretrained models and parameters online for face recognition.
-Face Verification and Binary Classification
-Triplet loss is one way to learn the parameters of a conv net for face recognition there's another way to learn these parameters as a straight binary classification problem.
-Learning the similarity function another way:
+Achieves a validation rate of 87% at false rate 0.001%
+---
+# Improving Triplets
 
-The final layer is a sigmoid layer.
-Y' = wi * Sigmoid ( f(x(i)) - f(x(j)) ) + b where the subtraction is the Manhattan distance between f(x(i)) and f(x(j))
-Some other similarities can be Euclidean and Ki square similarity.
-The NN here is Siamese means the top and bottom convs has the same parameters.
-The paper for this work: [Taigman et. al., 2014. DeepFace closing the gap to human level performance]
-A good performance/deployment trick:
+
+.footnote.small[
+K. Sohn. Improved deep metric learning with multi-class N-pair loss objective, NIPS 2016 <br/>
+]
+---
+## Getting started
+
+Available open source implementations / pretrained models:
+- Openface
+- FaceNet
+- DeepFace
+
+Commercial recognition systems are trained on a large datasets like 10/100 million images
+
+--
+
+## Deploying
+
 Pre-compute all the images that you are using as a comparison to the vector f(x(j))
 When a new image that needs to be compared, get its vector f(x(i)) then put it with all the pre computed vectors and pass it to the sigmoid function.
-This version works quite as well as the triplet loss function.
-Available implementations for face recognition using deep learning includes:
-Openface
-FaceNet
-DeepFace
 
+
+???
+
+refs
+Y. Movshovitz-Attias et al. No fuss distance metric learning using proxies, NIPS 2017 = using proxies + NCA -- sota?
+K. Sohn. Improved deep metric learning with multi-class N-pair loss objective, NIPS 2016 = use multiple negatives instead of one triplet
+H. Oh Song, et al. Deep metric learning via lifted structured feature embedding, CVPR 2016 = using all possible examples & relations in batch - online products
+O. Rippel, et al. Metric learning with adaptive density discrimination. Arxiv preprint, 2015 = magnet loss, clustering and neighborhood
+Ustinova, Evgeniya, et al. Learning deep embeddings with histogram loss, NIPS 2016 = full batch, seperate positives from negatives distributions (KL divergence, histogram bins)
+Huang, Chen, et al. Local similarity-aware deep feature embedding, NIPS 2016 = similar to previous, but using quadriplets
+Schroff, Florian, et al. Facenet: A unified embedding for face recognition and clustering, CVPR 2015. = hard negative mining and semi hard
 ---
 class: middle, center
 
