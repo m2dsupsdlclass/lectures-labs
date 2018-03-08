@@ -53,22 +53,23 @@ for train_batch, train_target in train_loader:
 mean /= n_samples_seen
 std /= n_samples_seen
 
-train_data = datasets.FashionMNIST('data', train=False, download=False,
+train_data = datasets.FashionMNIST('data', train=True, download=True,
                                    transform=transforms.Compose([
                                        transforms.ToTensor(),
                                        transforms.Normalize(mean=mean,
                                                             std=std)]))
 
-test_data = datasets.FashionMNIST('data', train=False, download=False,
+test_data = datasets.FashionMNIST('data', train=False, download=True,
                                   transform=transforms.Compose([
                                       transforms.ToTensor(),
                                       transforms.Normalize(mean=mean,
                                                            std=std)]))
 
-train_loader = DataLoader(train_data, batch_size=32, shuffle=True)
+train_loader = DataLoader(train_data, batch_size=32, shuffle=True,
+                          **kwargs)
 
-test_loader = torch.utils.data.DataLoader(test_data, batch_size=32,
-                                          shuffle=False, **kwargs)
+test_loader = DataLoader(test_data, batch_size=32, shuffle=False,
+                         **kwargs)
 
 
 class VGGCell(nn.Module):
