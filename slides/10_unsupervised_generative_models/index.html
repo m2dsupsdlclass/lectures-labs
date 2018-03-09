@@ -12,15 +12,20 @@
        width: 50%;
        float: right;
      }
+     .footnote {
+        position: absolute;
+        bottom: 2em;
+        margin: 0em 2em;
+     }
      .grey { color: #bbbbbb; }
       </style>
     <link rel="stylesheet" type="text/css" href="slides.css">
   </head>
   <body>
-    <textarea id="source">
+      <textarea id="source">
 class: center, middle
 
-# Autoencoders, generative models and unsupervised learning
+# Unsupervised learning and Generative models
 
 Charles Ollion - Olivier Grisel
 
@@ -32,82 +37,78 @@ Charles Ollion - Olivier Grisel
 
 
 ---
-# Outline
+## Outline
 
-### Unsupervised learning and Autoencoders
+### Unsupervised learning
 
 --
 
-### Variational autoencoders
+### Autoencoders
 
 --
 
 ### Generative Adversarial Networks
 
---
-
-### Unsupervised and weakly supervised models
-
 ---
 class: middle, center
 
-# Weak supervision
+# Unsupervised learning
 
 ---
-# Weak supervision
+## Unsupervised learning
+
+Goal of unsupervised learning is to **find underlying structrure** in data, with several aims:
+
+--
+
+- clustering
+
+- building representations of data for a downstream supervised task (e.g. classification)
+
+--
+
+For complex data (text, image, sound, ...), there is plenty of hidden latent structure we hope to capture
+
+--
+
+- **Image data**: find low dimension, semantic visual representations, independant of variation sources
+
+- **Text data**: find fixed size, dense semantic representation of data
+
+---
+## Graal of unsupervised learning
+
+Find a low dimension space which captures all the **variation** of data and **disantangles** the different latent factors underlying the data
 
 .center[
-<img src="images/flickr.png" style="width: 300px;" />
+          <img src="images/latent_infogan.png" style="width: 650px;" />
 ]
 
 .footnote.small[
-Joulin, Armand, et al. "Learning visual features from large weakly supervised data." ECCV, 2016
+Chen, Xi, et al. Infogan: Interpretable representation learning by information maximizing generative adversarial nets. NIPS, 2016.
 ]
+---
+## Self-supervised learning
+
+find smart ways to build supervision, exploiting problem knowledge and regularities
 
 --
 
-- **Output dimension** (vocabulary) is huge: ~100 000
+Use text structure to create supervision
+
+- Word2Vec, Skip-thought vectors, language models
 
 --
-- After stopword removal, **importance sampling** of positive labels
 
---
-- Do not compute the full softmax, **randomly sample negatives**
+Can we do the same for image, video, etc?
 
 ---
-# Weak supervision
-
-Object localisation with only global image label data
+## Self-supervised learning
 
 .center[
-<img src="images/weaklocalisation.png" style="width: 650px;" />
+          <img src="images/gupta1.png" style="width: 380px;" />
 ]
 
-.footnote.small[
-Oquab, Maxime, "Is object localization for free? – Weakly-supervised learning with convolutional neural networks", 2015
-]
-
-- Fully convolutional network at different image scales
-
---
-- Loss: $- \max C\_{i,j}^{label} + \max C\_{i,j}^{other}$
-
---
-- Provides good localisation of **center** of objects
-
---
-- Image-level classification is on par with / better than  object-level classification
----
-# Self-supervised learning
-
-- **No labels at all**: find smart ways to build supervision
-
----
-# Self-supervised learning
-
-.center[
-<img src="images/gupta1.png" style="width: 400px;" />
-]
 
 .footnote.small[
 Doersch, Carl, Abhinav Gupta, and Alexei A. Efros. "Unsupervised visual representation learning by context prediction." ICCV 2015.
@@ -116,41 +117,10 @@ Doersch, Carl, Abhinav Gupta, and Alexei A. Efros. "Unsupervised visual represen
 --
 
 - Predict patches arrangement in images: 8 class classifier
+- Siamese architecture for the two patches + concat
 
 ---
-# Labels Take Away
-
-number of *unsupervised* **>>** *Weakly-supervised*  **>>** *Supervised* data
-
---
-
-number of *class labels* **>>** *bounding boxes* **>>** *segmentation masks*
-
---
-
-- For most cases, use **ImageNet pre-trained networks**
-
---
-- Good ongoing research on learning *weakly* supervised features: cover larger spectrum of image domains
-
---
-- Unsupervised learning of features still inferior to ImageNet features
-
---
-
-Segmentation and localisation using **weak labels**: very early but promising results
-
---
-
-Use of **simulations** for localisation / segmentation data (GTA V...)
-
----
-class: middle, center
-
-# Lab 10: Room B316 and B543 in 15min!
-
----
-# Bonus: Self-supervised 
+# Self-supervised from video
 
 .center[
 <img src="images/gupta2.png" style="width: 380px;" />
@@ -167,13 +137,34 @@ Wang, Xiaolong, and Abhinav Gupta. "Unsupervised learning of visual representati
 - Train a siamese net with positive pairs = similar objects detected
 
 --
-- Hard negative mining: find objects with large movement
+- Hard pairs mining: find objects with large movement
 
 ---
-
 class: middle, center
 
-# Lab 1: Room C48-C49 in 15min!
+# Autoencoders
+
+---
+## Classic Autoencoder
+
+.center[
+<img src="images/autoencoder.png" style="width: 420px;" />
+]
+
+--
+
+Self supervision: reconstruction loss of the input, usually:
+
+$$l(x,y) = || f(x) - y ||^2_2$$
+
+--
+
+z is called the latent code
+
+---
+class: middle, center
+
+# Lab 10: Room C48-C49 in 15min!
 
     </textarea>
     <style TYPE="text/css">

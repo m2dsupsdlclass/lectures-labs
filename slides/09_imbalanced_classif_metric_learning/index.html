@@ -552,11 +552,36 @@ Commercial recognition systems are trained on a large datasets like 10/100 milli
 
 --
 
-## Deploying
+## Deploying Verification
 
 Pre-compute all the images that you are using as a comparison to the vector f(x(j))
 When a new image that needs to be compared, get its vector f(x(i)) then put it with all the pre computed vectors and pass it to the sigmoid function.
 
+---
+## Labels Take Away
+
+number of *unsupervised* **>>** *Weakly-supervised*  **>>** *Supervised* data
+
+--
+
+number of *class labels* **>>** *bounding boxes* **>>** *segmentation masks*
+
+--
+
+For most cases, use **ImageNet pre-trained networks**
+
+--
+
+- For most cases, use a classifier with softmax
+- If you have many classes, and/or strong class imbalance use representation learning
+- both can give useful embeddings for clustering / low shot learning
+
+--
+ Good ongoing research on learning *weakly* supervised features: cover larger spectrum of image domains
+
+--
+
+Use of **simulations** for localisation / segmentation data (GTA V...)
 
 ???
 
