@@ -39,11 +39,11 @@ Charles Ollion - Olivier Grisel
 ## Classic Deep Learning data setup
 
 - Classification with a single label per sample
-- 2-1000 classes ; 1000 samples per class
+- 2-1000 classes ; 1000+ samples per class
 
 --
 
-### real life problems
+### Real life problems
 
 What if I have multiple classes per sample?
 
@@ -53,7 +53,7 @@ What if I have unbalanced or noisy labels?
 
 --
 
-what if I have 1M classes and 10 samples / class?
+What if I have 1M classes and 10 samples / class?
 
 ---
 ## Outline
@@ -92,7 +92,9 @@ x = Dense(1000, activation="softmax")(x)
 
 _Object detection is multilabel!_
 
-Replace `softmax` with `sigmoid` activation
+Replace `softmax` with `sigmoid` (output activation)
+
+Replace `categorical_crossentropy` with `binary_crossentropy` (loss)
 
 ```python
 # ...
@@ -103,13 +105,14 @@ x = Dense(1000, activation="sigmoid")(x)
 
 --
 
-Similar to having a binary classifier for each class
+Similar to having one binary classifier for each class but with shared
+activations on hidden layers.
 
 $y^{true}$ is a binary vector corresponding to classes present in the image.
 
 --
 
-**problem** : hard to label images for ALL possible tags!
+**Problem** : costly to label images for ALL possible tags!
 
 ---
 # Weak supervision
@@ -140,7 +143,7 @@ Train in weak classification scheme
 
 **How to measure precision/recall?**
 
-- build a (smaller) fully labeled test set
+- Build a (smaller) fully labeled test set
 
 .footnote.small[
 Garrigues, P., Farfade, S., Izadinia, H., Boakye, K., & Kalantidis, Y. (2016). Tag prediction at flickr: a view from the darkroom. NIPS workshop on large scale CV 2016
@@ -150,8 +153,8 @@ Garrigues, P., Farfade, S., Izadinia, H., Boakye, K., & Kalantidis, Y. (2016). T
 
 **How to interpret the score?**
 
-- **Consistent across tags:** A score of 0.8 for “cat” classifier ~ same meaning as score of 0.8 for the “flower” classifier
-- **Interpretable:** Score should reflect the posterior of a tag being present in an image, e.g. p(dog|image)
+- **Consistent across tags:** a score of 0.8 for “cat” classifier ~ same meaning as score of 0.8 for the “flower” classifier
+- **Interpretable:** score should reflect the posterior of a tag being present in an image, e.g. p(dog|image)
 
 --
 
@@ -173,12 +176,24 @@ ex: Face Recognition/Verification
           <img src="images/lfw.png" style="width: 500px;" />
 ]
 
-- **Recognition:** Given a face, classify among K possible persons
+- **Recognition:** given a face, classify among K possible persons
 - **Verification:** verify that two faces belongs to the same person
 
 --
 
-A verification system = similarity measure. If it's really good, useful for recognition
+A verification system = similarity measure. If it's really good, useful for recognition.
+
+???
+
+- **Recognition:** multi-class classification. Model cannot predict identities
+unseen in the training set.
+
+- **Verification:** binary classification on pairs of faces. Can
+generalize to identities unseen in the training set. Not necessary to
+retrain the full model to handle new identities.
+
+
+
 ---
 ## Learning a distance function
 
@@ -187,7 +202,7 @@ We want to build $d_{\theta}( x_1, x_2 )$ which indicates degree of difference b
 
 --
 
-we define $T$ such that if $d_{\theta}( x_1, x_2 ) < T$, we consider $x_1$ and $x_2$ to be of the same class (e.g. identity)
+We define $T$ such that if $d_{\theta}( x_1, x_2 ) < T$, we consider $x_1$ and $x_2$ to be of the same class (e.g. identity)
 
 --
 
@@ -220,8 +235,8 @@ euclidean distance) represents **semantic distance**.
 
 --
 
-For other problems (sound, NLP), different networks may be used (RNNs, ...) which
-output a fixed dimension vector representing the data.
+For other problems (sound, NLP), different networks may be used (CNN with 1D convolutions, RNNs, ...) which
+output a fixed dimension vector representing each input element.
 
 --
 
