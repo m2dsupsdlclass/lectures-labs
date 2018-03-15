@@ -55,6 +55,9 @@ What if I have unbalanced or noisy labels?
 
 What if I have 1M classes and 10 samples / class?
 
+???
+class imbalance: frequent for fraud anomaly detectionxs
+
 ---
 ## Outline
 
@@ -74,11 +77,34 @@ class: middle, center
 # Multi-labeling and Sampling strategies
 
 ---
-## From Classification to multilabel
+## Dealing with Imbalance
 
-_Object detection is multilabel!_
+Many real-life datasets are imbalanced, e.g. **anomaly detection**: (binary classification, most of the data is normal, very few points are anomalies)
 
-Classic classification
+--
+
+The training process may fail if most batches have only a single class in them
+
+You may use **oversampling**, **importance weighting** of minority classes / samples, to help the optimization process. In Keras:
+
+--
+
+```python
+# build your own batches and add weights
+model.train_on_batch(self, x, y, class_weight=None, sample_weight=None)
+``` 
+--
+
+Evaluation must be very rigorous (the test set should represent the **true distribution** of data and labels)
+
+???
+
+Binary imbalance, try to build batches with 1/3 of the minority class and 2/3 majority
+---
+## Multilabel classification
+
+Build a **binary classifier for each class** but with shared
+activations on hidden layers. Easily adapted from classic classification:
 
 ```python
 # ...
@@ -87,14 +113,15 @@ x = GlobalAveragePooling2D()(x)
 x = Dense(1000, activation="softmax")(x)
 ```
 
+???
+Know any system we already talked about which is multilabel?
+_Object detection such as Fast RCNN is multilabel!_
+
 ---
-## From Classification to multilabel
+## Multilabel classification 
 
-_Object detection is multilabel!_
-
-Replace `softmax` with `sigmoid` (output activation)
-
-Replace `categorical_crossentropy` with `binary_crossentropy` (loss)
+Build a **binary classifier for each class** but with shared
+activations on hidden layers. Easily adapted from classic classification:
 
 ```python
 # ...
@@ -102,17 +129,17 @@ x = Convolution2D(2048, 3)(x)
 x = GlobalAveragePooling2D()(x)
 x = Dense(1000, activation="sigmoid")(x)
 ```
+Replace `softmax` with `sigmoid` (output activation)
+
+Replace `categorical_crossentropy` with `binary_crossentropy` (loss)
 
 --
 
-Similar to having one binary classifier for each class but with shared
-activations on hidden layers.
-
-$y^{true}$ is a binary vector corresponding to classes present in the image.
+$y^{true}$ is a binary vector corresponding to classes present in the image (many-hot encoding).
 
 --
 
-**Problem** : costly to label images for ALL possible tags!
+**Problem** : costly to label images exhaustively for ALL possible tags 
 
 ---
 # Weak supervision
@@ -135,15 +162,14 @@ Joulin, Armand, et al. "Learning visual features from large weakly supervised da
 --
 - Do not compute the full softmax, **randomly sample negatives**
 
+???
+Useful as tagging system or representation learning
+used in production at Heuritech to pretrain models
 ---
 
 ## Inference tricks
 
-Train in weak classification scheme
-
-**How to measure precision/recall?**
-
-- Build a (smaller) fully labeled test set
+You may train with a **softmax**, and do multilabel inference with a **sigmoid**
 
 .footnote.small[
 Garrigues, P., Farfade, S., Izadinia, H., Boakye, K., & Kalantidis, Y. (2016). Tag prediction at flickr: a view from the darkroom. NIPS workshop on large scale CV 2016
@@ -151,15 +177,20 @@ Garrigues, P., Farfade, S., Izadinia, H., Boakye, K., & Kalantidis, Y. (2016). T
 
 --
 
-**How to interpret the score?**
+Fine tune the **output bias** parameter on a small by **fully labeled** dataset
 
-- **Consistent across tags:** a score of 0.8 for “cat” classifier ~ same meaning as score of 0.8 for the “flower” classifier
-- **Interpretable:** score should reflect the posterior of a tag being present in an image, e.g. p(dog|image)
+Score reflects the posterior of a tag being present in an image, e.g.  $p(dog|image)$
 
 --
 
-Compute a biais for each class depending on a fully labeled set
+measure **precision/recall** on a fully labeled test set
 
+???
+output score is **Interpretable**: it should 
+**Consistent across tags:** a score of 0.8 for “cat” classifier ~ same meaning as score of 0.8 for the “flower” classifier (while no guarantee)
+
+Impossible to measure a correct precision / recall on the weak dataset
+This is what we use at Heuritech for multilabeling
 ---
 class: middle, center
 
@@ -181,7 +212,7 @@ ex: Face Recognition/Verification
 
 --
 
-A verification system = similarity measure. If it's really good, useful for recognition.
+A verification system can be implemented as a similarity measure. If it's really good, useful for recognition.
 
 ???
 
@@ -212,12 +243,13 @@ We define $T$ such that if $d_{\theta}( x_1, x_2 ) < T$, we consider $x_1$ and $
 
 <br/>
 
-Also look at: Mahalanobis distance Metric Learning
-.small[(more theoretical framework, but limited to linear projections, much less useful for images)]
+**Mahalanobis distance Metric Learning** may be used to build distances, but are limited to linear projections, which won't be enough for fine-grained image analysis
 
 .footnote.small[
 Weinberger, Kilian Q., John Blitzer, and Lawrence K. Saul. "Distance metric learning for large margin nearest neighbor classification." Advances in neural information processing systems. 2006.
 ]
+???
+not a real distance, but we just want a semantic proxy of a distance
 
 ---
 ## Learning a distance function
@@ -242,6 +274,9 @@ output a fixed dimension vector representing each input element.
 
 Training $f_{\theta}$ is also called **representation learning**
 
+???
+Euclidean distance directly in the space of pixels is not a good proxy: very dependant for instance of lighting conditions or pose
+
 ---
 ## Siamese networks
 
@@ -253,6 +288,8 @@ Training $f_{\theta}$ is also called **representation learning**
 Chopra, Sumit, Raia Hadsell, and Yann LeCun. "Learning a similarity metric discriminatively, with application to face verification." CVPR 2005.
 ]
 
+???
+Build a loss function, and propagate to the two branches. Updated with the sum of gradients from the two branches
 ---
 ## Loss function
 
@@ -260,7 +297,7 @@ Chopra, Sumit, Raia Hadsell, and Yann LeCun. "Learning a similarity metric discr
           <img src="images/contrastive.png" style="width: 300px;" />
 ]
 
-**Contrastive loss:** Pushes together similar class pairs, and further away different class ones, up to a margin.
+**Contrastive loss:** Pushes together same class pairs, and further away different class ones, up to a margin.
 
 .footnote.small[
 Chopra, Sumit, Raia Hadsell, and Yann LeCun. "Learning a similarity metric discriminatively, with application to face verification." CVPR 2005.
@@ -280,7 +317,8 @@ Alternatively, **absolute difference + Binary classification**:
 
 $$y = sigmoid ( \mathbf{w} \cdot |f\_{\theta}(x\_1) - f\_{\theta}(x\_2)| + b)$$
 
-
+???
+difference is a vector
 --
 
 Also, **concat + Binary classification**
@@ -290,13 +328,15 @@ $$y = sigmoid ( \mathbf{w} \cdot f\_{\theta}(x\_1) ||  f\_{\theta}(x\_2) + b)$$
 
 --
 
-Simpler, often less effective: simple regression after cosine similarity
+<br/>
+
+Simpler:regression after cosine similarity
 
 ---
 ## Training
 
-- sample positive pairs $(x_i, x_j)$, with $(i, j)$ of similar class
-- sample negative pairs $(x_i, x_j)$, with $(i, j)$ of different class
+- sample positive pairs $(x_i, x_j)$, with $(i, j)$ of same class
+- sample negative pairs $(x_i, x_j)$, with $(i, j)$ of different classes
 
 .footnote.small[
 Taigman et. al., 2014. DeepFace closing the gap to human level performance
@@ -305,11 +345,11 @@ Taigman et. al., 2014. DeepFace closing the gap to human level performance
 --
 
 
-Forward pass using both inputs through the two networks
+Forward pass using both inputs through the two networks (**same parameters**, **different activations**)
 
 --
 
-backpropagate through the two networks (same weights are updated twice)
+backpropagate through the two networks (the weights are updated with the **sum of the two gradients**)
 
 --
 
@@ -328,7 +368,7 @@ Can be tricky to train, sensible on input
 --
 
 - results http://vis-www.cs.umass.edu/lfw/results.html
-- DeepFace: 0.9735 classification accuracy
+- DeepFace: 0.9735 binary classification accuracy
 
 .footnote.small[
 Taigman et. al., 2014. DeepFace closing the gap to human level performance
@@ -373,24 +413,26 @@ class: middle, center
 A triplet: $(x^a, x^{+}, x^{-})$
 - an anchor image
 - positive image (same person as anchor)
-- negative image (different person as enchor)
+- negative image (different person as anchor)
 
 We compute $f_{\theta}$ for each of these 3 images
 
 --
+
 We want that:
 
-$||f(x^a) - f(x^{+})||_2 \leq ||f(x^a) - f(x^{-})||_2$
+$||f(x^a) - f(x^{-})||_2 \geq ||f(x^a) - f(x^{+})||_2$
 
 --
 
-$||f(x^a) - f(x^{+})||_2 - ||f(x^a) - f(x^{-})||_2 \leq 0$
+$||f(x^a) - f(x^{-})||_2 - ||f(x^a) - f(x^{+})||_2 \geq \alpha$
+
+$\alpha$ **margin** typically small positive number $(0.2, 0.5, \cdot)$
 
 --
 
-$||f(x^a) - f(x^{+})||_2 - ||f(x^a) - f(x^{-})||_2 \leq - \alpha$
+**minimize** $||f(x^a) - f(x^{+})||_2 - ||f(x^a) - f(x^{-})||_2 + \alpha $
 
-$\alpha$ margin typically small positive number $(0.2, 0.5, \cdot)$
 ???
 
 Although we did not a do direct comparison to other
@@ -419,33 +461,36 @@ Schroff et al.,2015, FaceNet: A unified embedding for face recognition and clust
 
 --
 
-Training
+**Training**
 
-- Sample a minibatch of triplets $\{(x^a, x^{+}, x^{-})_i\}$
+- Sample a minibatch of triplets $\\{(x^a, x^{+}, x^{-})_i\\}$
+- Forward pass on all 3 networks using $f_{\theta}$
 - Compute $\sum\_i l((x^a, x^{+}, x^{-})\_i)$
-- Propagate gradients to update $f_{\theta}$
 
 --
+- Compute the gradients through the 3 networks
+- update $f_{\theta}$ using the sum of 3 gradients
+
+???
 Also, L2 normalization of embeddings
 
 ---
 ## Hard negative sampling
 
-If anchor, positive and negative are chosen randomly, gradient in one batch quickly become almost $0$
+After a few epochs, If $(x^a, x^{+}, x^{-})$ are chosen randomly, it will be easy to satisfy the inequality.
 
 --
 
-Number of possible triplets is huge, random sampling is inefficient
+Gradient in one batch quickly become almost $0$ except for **hard cases**.
+Random sampling is inefficient to find these hard cases
 
 --
 
-Schedule and choose hard triplets:
-
-- Hard triplet sampling
+- **Hard triplet sampling:** sample $x^{-}$ such that:
 
 $||f(x^a) - f(x^{+})||_2 > ||f(x^a) - f(x^{-})||_2 + \alpha$
 
-- Semi Hard triplet sampling
+- **Semi Hard triplet sampling:** sample $x^{-}$ such that:
 
 $||f(x^a) - f(x^{+})||_2 > ||f(x^a) - f(x^{-})||_2$
 
@@ -467,34 +512,10 @@ Schroff, Florian, et al. Facenet: A unified embedding for face recognition and c
 - Face alignment is critical!
 
 ???
-Achieves a validation rate of 87% at false rate 0.001%
----
-## Improving Triplets
+Each line is a different identity (label)
+First 3 images can be seen as a hard triplet
+Face recognitoin: achieves a validation rate of 87% at false rate 0.001%
 
-
-.footnote.small[
-K. Sohn. Improved deep metric learning with multi-class N-pair loss objective, NIPS 2016 <br/>
-]
----
-## Histogram loss
-
-.center[
-          <img src="images/histogram.png" style="width: 460px;" />
-]
-
-Compute all the **positives similarities** and **negatives similarities** within a batch
-
-.footnote.small[
-Ustinova, Evgeniya, et al. Learning deep embeddings with histogram loss, NIPS 2016
-]
-
---
-
-The loss pushes to **seperate** the two similarity distributions
-
---
-
-Sample classes intelligently to have representative enough distributions
 ---
 ## Quadruplet loss
 
@@ -537,13 +558,33 @@ Huang, Chen, et al. Local similarity-aware deep feature embedding, NIPS 2016
 Sample a hard quadruplet $(i,j)$ most dissimilar positive sample, and $k$ and $l$ are hard negatives
 
 ---
+## Histogram loss
+
+.center[
+          <img src="images/histogram.png" style="width: 460px;" />
+]
+
+Compute all the **positives similarities** and **negatives similarities** within a batch
+
+.footnote.small[
+Ustinova, Evgeniya, et al. Learning deep embeddings with histogram loss, NIPS 2016
+]
+
+--
+
+The loss pushes to **seperate** the two similarity distributions (needs to be differentiable)
+
+--
+
+Sample classes **intelligently** to have representative enough distributions
+---
 ## Results
 
 .center[
           <img src="images/resquad.png" style="width: 500px;" />
 ]
 
-Metric: Recall @K
+Metric: **Recall @K**
 
 --
 
@@ -554,49 +595,46 @@ Metric: Recall @K
 --
 
 ImageNet pretrained is competitive!
-
+???
+recall @K: Rank all images by similarity to an input image ; is an image of similar class within the first K images
 ---
 ## Getting started
 
 Available open source implementations / pretrained models:
-- Openface
-- FaceNet
+- Openface https://cmusatyalab.github.io/openface/
+- FaceNet https://github.com/davidsandberg/facenet
 - DeepFace
 
 Commercial recognition systems are trained on a large datasets like 10/100 million images
 
 --
 
-## Deploying Verification
+**Deploying Verification models** e.g. Iphone FaceID: 
 
-Pre-compute all the images that you are using as a comparison to the vector f(x(j))
-When a new image that needs to be compared, get its vector f(x(i)) then put it with all the pre computed vectors and pass it to the sigmoid function.
+Beforehand, precompute representations of your 10 photos
+
+--
+
+At test time, compute representation of the photo, then compute similarities with the 10 representations
+
+If a similarity is within a predefined threshold then Unlock!
 
 ---
-## Labels Take Away
+## Take Aways on classification
 
-number of *unsupervised* **>>** *Weakly-supervised*  **>>** *Supervised* data
-
---
-
-number of *class labels* **>>** *bounding boxes* **>>** *segmentation masks*
-
---
-
-For most cases, use **ImageNet pre-trained networks**
-
---
-
-- For most cases, use a classifier with softmax
-- If you have many classes, and/or strong class imbalance use representation learning
+- For most cases, use a **classifier with softmax**
+- If you have many classes, and/or strong class imbalance use **representation learning**
 - both can give useful embeddings for clustering / low shot learning
+ 
+--
+ 
+
+- Use **ImageNet pre-trained features** in most cases
+- Ongoing research on learning *weakly* supervised features: cover larger spectrum of image domains
 
 --
- Good ongoing research on learning *weakly* supervised features: cover larger spectrum of image domains
 
---
-
-Use of **simulations** for localisation / segmentation data (GTA V...)
+Use of **simulations** for generating data esp localisation / segmentation data (GTA V...)
 
 ???
 
@@ -611,7 +649,7 @@ Schroff, Florian, et al. Facenet: A unified embedding for face recognition and c
 ---
 class: middle, center
 
-# Lab 1: Room C48-C49 in 15min!
+# Lab 09: Room B316 / B551-553 in 15min!
 
     </textarea>
     <style TYPE="text/css">
