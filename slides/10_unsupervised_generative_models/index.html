@@ -145,7 +145,7 @@ class: middle, center
 # Autoencoders
 
 ---
-## Classic Autoencoder
+## Autoencoder
 
 .center[
 <img src="images/autoencoder.png" style="width: 420px;" />
@@ -155,11 +155,32 @@ class: middle, center
 
 Self supervision: reconstruction loss of the input, usually:
 
-$$l(x,y) = || f(x) - y ||^2_2$$
+$$l(x, y = x) = || f(x) - x ||^2_2$$
 
 --
 
-z is called the latent code
+Binary crossentropy is also used
+
+---
+## Autoencoder
+
+.center[
+<img src="images/autoencoder.png" style="width: 420px;" />
+]
+
+Keeping the latent code $z$ small forces the network to learn a "smart" compression of the data, not just an identity function
+
+--
+
+Encoder and decoder can have arbritrary architecture (CNNs, RNNs...)
+---
+## Sparse/Denoising Autoencoder
+
+Adding a sparsity constraint on activations:
+
+$$ ||encoder(x)||_1 \sim \rho, \rho = 0.05 $$
+
+Learns sparse features, more easily interpretable
 
 ---
 class: middle, center
