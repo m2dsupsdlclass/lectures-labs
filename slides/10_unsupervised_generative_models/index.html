@@ -61,9 +61,8 @@ Goal of unsupervised learning is to **find underlying structrure** in data, with
 
 --
 
-- clustering
-
-- building representations of data for a downstream supervised task (e.g. classification)
+  - clustering
+  - building representations of data for a downstream supervised task (e.g. classification)
 
 --
 
@@ -71,9 +70,8 @@ For complex data (text, image, sound, ...), there is plenty of hidden latent str
 
 --
 
-- **Image data**: find low dimension, semantic visual representations, independant of variation sources
-
-- **Text data**: find fixed size, dense semantic representation of data
+  - **Image data**: find low dimension, semantic visual representations, independant of variation sources
+  - **Text data**: find fixed size, dense semantic representation of data
 
 ---
 ## Graal of unsupervised learning
@@ -81,7 +79,7 @@ For complex data (text, image, sound, ...), there is plenty of hidden latent str
 Find a low dimension space which captures all the **variation** of data and **disantangles** the different latent factors underlying the data
 
 .center[
-          <img src="images/latent_infogan.png" style="width: 650px;" />
+          <img src="images/latent_infogan.png" style="width: 640px;" />
 ]
 
 .footnote.small[
@@ -90,17 +88,24 @@ Chen, Xi, et al. Infogan: Interpretable representation learning by information m
 ---
 ## Self-supervised learning
 
-find smart ways to build supervision, exploiting problem knowledge and regularities
+find smart ways to **build supervision** without labels, exploiting domain knowledge and regularities
 
 --
 
-Use text structure to create supervision
+Use **text structure** to create supervision
 
 - Word2Vec, Skip-thought vectors, language models
 
 --
 
-Can we do the same for image, video, etc?
+Can we do the same for other domains?
+
+- **Image:** exploit spatial context of an object
+- **Sound, video:** exploit temporal context
+
+--
+
+No direct **accuracy** measure: usually tested through a downstream task
 
 ---
 ## Self-supervised learning
@@ -153,13 +158,13 @@ class: middle, center
 
 --
 
-Self supervision: reconstruction loss of the input, usually:
+Supervision : reconstruction loss of the input, usually:
 
 $$l(x, y = x) = || f(x) - x ||^2_2$$
 
 --
 
-Binary crossentropy is also used
+**Binary crossentropy** is also used
 
 ---
 ## Autoencoder
@@ -168,7 +173,7 @@ Binary crossentropy is also used
           <img src="images/autoencoder.png" style="width: 420px;" />
 ]
 
-Keeping the latent code $z$ small forces the network to learn a "smart" compression of the data, not just an identity function
+Keeping the **latent code** $z$ low-dimensional forces the network to learn a "smart" compression of the data, not just an identity function
 
 --
 
@@ -180,12 +185,33 @@ Adding a sparsity constraint on activations:
 
 $$ ||encoder(x)||_1 \sim \rho, \rho = 0.05 $$
 
-Learns sparse features, more easily interpretable
+Learns sparse features, easily interpretable
+
+--
+
+**denoising autoencoder**: force features for noise robustness
+
+.center[
+          <img src="images/denoising.png" style="width: 400px;" />
+]
 
 ---
-###
+## Uses and limitations
 
-Results
+After **pre-training** use the latent code $z$ as input to a classifier instead of $x$
+
+**Semi-supervised learning** simultaneous learning of the latent code (on a large, unlabeled dataset) and the classifier (on a smaller, labeled dataset)
+
+--
+
+Other use: Use decoder $D(x)$ as a **Generative model**: generate samples from random noise
+
+--
+
+**Limitations :**
+
+- direct autoencoder fail to capture good representations for complex data such as images
+- The generative model is usually of very poor quality (very blurry for images for instance)
 
 ---
 ## Reality Check
@@ -200,9 +226,9 @@ For image features, **ImageNet pretraining** is still **much better** than unsup
 Pathak, Deepak, et al. Context encoders: Feature learning by inpainting. CVPR 2016.
 ]
 
---
 
-Fine-tuned on Pascal VOC dataset
+- Results shown after fine-tuned the network on **Pascal VOC dataset**
+- The "ours" method is feature representation based on context inpainting
 
 ---
 
@@ -217,8 +243,10 @@ class: middle, center
 ## Generative Adversarial Networks
 
 .center[
-          <img src="images/gan_vanilla.jpg" style="width: 260px;" />
+          <img src="images/gan_vanilla.jpg" style="width: 240px;" />
 ]
+
+Alternate training of a **generative network** $G$ and a **discrimininative network** $D$
 
 .footnote.small[
 Goodfellow, Ian, et al. Generative adversarial nets. NIPS 2014.
@@ -227,34 +255,51 @@ Goodfellow, Ian, et al. Generative adversarial nets. NIPS 2014.
 ---
 ## GANs
 
-Alternate training of a **generative network** $G$ and a **discrimininative network** $D$
-
---
-
 - D tries to find out which example are generated or real
 - G tries to fool D into thinking its generated examples are real
 
----
-## GANs
+--
 
-Todo: plenty of explanation, 1D explanation
-
----
-## Info GAN
+Sample real data $x \sim p_{data}$
 
 .center[
-          <img src="images/gan_info.jpg" style="width: 260px;" />
-]
-
-.footnote.small[
-Chen, Xi, et al. Infogan: Interpretable representation learning by information maximizing generative adversarial nets. NIPS, 2016.
+          <img src="images/gan_eq1.png" style="width: 640px;" />
 ]
 
 --
 
+Sample $z$ and generate fake data $G(z)$
+
 .center[
-          <img src="images/latent_infogan.png" style="width: 350px;" />
+          <img src="images/gan_eq2.png" style="width: 640px;" />
 ]
+--
+
+.center[
+          <img src="images/gan_eq3.png" style="width: 640px;" />
+]
+---
+## GANs
+
+**1D-example**
+
+.center[
+          <img src="images/gan_1d.png" style="width: 560px;" />
+]
+
+- optimal: $\color{blue}{D} = \frac{1}{2}$ , $\color{green}{G(z)} = p_{data}$ 
+--
+
+- $G$ never "sees" training data, it is solely updated from gradients coming from $D$
+--
+
+- Naive Keras implementation:
+
+```python
+d_loss = K.mean(-K.log(Dx) - K.log(1 - DGz))
+g_loss = K.mean(K.log(1 - DGz))
+```
+
 ---
 ## DC-GAN
 
@@ -262,11 +307,48 @@ Chen, Xi, et al. Infogan: Interpretable representation learning by information m
           <img src="images/dcgan.png" style="width: 560px;" />
 ]
 
+- GANs training is unstable, and may suffer from **mode collapse**
+--
+- **Sensitive hyperparameters:** Use of batchnorm, strided convolutions, careful learning rates, several $D$ updates per $G$ updates...
+
 .footnote.small[
 Radford, Alec, Luke Metz, and Soumith Chintala. Unsupervised representation learning with deep convolutional generative adversarial networks. 2015.
 ]
+
 ---
-## Image generation research
+## Info GAN
+
+.footnote.small[
+Chen, Xi, et al. Infogan: Interpretable representation learning by information maximizing generative adversarial nets. NIPS, 2016.
+]
+
+
+.middle[<img src="images/gan_info.jpg" style="width: 240px;" />]
+
+--
+
+Separate noise $\mathbf{Z}$ and latent variables $\mathbf{C}$ and maximizes the mutual information between $c$ the and the observation $G(z,c)$
+
+???
+
+It’s not practical to calculate the mutual information explicitly, so we add an “auxiliary” distribution $Q(c|x)$, to approximate the real $P(c|x)$
+which is modeled by a parameterized neural network, (with some layers shared with the discriminator).
+
+---
+## Info GAN
+
+.footnote.small[
+Chen, Xi, et al. Infogan: Interpretable representation learning by information maximizing generative adversarial nets. NIPS, 2016.
+]
+
+
+.middle[<img src="images/gan_info.jpg" style="width: 240px;" />]
+.middle[<img src="images/latent_infogan.png" style="width: 470px;" />]
+
+Separate noise $\mathbf{Z}$ and latent variables $\mathbf{C}$ and maximizes the mutual information between $c$ the and the observation $G(z,c)$
+
+---
+## Progressive growing of GANs
 
 .center[
           <img src="images/nvidia.gif" style="width: 360px;" />
@@ -277,6 +359,38 @@ All images are generated by walking through the latent space
 .footnote.small[
 Karras, Tero, et al. Progressive growing of gans for improved quality, stability, and variation. 2017.
 ]
+---
+## Pix2pix: Conditional GANs
+
+.center[
+          <img src="images/pix2pix_gan.png" style="width: 360px;" />
+]
+
+The generation no longer makes use of $z$, rather is conditionned by an input $x$
+
+.footnote.small[
+Isola, Phillip et al.  Image-to-Image Translation with Conditional Adversarial Networks, CVPR 2017
+]
+
+--
+.center[
+          <img src="images/pix2pix.jpeg" style="width: 560px;" />
+]
+
+---
+## Cycle GANs
+
+.center[
+          <img src="images/cyclegan.jpeg" style="width: 560px;" />
+]
+
+.footnote.small[
+Jun-Yan Zhu et al. Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks, ICCV 2017
+]
+
+--
+
+- No alignment between pairs needed, simply two different sets of images
 
 ---
 ## Super Resolution
