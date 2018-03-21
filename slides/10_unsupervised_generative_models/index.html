@@ -57,26 +57,51 @@ class: middle, center
 ---
 ## Unsupervised learning
 
-Goal of unsupervised learning is to **find underlying structrure** in data, with several aims:
+Generic goal of unsupervised learning is to **find underlying structrure** in data. Specific goals include:
 
---
+- clustering: group similar observations together;
 
-  - clustering
-  - building representations of data for a downstream supervised task (e.g. classification)
+- reduce dimensionality for visualization;
 
---
+- building a better representation of data for a downstream supervised task;
+
+- learning a likelihood function, e.g. to detect anomalies;
+
+- generating new samples similar to past observations.
+
+???
+
+Use case for generating new data:
+
+- arts: smart synthetizers for electronic music.
+
+- entertainment: procedural games: faces &amp; behaviors for NPCs, infinite landscapes....
+
+- more natural UI, e.g. speech synthesis.
+
+- media compression, denoising, restoration, super-resolution.
+
+---
+## Unsupervised learning
+
 
 For complex data (text, image, sound, ...), there is plenty of hidden latent structure we hope to capture
 
+  - **Image data**: find low dimension, semantic visual representations, independant of variation sources
+
+  - **Text data**: find fixed size, dense semantic representation of data
+
 --
 
-  - **Image data**: find low dimension, semantic visual representations, independant of variation sources
-  - **Text data**: find fixed size, dense semantic representation of data
+Latent space might be used to help build more efficient human labeling interfaces. 
+
+=> Goal: reduce labeling cost via active learning.
 
 ---
 ## Graal of unsupervised learning
 
-Find a low dimension space which captures all the **variation** of data and **disantangles** the different latent factors underlying the data
+Find a low dimension space which captures all the **variations** of data
+and **disantangles** the different latent factors underlying the data.
 
 .center[
           <img src="images/latent_infogan.png" style="width: 640px;" />
