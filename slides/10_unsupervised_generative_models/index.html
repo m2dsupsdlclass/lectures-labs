@@ -178,7 +178,7 @@ class: middle, center
 ## Autoencoder
 
 .center[
-          <img src="images/autoencoder.png" style="width: 420px;" />
+  <img src="images/autoencoder.png" style="width: 420px;" />
 ]
 
 --
@@ -295,7 +295,7 @@ $q\_{\phi}(\mathbf{z}|\mathbf{x})$ with continuous parameters $\phi$.
 
 --
 
-We can rewrite the log-likelihood as (exercise):
+We can rewrite the log-likelihood as:
 
 $$ log \, p\_\theta(\mathbf{x}^{(i)}) =
   \mathrm{D}\_{KL}(q\_{\phi}(\mathbf{z}|\mathbf{x}^{(i)})||p\_{\theta}(\mathbf{z}|\mathbf{x}^{(i)})) +
@@ -324,19 +324,27 @@ $$p\_\theta(\mathbf{z}) = \mathcal{N}(0, 1)$$
 --
 - Parametrize $p\_\theta(\mathbf{x}|\mathbf{z})$ by a neural network $f\_\theta$ (decoder):
 
-$$p\_\theta(\mathbf{x}|\mathbf{z}) = \mathcal{N}(f\_{\theta}(\mathbf{z}), 1)$$
+$$p\_\theta(\mathbf{x}^{(i)}|\mathbf{z}) = \mathcal{N}(f\_{\theta}(\mathbf{z}), 1)$$
 
 --
-- Parametrize $q\_\phi(\mathbf{z}|\mathbf{x})$ by a neural network with two heads
+- Parametrize $q\_\phi(\mathbf{z}|\mathbf{x}^{(i)})$ by a neural network with two heads
   $\mu\_\phi$ and $\sigma\_\phi$ (encoder):
 
 
-$$ q\_\phi(\mathbf{z}|\mathbf{x}) = \mathcal{N}(\mu\_\phi(\mathbf{x}), \sigma\_\phi(\mathbf{x}))$$
+$$ q\_\phi(\mathbf{z}|\mathbf{x}^{(i)}) = \mathcal{N}(\mu\_\phi(\mathbf{x}^{(i)}), \sigma\_\phi(\mathbf{x}^{(i)}))$$
 
 --
 - Reparametrization trick:
 
-$$ \mathbf{z} = \mu\_\phi(\mathbf{x}) + \sigma\_\phi(\mathbf{x}) \cdot \epsilon \quad \text{with} \quad \epsilon \sim \mathcal{N(0, 1)} $$
+$$ \mathbf{z} = \mu\_\phi(\mathbf{x}^{(i)}) + \sigma\_\phi(\mathbf{x}^{(i)}) \cdot \epsilon \quad \text{with} \quad \epsilon \sim \mathcal{N(0, 1)} $$
+
+???
+
+Reparametrization trick make the relationship between z and x
+deterministic and differentiable. Plugging everything in the lower bound
+objective function makes it possible to use stochastic gradient descent
+to optimize jointly over phi and theta by sampling a different epsilon
+for each x in the minibatch.
 
 ---
 class: middle, center
