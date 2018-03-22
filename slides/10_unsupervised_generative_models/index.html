@@ -185,7 +185,7 @@ class: middle, center
 
 Supervision : reconstruction loss of the input, usually:
 
-$$l(x, y = x) = || f(x) - x ||^2_2$$
+$$l(x, f(x)) = || f(x) - x ||^2_2$$
 
 --
 
@@ -198,7 +198,7 @@ $$l(x, y = x) = || f(x) - x ||^2_2$$
           <img src="images/autoencoder.png" style="width: 420px;" />
 ]
 
-Keeping the **latent code** $z$ low-dimensional forces the network to learn a "smart" compression of the data, not just an identity function
+Keeping the **latent code** $\mathbf{z}$ low-dimensional forces the network to learn a "smart" compression of the data, not just an identity function
 
 --
 
@@ -223,7 +223,7 @@ Learns sparse features, easily interpretable
 ---
 ## Uses and limitations
 
-After **pre-training** use the latent code $z$ as input to a classifier instead of $x$
+After **pre-training** use the latent code $\mathbf{z}$ as input to a classifier instead of $\mathbf{x}$
 
 **Semi-supervised learning** simultaneous learning of the latent code (on a large, unlabeled dataset) and the classifier (on a smaller, labeled dataset)
 
@@ -241,7 +241,7 @@ Other use: Use decoder $D(x)$ as a **Generative model**: generate samples from r
 ---
 ## Reality Check
 
-For image features, **ImageNet pretraining** is still **much better** than unsupervised
+For image features, **ImageNet pretraining** is still **much better** than unsupervised models
 
 .center[
           <img src="images/results_features.png" style="width: 420px;" />
@@ -491,7 +491,7 @@ Sample real data $x \sim p_{data}$
 
 --
 
-Sample $z$ and generate fake data $G(z)$
+Sample $\mathbf{z}$ and generate fake data $G(\mathbf{z})$
 
 .center[
           <img src="images/gan_eq2.png" style="width: 640px;" />
@@ -510,7 +510,7 @@ Sample $z$ and generate fake data $G(z)$
           <img src="images/gan_1d.png" style="width: 560px;" />
 ]
 
-- optimal: $\color{blue}{D} = \frac{1}{2}$ , $\color{green}{G(z)} = p_{data}$ 
+- optimal: $\color{blue}{D} = \frac{1}{2}$ , $\color{green}{G(\mathbf{z})} = p_{data}$
 --
 
 - $G$ never "sees" training data, it is solely updated from gradients coming from $D$
@@ -606,7 +606,7 @@ Karras, Tero, et al. Progressive growing of gans for improved quality, stability
           <img src="images/pix2pix_gan.png" style="width: 360px;" />
 ]
 
-The generation no longer makes use of $z$, rather is conditionned by an input $x$
+The generation no longer makes use of $\mathbf{z}$, rather is conditionned by an input $\mathbf{x}$
 
 .footnote.small[
 Isola, Phillip et al.  Image-to-Image Translation with Conditional Adversarial Networks, CVPR 2017
