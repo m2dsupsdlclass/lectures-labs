@@ -61,7 +61,7 @@ Generic goal of unsupervised learning is to **find underlying structrure** in da
 
 - clustering: group similar observations together;
 
-- reduce dimensionality for visualization;
+- reducing the dimensionality for visualization;
 
 - building a better representation of data for a downstream supervised task;
 
@@ -85,11 +85,11 @@ Use case for generating new data:
 ## Unsupervised learning
 
 
-For complex data (text, image, sound, ...), there is plenty of hidden latent structure we hope to capture
+For complex data (text, image, sound, ...), there is plenty of hidden latent structure we hope to capture:
 
-  - **Image data**: find low dimension, semantic visual representations, independant of variation sources
+  - **Image data**: find low dimensional semantic representations, independent sources of variation;
 
-  - **Text data**: find fixed size, dense semantic representation of data
+  - **Text data**: find fixed size, dense semantic representation of data.
 
 --
 
@@ -379,6 +379,83 @@ class: middle, center
 
 The reparametrization makes the objective differentiable wrt. $\theta$ &amp; $\phi$.
 
+---
+## Conv/deconv VAEs
+
+.center[
+<iframe width="560" height="315"
+  src="https://www.youtube.com/embed/XNZIN7Jh3Sg"
+  frameborder="0" allow="autoplay; encrypted-media"
+  allowfullscreen></iframe>
+]
+
+.footnote.small[ [conv/deconv
+VAE](https://www.youtube.com/watch?v=XNZIN7Jh3Sg) trained by Alec
+Radford in 2015 on Labeled Faces in the Wild (LFW) dataset, 2h on single
+GTX 980]
+
+---
+## Variational Autoencoders (VAE)
+
+### Remarks
+
+- Similar to Denoising AE but noise added to hidden layer;
+- Motivated by a well-defined probablistic model of the generative process;
+- Quite easy to train in practice.
+
+--
+
+### Limitations
+
+- Is the continuous parametrization of posterior latent distribution
+  too restrictive?
+- Would a discrete latent variable make more sense?
+- Gaussian parametrization of the decoder output results in blurry
+  images.
+
+---
+## Discrete latent variables VAE
+
+### [Gumbel-Softmax](https://arxiv.org/abs/1611.01144) / [Concrete distribution](https://arxiv.org/abs/1611.00712) VAEs
+
+- Adapts the reparametrization trick for a discrete $\mathbf{z}$.
+- Trains ok but no ground breaking applications so far.
+
+--
+
+### [VQ-VAE](https://arxiv.org/abs/1711.00937)
+
+- $\mathbf{z}$ is a vector indexed in a trainable embedding matrix.
+- Select $\mathbf{z}$ as embedding vector closest to encoder output.
+- Approximate backprop via "gradient-copy" trick.
+- Very expressive model, especially when combined with strong decoders and priors.
+
+---
+## VQ-VAE imagenet results
+
+.center[
+<image src="images/vqvae-imagenet.jpeg" width="700px" />
+]
+
+.small.footnote[
+[Neural Discrete Representation Learning](https://arxiv.org/abs/1711.00937)
+Aaron van den Oord, Oriol Vinyals, Koray Kavukcuoglu
+]
+
+---
+## VQ-VAE speech results
+
+Speech synth demo: https://avdnoord.github.io/homepage/vqvae/
+
+Example reconstruction:
+
+- Original: <audio src="https://avdnoord.github.io/homepage/audio/pt1_orig3.wav" controls="controls"></audio>
+- Reconstructed: <audio src="https://avdnoord.github.io/homepage/audio/pt1_recon3.wav" controls="controls"></audio>
+
+Reconstruction conditionned on different speaker id:
+
+- Original: <audio src="https://avdnoord.github.io/homepage/audio/pt3_source4.wav" controls="controls"></audio>
+- Reconstructed: <audio src="https://avdnoord.github.io/homepage/audio/pt3_transfer4.wav" controls="controls"></audio>
 
 ---
 class: middle, center
