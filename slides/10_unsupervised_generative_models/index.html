@@ -100,7 +100,7 @@ Latent space might be used to help build more efficient human labeling interface
 ---
 ## Graal of unsupervised learning
 
-Find a low dimension space which captures all the **variations** of data
+A low dimension space which captures all the **variations** of data
 and **disantangles** the different latent factors underlying the data.
 
 .center[
@@ -178,7 +178,7 @@ class: middle, center
 ## Autoencoder
 
 .center[
-  <img src="images/autoencoder.png" style="width: 420px;" />
+          <img src="images/autoencoder.png" style="width: 420px;" />
 ]
 
 --
@@ -195,7 +195,7 @@ $$l(x, y = x) = || f(x) - x ||^2_2$$
 ## Autoencoder
 
 .center[
-  <img src="images/autoencoder.png" style="width: 420px;" />
+          <img src="images/autoencoder.png" style="width: 420px;" />
 ]
 
 Keeping the **latent code** $z$ low-dimensional forces the network to learn a "smart" compression of the data, not just an identity function
@@ -217,7 +217,7 @@ Learns sparse features, easily interpretable
 **Denoising Autoencoder**: train features for robustness to noise.
 
 .center[
-  <img src="images/denoising.png" style="width: 400px;" />
+          <img src="images/denoising.png" style="width: 400px;" />
 ]
 
 ---
@@ -354,28 +354,28 @@ for each x in the minibatch.
 ---
 class: middle, center
 
-<img src="images/vae_0.svg" style="width: 700px;" />
+          <img src="images/vae_0.svg" style="width: 700px;" />
 
 The **decoder** $f\_\theta$ defines the likelihood of data.
 
 ---
 class: middle, center
 
-<img src="images/vae_1.svg" style="width: 700px;" />
+          <img src="images/vae_1.svg" style="width: 700px;" />
 
 The latent variable $\mathbf{z}$ is stochastic.
 
 ---
 class: middle, center
 
-<img src="images/vae_2.svg" style="width: 700px;" />
+          <img src="images/vae_2.svg" style="width: 700px;" />
 
 The **encoder** $f\_\phi$ defines an approximate posterior on $\mathbf{z}$.
 
 ---
 class: middle, center
 
-<img src="images/vae_3.svg" style="width: 700px;" />
+          <img src="images/vae_3.svg" style="width: 700px;" />
 
 The reparametrization makes the objective differentiable wrt. $\theta$ &amp; $\phi$.
 
@@ -453,13 +453,30 @@ g_loss = K.mean(K.log(1 - DGz))
           <img src="images/dcgan.png" style="width: 560px;" />
 ]
 
+.footnote.small[
+Radford, Alec, Luke Metz, and Soumith Chintala. Unsupervised representation learning with deep convolutional generative adversarial networks. 2015.
+]
+
 - GANs training is unstable, and may suffer from **mode collapse**
+
 --
 - **Sensitive hyperparameters:** Use of batchnorm, strided convolutions, careful learning rates, several $D$ updates per $G$ updates...
+
+---
+## DC-GAN
+
+.center[
+          <img src="images/gan_vector_glasses.png" style="width: 560px;" />
+]
 
 .footnote.small[
 Radford, Alec, Luke Metz, and Soumith Chintala. Unsupervised representation learning with deep convolutional generative adversarial networks. 2015.
 ]
+
+- Generator generates less-blurry images than VAEs
+
+--
+- Latent space has some local linar properties (vector arithmetic like with Word2Vec)
 
 ---
 ## Info GAN
@@ -563,6 +580,32 @@ Ledig, Christian, et al. Photo-realistic single image super-resolution using a g
 Ganin, Yaroslav, et al. Domain-adversarial training of neural networks. JMLR 2016.
 ]
 
+--
+
+- Forces the features (green) **not** to be specialised in discriminating between domains
+
+--
+- Easy to implement in TensorFlow / Pytorch with a ```GradientReversalLayer```
+
+---
+## Domain Adversarial Training
+
+- Train on source domain **with labels**, and target domain **without labels**
+
+--
+- Test and measure accuracy on target domain
+
+--
+- Reprensentation tend to be more unbiased towards the domain
+
+.center[
+          <img src="images/representations.png" style="width: 430px;" />
+]
+
+???
+
+Plenty of other techniques besides DAN, such as Domain Separation Networks
+
 ---
 ## Takeaways
 
@@ -612,7 +655,7 @@ Adversarial training is useful beyond generative models:
 - domain adaptation;
 - learning representations blind to sensitive attributes;
 - defend against malicious inputs (adversarial examples);
-- regularization by <tra></tra>ining on adversarial examples.
+- regularization by training on adversarial examples.
 
 --
 
