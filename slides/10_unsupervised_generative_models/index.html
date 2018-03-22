@@ -583,7 +583,9 @@ Ganin, Yaroslav, et al. Domain-adversarial training of neural networks. JMLR 201
 
 ???
 
-  - VAE likelihood bound is not necessarily that useful in practice.
+- VAE likelihood bound is not necessarily that useful in practice.
+- We don't know how loose is the bound.
+
 
 ---
 ## Takeaways
@@ -607,15 +609,21 @@ There exists other kinds of generative models, e.g. auto-regressive models:
 
 Adversarial training is useful beyond generative models:
 
-- regularization and domain adaptation;
+- domain adaptation;
 - learning representations blind to sensitive attributes;
-- attack and defend against malicious inputs.
+- defend against malicious inputs (adversarial examples);
+- regularization by <tra></tra>ining on adversarial examples.
 
 --
 
 Quality of samples from VAE and GAN depends a lot on the architectures
 of sub-networks.
 
+???
+
+Blindness to sensitive attributes is not necessarily the best way to
+tackle unfair or detrimental discrination. [Quantifying fairness is a
+complex topic](https://geomblog.github.io/fairness/).
 
 ---
 class: middle, center
