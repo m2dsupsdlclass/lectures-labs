@@ -590,16 +590,18 @@ Ganin, Yaroslav, et al. Domain-adversarial training of neural networks. JMLR 201
 ---
 ## Domain Adversarial Training
 
-- Train on source domain **with labels**, and target domain **without labels**
-
---
-- Test and measure accuracy on target domain
-
---
-- Reprensentation tend to be more unbiased towards the domain
+- Train **labeled** source domain + **unlabeled** target domain
 
 .center[
-          <img src="images/representations.png" style="width: 430px;" />
+          <img src="images/mnistsvhn.png" style="width: 430px;" />
+]
+
+--
+
+- Reprensentation tend to be **less biased** towards the domain
+
+.center[
+          <img src="images/representations.png" style="width: 460px;" />
 ]
 
 ???
