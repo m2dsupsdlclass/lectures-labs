@@ -379,6 +379,7 @@ class: middle, center
 
 The reparametrization makes the objective differentiable wrt. $\theta$ &amp; $\phi$.
 
+
 ---
 class: middle, center
 
@@ -561,6 +562,61 @@ Ledig, Christian, et al. Photo-realistic single image super-resolution using a g
 .footnote.small[
 Ganin, Yaroslav, et al. Domain-adversarial training of neural networks. JMLR 2016.
 ]
+
+---
+## Takeaways
+
+### (Reconstruction) Autoencoders
+
+- have no direct probabilistic interpretation;
+- are not designed to generate useful samples;
+- encoder defines a useful latent representation.
+
+--
+
+### VAEs
+
+- model explicitly (a lower bound of) the likelihood;
+- high quality samples from high dimensional distributions;
+- encoder defines a useful latent representation;
+- optimization problem is often well-behaved.
+
+???
+
+  - VAE likelihood bound is not necessarily that useful in practice.
+
+---
+## Takeaways
+
+### GANs
+
+- likelihood-free generative models;
+- high quality samples from high dimensional distributions;
+- discriminator not meant be used as encoder;
+- optimization problem is trickier than for VAEs (open research).
+
+--
+
+There exists other kinds of generative models, e.g. auto-regressive models:
+
+- examples: PixelCNN, WaveNet, RNN language models...
+- can be used as prior and decoder for VAEs, generators for GANs.
+
+---
+## Takeaways
+
+Adversarial training is useful beyond generative models:
+
+- regularization and domain adaptation;
+- learning representations blind to sensitive attributes;
+- attack and defend against malicious inputs.
+
+--
+
+Quality of samples from VAE and GAN depends a lot on the architectures
+of sub-networks.
+
+
 ---
 class: middle, center
 
