@@ -34,7 +34,7 @@ To take pictures with the webcam we will also need opencv-python:
     python3 -m pip install opencv-python
 
 If your laptop does not have a webcam or if opencv does not work, don't worry
-this is note mandatory.
+this is not mandatory.
 
 
 # Troubleshooting 
