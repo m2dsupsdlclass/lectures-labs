@@ -12,8 +12,6 @@ Saclay](http://datascience-x-master-paris-saclay.fr)
   src="slides/05_conv_nets_2/images/Logo_Master_Datascience.png" width="300"/></a>
 </p>
 
-### Note: We're adding content to this lecture for early 2018, expect a few broken things in the notebooks and slides during this process
-
 ## Table of contents
 
 The course covers the basics of Deep Learning, with a focus on applications.
@@ -22,8 +20,8 @@ The course covers the basics of Deep Learning, with a focus on applications.
 
   - [Intro to Deep Learning](https://m2dsupsdlclass.github.io/lectures-labs/slides/01_intro_to_deep_learning/index.html)
   - [Neural Networks and Backpropagation](https://m2dsupsdlclass.github.io/lectures-labs/slides/02_backprop/index.html)
-  - [Embeddings and Recommender Systems](https://m2dsupsdlclass.github.io/lectures-labs/slides/04_recommender_systems/index.html)
-  - [Convolutional Neural Networks for Image Classification](https://m2dsupsdlclass.github.io/lectures-labs/slides/03_conv_nets/index.html)
+  - [Embeddings and Recommender Systems](https://m2dsupsdlclass.github.io/lectures-labs/slides/03_recommender_systems/index.html)
+  - [Convolutional Neural Networks for Image Classification](https://m2dsupsdlclass.github.io/lectures-labs/slides/04_conv_nets/index.html)
   - [Deep Learning for Object Detection and Image Segmentation](https://m2dsupsdlclass.github.io/lectures-labs/slides/05_conv_nets_2/index.html)
   - [Recurrent Neural Networks and NLP](https://m2dsupsdlclass.github.io/lectures-labs/slides/06_deep_nlp/index.html)
   - [Sequence to sequence, attention and memory](https://m2dsupsdlclass.github.io/lectures-labs/slides/07_deep_nlp_2/index.html)
@@ -46,38 +44,59 @@ Please follow the [installation\_instructions.md](
 https://github.com/m2dsupsdlclass/lectures-labs/blob/master/installation_instructions.md)
 to get started.
 
-Direct links to the rendered notebooks including solutions (to be updated): 
+Direct links to the rendered notebooks including solutions (to be updated in rendered mode): 
 
-#### Lab 1: Neural Networks and Backpropagation
+#### Lab 1: Intro to Deep Learning
 
-  - [Intro to MLP with Keras, Numpy and TensorFlow](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/01_backprop/Intro_MLP_keras_numpy_tensorflow_rendered.ipynb)
+  - [Intro to MLP with Keras](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/01_keras/Intro%20Keras.ipynb)
+  - [Pretrained models with Keras](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/01_keras/Intro%20pretrained%20models%20for%20computer%20vision.ipynb)
 
-#### Lab 2: Embeddings and Recommender Systems
+#### Lab 2: Neural Networks and Backpropagation
 
-  - [Short Intro to Embeddings with Keras](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/02_neural_recsys/Short_Intro_to_Embeddings_with_Keras_rendered.ipynb)
-  - [Neural Recommender Systems with Explicit Feedback](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/02_neural_recsys/Explicit_Feedback_Neural_Recommender_System_rendered.ipynb)
-  - [Neural Recommender Systems with Implicit Feedback and the Triplet Loss](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/02_neural_recsys/Implicit_Feedback_Recsys_with_the_triplet_loss_rendered.ipynb)
+  - [Backpropagation in Neural Networks using Numpy](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/02_backprop/Backpropagation_numpy.ipynb)
+  - [Bonus: Backpropagation using TensorFlow](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/02_backprop/Backpropagation_tensorflow.ipynb)
 
-#### Lab 3: Convolutional Neural Networks for Image Classification
+#### Lab 3: Embeddings and Recommender Systems
 
-  - [Convolution and ConvNets with TensorFlow](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/03_conv_nets/ConvNets_with_TensorFlow_rendered.ipynb)
-  - [Pretrained ConvNets with Keras](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/03_conv_nets/Pretrained_ConvNets_with_Keras_rendered.ipynb)
-  - [Fine Tuning a pretrained ConvNet with Keras (GPU required)](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/03_conv_nets/Fine_Tuning_Deep_CNNs_with_GPU_rendered.ipynb)
+  - [Short Intro to Embeddings with Keras](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/03_neural_recsys/Short_Intro_to_Embeddings_with_Keras_rendered.ipynb)
+  - [Neural Recommender Systems with Explicit Feedback](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/03_neural_recsys/Explicit_Feedback_Neural_Recommender_System_rendered.ipynb)
+  - [Neural Recommender Systems with Implicit Feedback and the Triplet Loss](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/03_neural_recsys/Implicit_Feedback_Recsys_with_the_triplet_loss_rendered.ipynb)
 
-#### Lab 4: Deep Learning for Object Dection and Image Segmentation
+#### Lab 4: Convolutional Neural Networks for Image Classification
 
-  - [Fully Convolutional Neural Networks](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/04_conv_nets_2/Fully_Convolutional_Neural_Networks_rendered.ipynb)
-  - [ConvNets for Classification and Localization](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/04_conv_nets_2/ConvNets_for_Classification_and_Localization_rendered.ipynb)
+  - [Convolutions](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/04_conv_nets/Convolutions.ipynb)
+  - [Pretrained ConvNets with Keras](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/04_conv_nets/Pretrained_ConvNets_with_Keras_rendered.ipynb)
+  - [Fine Tuning a pretrained ConvNet with Keras (GPU required)](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/04_conv_nets/Fine_Tuning_Deep_CNNs_with_GPU_rendered.ipynb)
+  - [Bonus: Convolution and ConvNets with TensorFlow](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/04_conv_nets/ConvNets_with_TensorFlow_rendered.ipynb)
+#### Lab 5: Deep Learning for Object Dection and Image Segmentation
 
-#### Lab 5: Text Classification, Word Embeddings and Language Models
+  - [Fully Convolutional Neural Networks](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/05_conv_nets_2/Fully_Convolutional_Neural_Networks_rendered.ipynb)
+  - [ConvNets for Classification and Localization](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/05_conv_nets_2/ConvNets_for_Classification_and_Localization_rendered.ipynb)
 
-  - [Text Classification and Word Vectors](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/05_deep_nlp/NLP_word_vectors_classification_rendered.ipynb)
-  - [Character Level Language Model (GPU required)](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/05_deep_nlp/Character_Level_Language_Model_rendered.ipynb)
+#### Lab 6: Text Classification, Word Embeddings and Language Models
 
-#### Lab 6: Sequence to Sequence for Machine Translation
+  - [Text Classification and Word Vectors](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/06_deep_nlp/NLP_word_vectors_classification_rendered.ipynb)
+  - [Character Level Language Model (GPU required)](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/06_deep_nlp/Character_Level_Language_Model_rendered.ipynb)
 
-  - [Translation of Numeric Phrases with Seq2Seq](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/06_seq2seq/Translation_of_Numeric_Phrases_with_Seq2Seq_rendered.ipynb)
+#### Lab 7: Sequence to Sequence for Machine Translation
 
+  - [Translation of Numeric Phrases with Seq2Seq](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/07_seq2seq/Translation_of_Numeric_Phrases_with_Seq2Seq_rendered.ipynb)
+  
+#### Lab 8: Intro to PyTorch
+
+  - [Pytorch Introduction to Autograd](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/08_frameworks/A_PyTorch_introduction__autograd_in_action.ipynb)
+  - [Pytorch classification of Fashion MNIST](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/08_frameworks/Fashion_MNIST_classification.ipynb)
+  - [Stochastic Optimization Landscape in Pytorch](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/08_frameworks/Minimal_MLP__stochastic_optimization_landscape.ipynb)
+
+#### Lab 9: Siamese Networks and Triplet loss
+
+  - [Face verification using Siamese Nets](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/09_triplet_loss/Face_Verification_Using_Siamese_Nets.ipynb)
+  - [Face verification using Triplet loss](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/09_triplet_loss/Face_Verification_Using_Triplet_Loss.ipynb)
+
+#### Lab 10: Variational Auto Encoder
+
+  - [VAE on Fashion MNIST](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/10_unsupervised_generative_models/Variational_AutoEncoders.ipynb)
+  
 ## Acknowledgments
 
 This lecture is built and maintained by Olivier Grisel and Charles Ollion
