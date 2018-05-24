@@ -1,6 +1,6 @@
 from keras.models import Model, Sequential
 from keras.layers import Embedding, Flatten, Input, Dense, Dropout
-from keras.layers import Concatenate
+from keras.layers import Concatenate, Lambda
 from keras.regularizers import l2
 
 
