@@ -18,11 +18,14 @@ class LinearMLP(nn.Module):
 
     def forward(self, x):
         return self.w1 * self.w2 * x
-    
-def exp_risk_linear_mlp(w1, w2):
+
+
+def expected_risk_linear_mlp(w1, w2):
     return .5 * (8 / 3 - (8 / 3) * w1 * w2 + 2 / 3 * w1 ** 2 * w2 ** 2) + std ** 2
 
-W1, W2, risks, emp_risk, exp_risk = make_grids(x, y, exp_risk_func=exp_risk_linear_mlp)
+
+W1, W2, risks, emp_risk, exp_risk = make_grids(
+    x, y, LinearMLP, expected_risk_func=expected_risk_linear_mlp)
 init = torch.FloatTensor([2, -1.9])
 model = LinearMLP(init)
 iterate_rec, grad_rec = train(model, x, y, lr=.05, n_epochs=10)
