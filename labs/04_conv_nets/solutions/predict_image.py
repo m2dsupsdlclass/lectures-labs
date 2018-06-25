@@ -8,7 +8,8 @@ path = "images_resize/000007.jpg"
 img = imread(path)
 plt.imshow(img)
 
-img = resize(img, (224, 224), mode='reflect', preserve_range=True)
+img = resize(img, (224, 224), mode='reflect', preserve_range=True,
+             anti_aliasing=True)
 # add a dimension for a "batch" of 1 image
 img_batch = preprocess_input(img[np.newaxis]) 
 
