@@ -24,7 +24,7 @@ Check that you can import tensorflow with the python from anaconda:
     python3 -c "import tensorflow as tf; print(tf.__version__)"
     1.4.1
 
-We tested the notebooks with keras 2.1.2 and tensoflow 1.4.1.
+We tested the notebooks with keras 2.2 and tensoflow 1.8.
 
 Ideally: create a new jupyter notebook and check that you can import
 the numpy, matplotlib, keras and tensorflow  modules.
