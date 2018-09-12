@@ -68,6 +68,7 @@ Direct links to the rendered notebooks including solutions (to be updated in ren
   - [Pretrained ConvNets with Keras](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/04_conv_nets/Pretrained_ConvNets_with_Keras_rendered.ipynb)
   - [Fine Tuning a pretrained ConvNet with Keras (GPU required)](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/04_conv_nets/Fine_Tuning_Deep_CNNs_with_GPU_rendered.ipynb)
   - [Bonus: Convolution and ConvNets with TensorFlow](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/04_conv_nets/ConvNets_with_TensorFlow_rendered.ipynb)
+
 #### Lab 5: Deep Learning for Object Dection and Image Segmentation
 
   - [Fully Convolutional Neural Networks](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/05_conv_nets_2/Fully_Convolutional_Neural_Networks_rendered.ipynb)
