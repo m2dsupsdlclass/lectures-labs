@@ -12,10 +12,14 @@ def my_init(shape=(3, 3, 3, 3), dtype=None):
     array[:, :, 2, 2] = 1 / 9.
     return array
 
-
+# padding="valid" means no padding.
+# In our case we don't need padding:
+# See formula: w' = (w - k + 2 * p) / s + 1
+# With k=3, s=3, and p=0, the output volume w' is
+# w' = w / 3
 conv_avg = Sequential([
     Conv2D(kernel_size=3, filters=3, strides=3,
-           padding="same", kernel_initializer=my_init,
+           padding="valid", kernel_initializer=my_init,
            input_shape=(None, None, 3))
 ])
 img_out_conv = conv_avg.predict(np.expand_dims(sample_image, 0))
