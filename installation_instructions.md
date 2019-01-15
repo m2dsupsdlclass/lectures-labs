@@ -7,24 +7,30 @@ Download the Anaconda distribution for your Operating System
    - Choose **Python 3.6**
    - Choose "64-bit installer"
 
+Note that at the time of writing, tensorflow 1.12.0 is the last stable release
+and is not available for Python 3.7.
+
 Follow the instructions of the Anaconda page to install anaconda
 on your laptop.
 
 Open a console / terminal and update the following packages with conda:
 
-    conda install python=3.6 numpy scikit-learn jupyter matplotlib pip
-    conda install pandas h5py pillow scikit-image lxml
-
-Install the tensorflow and keras (without GPU support) library:
-
-    python3 -m pip install -U tensorflow keras
+    conda install python=3.6 numpy scikit-learn jupyter ipykernel matplotlib pip
+    conda install pandas h5py pillow scikit-image lxml tensorflow keras
 
 Check that you can import tensorflow with the python from anaconda:
 
     python3 -c "import tensorflow as tf; print(tf.__version__)"
-    1.4.1
+    1.12.0
 
-We tested the notebooks with keras 2.2 and tensoflow 1.8.
+If you have several installations of Python on your system (virtualenv, conda
+environments...), it can be confusing to select the correct Python environment
+from the jupyter interface. You can name this environment for instance
+"dlclass" and reference it as a Jupyter kernel:
+
+    python3 -m ipykernel install --user --name dlclass --display-name dlclass
+
+We tested the notebooks with keras 2.2+ and tensoflow 1.8+.
 
 Ideally: create a new jupyter notebook and check that you can import
 the numpy, matplotlib, keras and tensorflow  modules.

@@ -3,9 +3,9 @@ from keras.models import Model
 
 input = base_model.layers[0].input
 
-# Take the output of the layer just before the AveragePooling2D
+# Take the output of the last layer of the convnet
 # layer:
-x = base_model.layers[-2].output
+x = base_model.layers[-1].output
 
 # A 1x1 convolution, with 1000 output channels, one per class
 x = Convolution2D(1000, (1, 1), name='conv1000')(x)
