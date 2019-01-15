@@ -16,11 +16,7 @@ on your laptop.
 Open a console / terminal and update the following packages with conda:
 
     conda install python=3.6 numpy scikit-learn jupyter ipykernel matplotlib pip
-    conda install pandas h5py pillow scikit-image lxml
-
-Install the tensorflow and keras (without GPU support) library:
-
-    python3 -m pip install -U tensorflow keras
+    conda install pandas h5py pillow scikit-image lxml tensorflow keras
 
 Check that you can import tensorflow with the python from anaconda:
 
