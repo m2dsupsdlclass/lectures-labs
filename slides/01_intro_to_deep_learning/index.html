@@ -387,6 +387,22 @@ Automatic computation of gradients: all modules are **differentiable**!
 --
 
 All frameworks enable parallel computation on **CPU** and **GPU**
+---
+# Computation Graph
+
+.center[
+<img src="images/computation_graph_backprop.png" style="width: 600px;" /><br/><br/>
+]
+
+Simple keras implementation
+
+```py
+model = Sequential()
+model.add(Dense(H, input_dim=N))  # defines W0
+model.add(Activation("tanh"))
+model.add(Dense(K))               # defines W1
+model.add(Activation("softmax"))
+```
 
 ---
 class: middle, center
