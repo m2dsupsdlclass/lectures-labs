@@ -7,7 +7,7 @@
 #
 # A network with null weights has null gradients but this not a local minimum
 # (nor a local maximum): it is a saddle point at the center of a neighborhood
-# with very low gradients. 
+# with very low gradients.
 #
 # Therefore when the scale of a random initializations of the weights is too
 # small, SGD has a hard time evading that area of low gradients. Adding
@@ -21,10 +21,11 @@
 #
 # The softmax function does not saturate (bad classification always have a
 # non-zero gradient). However the intermediate tanh layers can saturate,
-# therefore squashing the gradients and making the network train much slower. 
+# therefore squashing the gradient of the loss with respect to the parameters
+# of the first "Dense" layer and making the network train much slower.
 #
 # The Glorot uniform init uses a scale that depends on the dimensions of the
-# weigh matrix so has to preserve the average norm of activations and flowing
+# weight matrix so has to preserve the average norm of activations and flowing
 # gradients so as to make learning possible. Keras provides alternatives that
 # can be better in some cases. Please refer to the references in the Keras
 # documentation to learn more on the theoretical justifications behind those
@@ -41,3 +42,5 @@
 # - ensure that the weights are properly initialized,
 # - inspect the per-layer gradient norms to help identify the bad layer,
 # - use Adam instead of SGD as your default go to initializer.
+#
+# https://stackoverflow.com/questions/50033312/how-to-monitor-gradient-vanish-and-explosion-in-keras-with-tensorboard
