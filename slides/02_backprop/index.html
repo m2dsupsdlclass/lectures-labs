@@ -604,11 +604,12 @@ Better at handling changes in gradient direction.
 
 --
 - Adam: adaptive learning rate scale for each param
-  - Global $\eta$ set to 0.001 often works well enough
+  - Global $\eta$ set to 3e-4 often works well enough
   - Good default choice of optimizer (often)
 
 --
-- But well-tuned SGD with LR scheduling can generalize better than Adam...
+- But well-tuned SGD with LR scheduling can generalize better than
+  Adam (with naive l2 reg)...
 
 --
 - Active area of research: [K-FAC](https://arxiv.org/abs/1503.05671) stochastic
@@ -618,6 +619,19 @@ Better at handling changes in gradient direction.
 ???
 Contrary to penalized models with a convex loss function, the learning problem
 (generalization) is strongly coupled to the optimization problem (training).
+
+- Decoupled Weight Decay Regularization
+https://arxiv.org/abs/1711.05101
+
+- Three Mechanisms of Weight Decay Regularization
+https://arxiv.org/abs/1810.12281
+
+---
+## The Karpathy Constant for Adam
+
+.center[
+<img src="images/karpathy_constant.png" style="width: 800px" />
+]
 
 ---
 ## Optimizers around a saddle point
@@ -639,7 +653,7 @@ Dealing with variations in curvatures might be a tougher problem.
 ---
 class: middle, center
 
-# Lab 2: petits amphis Painlevé et Sauvy in 15min!
+# Lab 2: back in 15min!
 
     </textarea>
     <style TYPE="text/css">
