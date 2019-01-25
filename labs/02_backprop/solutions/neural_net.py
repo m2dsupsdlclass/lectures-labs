@@ -7,7 +7,7 @@ class NeuralNet():
         self.b_h = np.zeros(hidden_size)
         self.W_o = np.random.uniform(
             size=(hidden_size, output_size), high=0.01, low=-0.01)
-        self.b_o =np.zeros(output_size)
+        self.b_o = np.zeros(output_size)
         self.output_size = output_size
         
     def forward(self, X):
@@ -33,7 +33,7 @@ class NeuralNet():
         grad_b_o = grad_z_o
         grad_h = np.dot(grad_z_o, np.transpose(self.W_o))
         grad_z_h = grad_h * dsigmoid(z_h)
-        grad_W_h = np.outer(x, grad_z_h)
+        grad_W_h = np.outer(X, grad_z_h)
         grad_b_h = grad_z_h
         grads = {"W_h": grad_W_h, "b_h": grad_b_h,
                  "W_o": grad_W_o, "b_o": grad_b_o}
