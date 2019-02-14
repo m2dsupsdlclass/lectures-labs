@@ -211,9 +211,9 @@ Alternatively, dot product (unnormalized) is used in practice as a pseudo simila
 
 ### t-SNE
 
-          <small>
-              Visualizing data using t-SNE, L van der Maaten, G Hinton, _The Journal of Machine Learning Research_, 2008 <br/>
-          </small>
+<small>
+  Visualizing data using t-SNE, L van der Maaten, G Hinton, _The Journal of Machine Learning Research_, 2008 <br/>
+</small>
 
 
 ???
@@ -223,9 +223,9 @@ https://colah.github.io/posts/2014-10-Visualizing-MNIST/
 
 
  - Unsupervised, low-dimension, non-linear projection
- - Optimized to keep relative distance between nearest neighbors
+ - Optimized to preserve relative distances between nearest neighbors
+ - Global layout is not necessarily meaningful
 
-<br/>
 
 --
 
@@ -554,18 +554,20 @@ class: middle, center
 ---
 # Ethical Considerations
 
-### Amplification of existing discriminatory and unfair behaviors / bias
+#### Amplification of existing discriminatory and unfair behaviors / bias
 
 - Example: gender bias in ad clicks (fashion / jobs)
 - Using the firstname as a predictive feature
 
 --
 
-### Amplification of the filter bubble and opinion polarization
+#### Amplification of the filter bubble and opinion polarization
 
-- People tend to unfollow people they don't agree with
-- Ranking / filtering systems can further amplify this issue
-- Optimizing for short-term clicks can promote clickbait contents
+- Personalization can amplify "people only follow people they agree with"
+- Optimizing for "engagement" promotes content that cause strong 
+  emotional reaction (and turns normal users into *haters*?)
+- RecSys can exploit weaknesses of some users, lead to addiction
+- Addicted users clicks over-represented in future training data
 
 ---
 # Call to action
