@@ -212,7 +212,7 @@ K. Hornik, 1991
 ---
 # Problem solved?
 
-UFA theorems **do not tell us**:
+What UFA theorems **do NOT tell us**:
 
 - The number $h$ of hidden units is small enough to have the network fit
   in RAM.
@@ -222,11 +222,15 @@ UFA theorems **do not tell us**:
   initialization schemes.
 
 ???
-A finite smple version of the theorem is constructive enough to fit a
-MLP with $2n + d$ parameters where $n$ is the number of points in the
-dataset. That requires running a $n$ by $n$ system though.
 
-https://arxiv.org/abs/1611.03530
+Recently several results have proven that gradient descent from
+small random init can provably converge to global min with zero loss on
+overparametrized single hidden layer perceptron.
+
+Gradient Descent Provably Optimizes Over-parameterized Neural Networks
+Simon S. Du, Xiyu Zhai, Barnabas Poczos, Aarti Singh (ICLR 2019)
+
+https://arxiv.org/abs/1810.02054
 
 ---
 # Approximation with ReLU nets
@@ -876,7 +880,7 @@ class: middle, center
 ---
 # Overfitting?
 
-Using L2 penalty on weights rarely helps.
+Using [(decoupled) weight decay](https://arxiv.org/abs/1711.05101) can help a bit.
 
 --
 
@@ -884,7 +888,7 @@ Reducing width can cause optimization issues.
 
 --
 
-Early stopping can help a bit but mostly avoids wasting compute
+Early stopping can help a bit but mostly useful to avoid wasting compute
 optimizing for nothing.
 
 --
@@ -908,6 +912,8 @@ Clever noise injection on the input:
 [random blank token in LM](https://arxiv.org/abs/1703.02573),
 [cutout](https://arxiv.org/abs/1708.04552) / [Random Erasing](
   https://arxiv.org/abs/1708.04896)
+
+
 
 
 ---
@@ -1099,6 +1105,9 @@ What makes deep network generalize so well?
 
 --
 - SGD with large step sizes, small minibatches and early stopping?
+
+--
+- Gradient Descent on over-parametrized net from small random init?
 
 --
 - A combination of all of the above?
