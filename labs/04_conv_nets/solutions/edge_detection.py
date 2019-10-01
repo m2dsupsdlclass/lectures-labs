@@ -3,20 +3,17 @@ def my_init(shape, dtype=None):
         [0.0,  0.2, 0.0],
         [0.0, -0.2, 0.0],
         [0.0,  0.0, 0.0],
-    ])
+    ], dtype="float32")
     # adds two axis to match the required shape (3,3,1,1)
     return np.expand_dims(np.expand_dims(array,-1),-1)
 
 
-conv_edge = Sequential([
-    Conv2D(kernel_size=(3,3), filters=1,
+conv_edge = Conv2D(kernel_size=(3,3), filters=1,
            padding="same", kernel_initializer=my_init,
-           input_shape=(None, None, 1))   
-])
-
+           input_shape=(None, None, 1))
 
 img_in = np.expand_dims(grey_sample_image, 0)
-img_out = conv_edge.predict(img_in)
+img_out = conv_edge(img_in).numpy()
 
 fig, (ax0, ax1) = plt.subplots(ncols=2, figsize=(10, 5))
 ax0.imshow(np.squeeze(img_in[0]).astype(np.uint8),
@@ -34,4 +31,4 @@ ax1.imshow(np.squeeze(img_out[0]).astype(np.uint8),
 #         [ 0.1,  0.2,  0.1],
 #         [ 0.0,  0.0,  0.0],
 #         [-0.1, -0.2, -0.1],
-#     ])
+#     ], dtype="float32")

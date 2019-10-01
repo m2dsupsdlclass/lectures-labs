@@ -1,6 +1,6 @@
-max_pool = Sequential([MaxPool2D(2, strides=2, input_shape=(None, None, 3))])
+max_pool = MaxPool2D(2, strides=2, input_shape=(None, None, 3))
 img_in = np.expand_dims(sample_image, 0)
-img_out = max_pool.predict(img_in)
+img_out = max_pool(img_in).numpy()
 
 print("input shape:", img_in.shape)
 print("output shape:", img_out.shape)
