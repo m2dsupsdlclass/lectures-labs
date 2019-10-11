@@ -1,4 +1,4 @@
-from keras.layers import Conv1D, MaxPooling1D, Flatten
+from tensorflow.keras.layers import Conv1D, MaxPooling1D, Flatten
 
 sequence_input = Input(shape=(MAX_SEQUENCE_LENGTH,), dtype='int32')
 embedded_sequences = embedding_layer(sequence_input)
