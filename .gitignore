@@ -60,3 +60,5 @@ labs/09_triplet_loss/lfw-a/
 labs/09_triplet_loss/lfw-deepfunneled.tgz
 labs/09_triplet_loss/lfw/
 
+
+tensorboard_logs

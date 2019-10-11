@@ -1,12 +1,12 @@
-large_scale_init = initializers.RandomNormal(stddev=1)
-small_scale_init = initializers.RandomNormal(stddev=1e-3)
+large_scale_init = initializers.TruncatedNormal(stddev=1)
+small_scale_init = initializers.TruncatedNormal(stddev=1e-3)
 
 
 optimizer_list = [
     ('SGD', optimizers.SGD(lr=0.1)),
     ('Adam', optimizers.Adam()),
-#     ('SGD + Nesterov momentum', optimizers.SGD(
-#             lr=0.1, momentum=0.9,nesterov=True)),
+    ('SGD + Nesterov momentum', optimizers.SGD(
+            lr=0.1, momentum=0.9, nesterov=True)),
 ]
 
 init_list = [
@@ -18,15 +18,16 @@ init_list = [
 
 
 for optimizer_name, optimizer in optimizer_list:
+    print("Fitting with:", optimizer_name)
     plt.figure(figsize=(12, 6))
     for init_name, init, linestyle in init_list:
         model = Sequential()
-        model.add(Dense(H, input_dim=N, kernel_initializer=init))
-        model.add(Activation("tanh"))
-        model.add(Dense(K, kernel_initializer=init))
-        model.add(Activation("tanh"))
-        model.add(Dense(K, kernel_initializer=init))
-        model.add(Activation("softmax"))
+        model.add(Dense(hidden_dim, input_dim=input_dim, activation="tanh",
+                        kernel_initializer=init))
+        model.add(Dense(hidden_dim, activation="tanh",
+                        kernel_initializer=init))
+        model.add(Dense(output_dim, activation="softmax",
+                        kernel_initializer=init))
 
         model.compile(optimizer=optimizer,
                       loss='categorical_crossentropy')

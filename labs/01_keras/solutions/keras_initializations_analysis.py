@@ -9,8 +9,13 @@
 # (nor a local maximum): it is a saddle point at the center of a neighborhood
 # with very low gradients.
 #
-# Therefore when the scale of a random initializations of the weights is too
-# small, SGD has a hard time evading that area of low gradients. Adding
+# This phenomenom only exists because of the presence of one or more hidden
+# layers: a logistic regression model (just a single Dense layer with softmax
+# activations) can bit fit with SGD from 0 initialized weights without any
+# problem.
+#
+# For neural nets when the scale of a random initializations of the weights is
+# too small, SGD has a hard time evading that area of low gradients. Adding
 # momentum can help but especially for deep networks it can take many epochs to
 # evade the area.
 #

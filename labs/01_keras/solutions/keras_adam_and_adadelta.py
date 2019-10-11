@@ -1,14 +1,18 @@
 model = Sequential()
-model.add(Dense(H, input_dim=N))
-model.add(Activation("relu"))
-model.add(Dense(H))
-model.add(Activation("relu"))
-model.add(Dense(K))
-model.add(Activation("softmax"))
+model.add(Dense(hidden_dim, input_dim=input_dim,
+                activation="relu"))
+model.add(Dense(hidden_dim, activation="relu"))
+model.add(Dense(output_dim, activation="softmax"))
 model.compile(optimizer="adam", loss='categorical_crossentropy',
               metrics=['accuracy'])
 
-model.fit(X_train, Y_train, epochs=15, batch_size=32)
+history = model.fit(X_train, Y_train, validation_split=0.2,
+                    epochs=15, batch_size=32)
+fig, (ax0, ax1) = plt.subplots(nrows=2, sharex=True, figsize=(12, 6))
+history_df = pd.DataFrame(history.history)
+history_df["epoch"] = history.epoch
+history_df.plot(x="epoch", y=["loss", "val_loss"], ax=ax0)
+history_df.plot(x="epoch", y=["accuracy", "val_accuracy"], ax=ax1);
 
 # Analysis:
 #
