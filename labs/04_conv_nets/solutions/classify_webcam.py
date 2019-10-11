@@ -9,7 +9,7 @@ def classify():
     image_batch = preprocess_input(image_batch)
 
     tic = time.time()
-    results = decode_predictions(model.predict(image_batch))[0]
+    results = decode_predictions(model(image_batch).numpy())[0]
     toc = time.time()
 
     fig, (ax0, ax1) = plt.subplots(nrows=1, ncols=2, figsize=(9, 5))
