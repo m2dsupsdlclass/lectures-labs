@@ -1,4 +1,4 @@
-from keras.layers import Dropout
+from tensorflow.keras.layers import Dropout
 
 # Use the VAE encoder to project the small training set into the latent space
 small_x_train_encoded, _ = conv_encoder.predict(small_x_train, batch_size=100)

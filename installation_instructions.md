@@ -7,9 +7,6 @@ Download the Anaconda distribution for your Operating System
    - Choose **Python 3.6**
    - Choose "64-bit installer"
 
-Note that at the time of writing, tensorflow 1.12.0 is the last stable release
-and is not available for Python 3.7.
-
 Follow the instructions of the Anaconda page to install anaconda
 on your laptop.
 
@@ -21,7 +18,7 @@ Open a console / terminal and update the following packages with conda:
 Check that you can import tensorflow with the python from anaconda:
 
     python3 -c "import tensorflow as tf; print(tf.__version__)"
-    1.12.0
+    2.0.0
 
 If you have several installations of Python on your system (virtualenv, conda
 environments...), it can be confusing to select the correct Python environment
@@ -30,10 +27,9 @@ from the jupyter interface. You can name this environment for instance
 
     python3 -m ipykernel install --user --name dlclass --display-name dlclass
 
-We tested the notebooks with keras 2.2+ and tensoflow 1.8+.
 
 Ideally: create a new jupyter notebook and check that you can import
-the numpy, matplotlib, keras and tensorflow  modules.
+the numpy, matplotlib, tensorflow  modules.
 
 To take pictures with the webcam we will also need opencv-python:
 
@@ -43,7 +39,7 @@ If your laptop does not have a webcam or if opencv does not work, don't worry
 this is not mandatory.
 
 
-# Troubleshooting 
+# Troubleshooting
 
 In a console check the installation location of the conda command in
 your PATH:
@@ -69,4 +65,3 @@ If you cannot solve your installations without the help of fellow students,
 please feel free to send an email to the instructors with the outputs of the
 previous command and include the full error messages along with the name and
 version of your operating system.
-

@@ -1,5 +1,5 @@
 
-from keras.layers import BatchNormalization
+from tensorflow.keras.layers import BatchNormalization
 
 
 def make_conv_encoder(img_rows, img_cols, img_chns,
