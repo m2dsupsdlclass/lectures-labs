@@ -1,5 +1,5 @@
-from keras.layers import Convolution2D
-from keras.models import Model
+from tensorflow.keras.layers import Convolution2D
+from tensorflow.keras.models import Model
 
 input = base_model.layers[0].input
 
