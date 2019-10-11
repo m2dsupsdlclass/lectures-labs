@@ -2,7 +2,7 @@ def beam_translate(model, source_sequence, shared_vocab, rev_shared_vocab,
                    word_level_source=True, word_level_target=True,
                    beam_size=10, return_ll=False):
     """Decode candidate translations with a beam search strategy
-    
+
     If return_ll is False, only the best candidate string is returned.
     If return_ll is True, all the candidate strings and their loglikelihoods
     are returned.
@@ -11,7 +11,7 @@ def beam_translate(model, source_sequence, shared_vocab, rev_shared_vocab,
     source_tokens = tokenize(source_sequence, word_level=word_level_source)
     input_ids = [shared_vocab.get(t, UNK) for t in source_tokens[::-1]]
     input_ids += [shared_vocab[GO]]
-    
+
     # initialize loglikelihood, input token ids, decoded tokens for
     # each candidate in the beam
     candidates = [(0, input_ids[:], [], False)]
@@ -27,11 +27,11 @@ def beam_translate(model, source_sequence, shared_vocab, rev_shared_vocab,
         for i, (_, input_ids, _, done) in enumerate(candidates):
             if not done:
                 input_array[i, -len(input_ids):] = input_ids
-        
+
         # Predict the next output in a single call to the model to amortize
         # the overhead and benefit from vector data parallelism on GPU.
-        next_likelihood_batch = model.predict(input_array)
-        
+        next_likelihood_batch = model(input_array).numpy()
+
         # Build the new candidates list by summing the loglikelood of the
         # next token with their parents for each new possible expansion.
         new_candidates = []
@@ -52,7 +52,7 @@ def beam_translate(model, source_sequence, shared_vocab, rev_shared_vocab,
                         new_decoded.append(rev_shared_vocab[next_token_id])
                     new_candidates.append(
                         (new_ll, new_input_ids, new_decoded, new_done))
-        
+
         # Only keep a beam of the most promising candidates
         new_candidates.sort(reverse=True)
         candidates = new_candidates[:beam_size]
