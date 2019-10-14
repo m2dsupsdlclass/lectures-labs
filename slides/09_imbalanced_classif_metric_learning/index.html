@@ -165,6 +165,25 @@ Joulin, Armand, et al. "Learning visual features from large weakly supervised da
 ???
 Useful as tagging system or representation learning
 used in production at Heuritech to pretrain models
+
+---
+# Weak supervision
+
+.center[
+          <img src="images/instagram.jpg" style="width: 300px;" />
+]
+
+.footnote.small[
+Mahajan, Dhruv, et al. "Exploring the Limits of Weakly Supervised Pretraining." Technical Report, 2018
+]
+
+--
+- Facebook trained a ResNet on Instagram's hashtags
+- Very noisy labels, most don't represent the image content
+
+--
+- The model fine-tuned on ImageNet reached the best accuracy
+
 ---
 
 ## Inference tricks
@@ -183,10 +202,10 @@ Score reflects the posterior of a tag being present in an image, e.g.  $p(dog|im
 
 --
 
-measure **precision/recall** on a fully labeled test set
+Measure **precision/recall** per class on a fully labeled test set.
 
 ???
-output score is **Interpretable**: it should 
+output score is **Interpretable**: it should
 **Consistent across tags:** a score of 0.8 for “cat” classifier ~ same meaning as score of 0.8 for the “flower” classifier (while no guarantee)
 
 Impossible to measure a correct precision / recall on the weak dataset
@@ -233,7 +252,7 @@ We want to build $d_{\theta}( x_1, x_2 )$ which indicates degree of difference b
 
 --
 
-We define $T$ such that if $d_{\theta}( x_1, x_2 ) < T$, we consider $x_1$ and $x_2$ to be of the same class (e.g. identity)
+We define a threshold $T$ such that if $d_{\theta}( x_1, x_2 ) < T$, we consider $x_1$ and $x_2$ to be of the same class (e.g. identity)
 
 --
 
@@ -262,7 +281,7 @@ $$
 
 $f_{\theta}$ is typically a CNN which outputs a fixed dense  $\mathbb{R}^d$ representation of the image.
 
-$f_{\theta}$ maps image space to a **representation space** where a simple metric (e.g.
+$f_{\theta}$ maps image space to an **isometric representation space** where a simple metric (e.g.
 euclidean distance) represents **semantic distance**.
 
 --
@@ -298,6 +317,8 @@ Build a loss function, and propagate to the two branches. Updated with the sum o
 ]
 
 **Contrastive loss:** Pushes together same class pairs, and further away different class ones, up to a margin.
+
+$L_\text{contrastive}(Y, D) = \frac{1}{2}(1 - Y)D^2 + \frac{1}{2}Y\max(0, m - D)^2$
 
 .footnote.small[
 Chopra, Sumit, Raia Hadsell, and Yann LeCun. "Learning a similarity metric discriminatively, with application to face verification." CVPR 2005.
@@ -349,11 +370,12 @@ Forward pass using both inputs through the two networks (**same parameters**, **
 
 --
 
-backpropagate through the two networks (the weights are updated with the **sum of the two gradients**)
+Backpropagate through the two networks (the weights are updated with the **sum of the two gradients**)
 
 --
 
-Important to **craft batches carefully** (balance positive and negative, group positives together)
+Important to **craft batches carefully** (balance positive and negative, group positives together).
+Many negatives are *easy* (closer than margin) & don't contribute to the loss.
 
 ???
 better to group pairs rather than pick random positive and negatives
@@ -412,8 +434,8 @@ class: middle, center
 
 A triplet: $(x^a, x^{+}, x^{-})$
 - an anchor image
-- positive image (same person as anchor)
-- negative image (different person as anchor)
+- a positive image (same person as anchor)
+- a negative image (different person as anchor)
 
 We compute $f_{\theta}$ for each of these 3 images
 
@@ -495,6 +517,22 @@ $||f(x^a) - f(x^{+})||_2 > ||f(x^a) - f(x^{-})||_2 + \alpha$
 $||f(x^a) - f(x^{+})||_2 > ||f(x^a) - f(x^{-})||_2$
 
 ---
+## Hard negative sampling
+
+.center[
+          <img src="images/semihard.png" style="width: 300px;" />
+]
+
+- **Hard triplet sampling:** sample $x^{-}$ such that:
+
+$||f(x^a) - f(x^{+})||_2 > ||f(x^a) - f(x^{-})||_2 + \alpha$
+
+- **Semi Hard triplet sampling:** sample $x^{-}$ such that:
+
+$||f(x^a) - f(x^{+})||_2 > ||f(x^a) - f(x^{-})||_2$
+
+
+---
 ## Triplets results
 
 .center[
@@ -556,6 +594,21 @@ Huang, Chen, et al. Local similarity-aware deep feature embedding, NIPS 2016
 ]
 
 Sample a hard quadruplet $(i,j)$ most dissimilar positive sample, and $k$ and $l$ are hard negatives
+
+---
+## N-pair loss
+
+.center[
+          <img src="images/npair.png" style="width: 500px;" />
+]
+
+.footnote.small[
+Sohn, Kihyuk. "Improved Deep Metric Learning withMulti-class N-pair Loss Objective", NIPS 2016
+]
+
+- Generalization of triplets to n-uplets
+- Samples pair of similar examples, negatives are all other samples in the batch
+
 
 ---
 ## Histogram loss
