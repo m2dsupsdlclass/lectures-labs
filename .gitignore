@@ -43,6 +43,8 @@ maskrcnn
 Mask_RCNN-master.zip
 mask_rcnn_coco.h5
 
+resnet50_coco_best_v2.1.0.h5
+
 # offline one
 slides/02_backprop/index_offline.html
 
