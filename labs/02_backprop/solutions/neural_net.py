@@ -9,31 +9,29 @@ class NeuralNet():
             size=(hidden_size, output_size), high=0.01, low=-0.01)
         self.b_o = np.zeros(output_size)
         self.output_size = output_size
-        
-    def forward(self, X):
-        h = sigmoid(np.dot(X, self.W_h) + self.b_h)
-        y = softmax(np.dot(h, self.W_o) + self.b_o)
-        return y
-    
-    def forward_keep_activations(self, X):
+
+    def forward(self, X, keep_activations=False):
         z_h = np.dot(X, self.W_h) + self.b_h
         h = sigmoid(z_h)
         z_o = np.dot(h, self.W_o) + self.b_o
         y = softmax(z_o)
-        return y, h, z_h
-    
+        if keep_activations:
+            return y, h, z_h
+        else:
+            return y
+
     def loss(self, X, y):
         return nll(one_hot(self.output_size, y), self.forward(X))
 
-    def grad_loss(self, X, y_true):
-        y, h, z_h = self.forward_keep_activations(X)
+    def grad_loss(self, x, y_true):
+        y, h, z_h = self.forward(x, keep_activations=True)
         grad_z_o = y - one_hot(self.output_size, y_true)
 
         grad_W_o = np.outer(h, grad_z_o)
         grad_b_o = grad_z_o
         grad_h = np.dot(grad_z_o, np.transpose(self.W_o))
         grad_z_h = grad_h * dsigmoid(z_h)
-        grad_W_h = np.outer(X, grad_z_h)
+        grad_W_h = np.outer(x, grad_z_h)
         grad_b_h = grad_z_h
         grads = {"W_h": grad_W_h, "b_h": grad_b_h,
                  "W_o": grad_W_o, "b_o": grad_b_o}
