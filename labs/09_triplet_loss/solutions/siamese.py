@@ -1,12 +1,17 @@
-i1 = Input((60, 60, 3), dtype='float32')
-i2 = Input((60, 60, 3), dtype='float32')
+class Siamese(tf.keras.Model):
+    def __init__(self, shared_conv):
+        super().__init__(self, name="siamese")
+        self.conv = shared_conv
+        self.dot = Dot(axes=-1, normalize=True)
 
-x1 = shared_conv(i1)
-x2 = shared_conv(i2)
+    def call(self, inputs):
+        i1, i2 = inputs
+        x1 = self.conv(i1)
+        x2 = self.conv(i2)
+        return self.dot([x1, x2])
 
-out = Dot(axes=-1, normalize=True)([x1, x2])
 
-model = Model(inputs=[i1, i2], outputs=out)
+model = Siamese(shared_conv)
 model.compile(loss=contrastive_loss, optimizer='rmsprop', metrics=[accuracy_sim])
 
 ###### binary classification instead of cosine

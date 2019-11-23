@@ -14,7 +14,7 @@ id_to_path = {v: k for k, v in path_to_id.items()}
 all_imgs = open_all_images(id_to_path)
 
 # Actually compute the similarities
-emb = shared_conv.predict(all_imgs)
+emb = shared_conv(all_imgs)
 emb = emb / np.linalg.norm(emb, axis=-1, keepdims=True)
 
 def most_sim(x, emb, topn=4):
