@@ -205,8 +205,8 @@ We don't know in advance the number of objects in the image. Object detection re
 
 ### Two main families:
 
-- A grid in the image where each cell is a proposal (SSD, YOLO)
-- Region proposal (SPP, MultiBox, Faster RCNN, ...)
+- Single-Stage: A grid in the image where each cell is a proposal (SSD, YOLO, RetinaNet)
+- Two-Stage: Region proposal then classification (Faster-RCNN)
 
 ---
 # YOLO
@@ -264,24 +264,25 @@ Redmon, Joseph, et al. "You only look once: Unified, real-time object detection.
 ]
 
 ---
-# SSD: single-shot detector
+# RetinaNet
 
 .center[
-          <img src="images/ssd.png" style="width: 600px;" />
+          <img src="images/retinanet.png" style="width: 700px;" />
 ]
 
 .footnote.small[
-Liu, Wei, et al. "SSD: Single shot multibox detector." ECCV 2016.
+Lin, Tsung-Yi, et al. "Focal loss for dense object detection." ICCV 2017.
 ]
 
 --
 
-Same as YOLO with:
-- Multiple default proto-box
-- Multiple scales
+Single stage detector with:
+- Multiple scales through a *Feature Pyramid Network*
+- Focal loss to manage imbalance between background and real objects
 
 --
-- Better training (data augmentation, hard negative mining)
+
+See this [post](https://towardsdatascience.com/review-retinanet-focal-loss-object-detection-38fba6afabe4) for more information 
 
 ---
 # Box Proposals
@@ -429,7 +430,7 @@ Output a class map for each pixel (here: dog vs background)
 ---
 # Convolutionize
 
-.center[         
+.center[
           <img src="images/convolutionalization.png" style="width: 400px;" />
 ]
 
@@ -597,7 +598,7 @@ Peng, Chao, et al. "MegDet: A Large Mini-Batch Object Detector." arXiv preprint 
 
 - ImageNet: centered objects, very broad image domain
 - 1M+ labels and many different classes resulting in very **general** and **disentangling** representations
-- Better Networks (i.e. ResNet vs VGG) have **a huge impact** 
+- Better Networks (i.e. ResNet vs VGG) have **a huge impact**
 
 --
 
