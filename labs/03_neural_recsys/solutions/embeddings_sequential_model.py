@@ -1,5 +1,4 @@
-from keras.models import Sequential
-
+from tensorflow.keras.models import Sequential
 
 model3 = Sequential([
     embedding_layer,
