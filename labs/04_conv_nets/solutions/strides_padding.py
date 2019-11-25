@@ -16,6 +16,7 @@ img_in = np.expand_dims(sample_image, 0)
 img_out_same = conv_strides_same(img_in)[0].numpy()
 img_out_valid = conv_strides_valid(img_in)[0].numpy()
 
+print("Shape of original image:", sample_image.shape)
 print("Shape of result with SAME padding:", img_out_same.shape)
 print("Shape of result with VALID padding:", img_out_valid.shape)
 
@@ -25,6 +26,6 @@ ax1.imshow(img_out_same.astype(np.uint8))
 ax2.imshow(img_out_valid.astype(np.uint8))
 
 # We observe that the stride divided the size of the image by 2
-# In the case of 'VALID' padding mode, no padding is added, so 
-# the size of the ouput image is actually 1 less because of the
+# In the case of 'VALID' padding mode, no padding is added, so
+# the size of the ouput image is actually 2 less because of the
 # kernel size
