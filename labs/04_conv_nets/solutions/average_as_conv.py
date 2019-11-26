@@ -1,4 +1,4 @@
-avg_pool = Sequential([AvgPool2D(3, strides=3, input_shape=(None, None, 3))])
+avg_pool = AvgPool2D(3, strides=3, input_shape=(None, None, 3))
 
 img_in = np.expand_dims(sample_image, 0)
 img_out_avg_pool = avg_pool(img_in).numpy()
@@ -34,3 +34,4 @@ ax2.imshow(img_out_conv[0].astype('uint8'));
 
 # Note that the numerical computation/approximation might
 # be slightly different in the two cases
+print("Avg pool is similar to Conv ? -", np.allclose(img_out_avg_pool, img_out_conv))
