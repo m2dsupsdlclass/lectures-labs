@@ -407,6 +407,21 @@ Zeming Li et al. Light-Head R-CNN: In Defense of Two-Stage Object Detector 2017
 - Yolo, SSD, Light-Head R-CNN for fast inference
 
 ---
+## Future works
+
+- New approaches try to avoid using anchors
+
+  -  CornerNet only predicts the two extreme edges of a box:
+
+.center[
+          <img src="images/cornernet.png" style="width: 400px;" />
+]
+
+.footnote.small[
+Law, Hei, and Deng, Jia. "CornerNet: Detecting Objects as Paired Keypoints" ECCV 2018
+]
+
+---
 class: middle, center
 
 # Segmentation
@@ -505,6 +520,25 @@ Noh, Hyeonwoo, et al. "Learning deconvolution network for semantic segmentation.
 
 ???
 Unpooling: switch variables tied to corresponding pooling layers. Remembers which pixel was the max
+
+---
+# Hourglass network
+
+.center[
+          <img src="images/hourglass.png" style="width: 650px;" />
+]
+
+.footnote.small[
+Newell, Alejandro, et al. "Stacked Hourglass Networks for Human Pose Estimation." ECCV 2016
+]
+
+--
+- U-Net like architectures repeated sequentially
+--
+
+- Each block refines the segmentation for the following
+- Each block has a segmentation loss
+
 
 ---
 # DeepMask / SharpMask
