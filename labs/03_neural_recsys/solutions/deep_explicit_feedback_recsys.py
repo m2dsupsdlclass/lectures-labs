@@ -1,13 +1,22 @@
 # For each sample we input the integer identifiers
 # of a single user and a single item
-class DeepRecoModel(Model):
+class DeepRegressionModel(Model):
+
     def __init__(self, embedding_size, max_user_id, max_item_id):
         super().__init__()
 
-        self.user_embedding = Embedding(output_dim=embedding_size, input_dim=max_user_id + 1,
-                                        input_length=1, name='user_embedding')
-        self.item_embedding = Embedding(output_dim=embedding_size, input_dim=max_item_id + 1,
-                                        input_length=1, name='item_embedding')
+        self.user_embedding = Embedding(
+            output_dim=embedding_size,
+            input_dim=max_user_id + 1,
+            input_length=1,
+            name='user_embedding'
+        )
+        self.item_embedding = Embedding(
+            output_dim=embedding_size,
+            input_dim=max_item_id + 1,
+            input_length=1,
+            name='item_embedding'
+        )
 
         # The following two layers don't have parameters.
         self.flatten = Flatten()
@@ -36,7 +45,8 @@ class DeepRecoModel(Model):
 
         return y
 
-model = DeepRecoModel(30, max_user_id, max_item_id)
+
+model = DeepRegressionModel(30, max_user_id, max_item_id)
 ## Error 4: A binary crossentropy loss is only useful for binary
 ## classification, while we are in regression (use mse or mae)
 model.compile(optimizer='adam', loss='mae')
