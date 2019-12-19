@@ -150,6 +150,58 @@ Doersch, Carl, Abhinav Gupta, and Alexei A. Efros. "Unsupervised visual represen
 - Siamese architecture for the two patches + concat
 
 ---
+##  Self-supervised learning
+
+.center[
+          <img src="images/selfsupervised_color.png" style="width: 700px;" />
+]
+
+
+.footnote.small[
+Zhang et al. "Colorful Image Colorization" ECCV 2016
+]
+
+--
+
+- Given RGB images, generate their grayscale version
+- Train a network to predict pixels color given grayscale image
+
+---
+##  Self-supervised learning
+
+.center[
+          <img src="images/selfsupervised_examplars.png" style="width: 600px;" />
+]
+
+
+.footnote.small[
+Dosovitskiy et al. "Exemplar Networks" 2014
+]
+
+--
+
+- Heavy augmentation of the images
+- Network must predict that augmented images are similar, and another random image dissimilar
+
+---
+## Self-supervised
+
+.center[
+          <img src="images/selfsupervised_rotations.png" style="width: 700px;" />
+]
+
+
+.footnote.small[
+Spyros Gidaris, Praveer Singh, Nikos Komodakis. "Unsupervised representation learning by predicting image rotations, " ICLR 2018
+]
+
+--
+
+- Generate 4 versions of the image, rotated by 0˚, 90˚, 180˚, and 270˚
+- Network must predict the angle
+
+
+---
 # Self-supervised from video
 
 .center[
@@ -554,6 +606,22 @@ Radford, Alec, Luke Metz, and Soumith Chintala. Unsupervised representation lear
 
 --
 - Latent space has some local linar properties (vector arithmetic like with Word2Vec)
+
+---
+## cDC-GAN
+
+.center[
+          <img src="images/cdcgan.png" style="width: 350px;" />
+]
+
+.footnote.small[
+Mehdi Mirza, Simon Osindero. "Conditional Generative Adversarial Nets". NeurIPS 2014.
+]
+
+--
+
+- Can generate image of the wanted class
+- Simply encode for both discriminator and generator the labels and concatenate it to features
 
 ---
 ## Info GAN
