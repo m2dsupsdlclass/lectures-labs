@@ -324,15 +324,15 @@ class: center,middle
 <img src="images/frameworks.png" style="width: 600px;" /><br/><br/>
 ]
 
- Automatic differentiation: **TensorFlow**, MXnet, CNTK, _Theano_
+ Automatic differentiation: _Theano_, TensorFlow, MXnet, CNTK
 
 --
 
- Dynamic and high level: TensorFlow 2.0, Torch &amp; ** PyTorch **, Chainer, MinPy, DyNet...
+ Dynamic and high level: **TensorFlow 2**, **PyTorch**, Chainer, MinPy, DyNet...
 
 --
 
-**Keras**: high level frontend for TensorFlow, mxnet, theano, cntk
+**Keras**: high level frontend for TensorFlow, MXnet, Theano, CNTK
 
 ---
 # Computation Graph
@@ -378,15 +378,16 @@ Automatic computation of gradients: all modules are **differentiable**!
 
 --
 
-**Tensorflow**, *theano*, etc. build a static computation graph
+*Theano* (deprecated), **Tensorflow 1**, etc. build a static computation graph via static declarations.
 
 --
 
-**Tensorflow 2.0**, **Torch**, **pytorch**, etc. rely on dynamic differentiable modules
+**Tensorflow 2**, **PyTorch**, etc. rely on dynamic differentiable modules: "define-by-run".
 
 --
 
-All frameworks enable parallel computation on **CPU** and **GPU**
+All frameworks enable parallel computation on generic **CPU** and accelerators such **GPU** and **TPU**.
+
 ---
 # Computation Graph
 
