@@ -224,17 +224,19 @@ $$
 # Training the network
 
 Find parameters $\mathbf{\theta} = ( \mathbf{W}^h; \mathbf{b}^h; \mathbf{W}^o; \mathbf{b}^o )$
-that minimize the **negative log likelihood** (or cross entropy)
+that minimize the **cross entropy** (or negative log likelyhood)
 
 --
 
 The loss function for a given sample $s \in S$:
 
 $$
-l(\mathbf{f}(\mathbf{x}^s;\theta), y^s) = nll(\theta; \mathbf{x}^s, y^s) = -\log \mathbf{f}(\mathbf{x}^s;\theta)\_{y^s}
+l(\mathbf{f}(\mathbf{x}^s;\theta), y^s) = CE(\theta; \mathbf{x}^s, y^s) = -\log \mathbf{f}(\mathbf{x}^s;\theta)\_{y^s}
 $$
 
 --
+
+<br/>
 
 .center[
 <img src="images/nll_explained.svg" style="width: 500px;" />
@@ -331,6 +333,14 @@ Hidden bias: $\frac{\partial l(\mathbf{f(x)}, y)}{\partial b^h_{i}}$
 <br/><br/>
 
 .center[
+<img src="images/chain_rule_before.svg" style="width: 600px;" />
+]
+---
+# Chain rule
+
+<br/><br/>
+
+.center[
 <img src="images/chain_rule_simple_0.svg" style="width: 600px;" />
 ]
 ---
@@ -409,7 +419,7 @@ Partial derivatives related to $\mathbf{W}^o$
 
 --
 
-### Compute layer params gradients 
+### Compute layer params gradients
 - $\nabla\_{\mathbf{W}^o} l = \nabla\_{\mathbf{z}^o(\mathbf{x})} l \cdot \mathbf{h(x)}^\top$
 - $\nabla\_{\mathbf{b}^o} l = \nabla\_{\mathbf{z}^o(\mathbf{x})} l$
 
@@ -527,7 +537,7 @@ in the joint objective function.
 --
   - or monitor validation loss and divide $\eta_{t}$ by 2 or 10 when no progress
   - See [ReduceLROnPlateau](https://keras.io/callbacks/#reducelronplateau) in Keras
- 
+
 ???
 Overview of recent research and empirical tricks:
 
@@ -559,7 +569,7 @@ $$\begin{eqnarray}
 m\_t &=& \gamma m\_{t-1} + \eta \nabla\_{\theta} L\_{B\_t}(\theta\_{t-1} - \gamma m\_{t-1}) \nonumber \\\\
 \theta\_t &=& \theta\_{t-1} - m\_t \nonumber
 \end{eqnarray}$$
-				    
+
 Better at handling changes in gradient direction.
 
 ---
