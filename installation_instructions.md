@@ -4,7 +4,7 @@ Download the Anaconda distribution for your Operating System
 (Windows, macOS or Linux):
 
    - https://www.continuum.io/downloads (~500 MB)
-   - Choose **Python 3.6**
+   - Choose **Python 3.7**
    - Choose "64-bit installer"
 
 Follow the instructions of the Anaconda page to install anaconda
@@ -12,13 +12,15 @@ on your laptop.
 
 Open a console / terminal and update the following packages with conda:
 
-    conda install python=3.6 numpy scikit-learn jupyter ipykernel matplotlib pip
+    conda install python=3.7 numpy scikit-learn jupyter ipykernel matplotlib pip
     conda install pandas h5py pillow scikit-image lxml tensorflow keras
 
 Check that you can import tensorflow with the python from anaconda:
 
     python3 -c "import tensorflow as tf; print(tf.__version__)"
-    2.0.0
+    2.1.0
+
+Note that tensorflow 2.0.0 should also work.
 
 If you have several installations of Python on your system (virtualenv, conda
 environments...), it can be confusing to select the correct Python environment
@@ -47,7 +49,7 @@ your PATH:
     conda info
 
 Read the output of that command to verify that your conda command is
-associated with Python 3.6.
+associated with Python 3.7.
 
 
 Check that the pip command in your PATH is the one installed by conda:
