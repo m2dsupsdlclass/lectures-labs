@@ -268,10 +268,29 @@ The cost function is the negative likelihood of the model computed on the full
 training set (for i.i.d. samples):
 
 $$
+L\_S(\theta) = -\frac{1}{|S|} \sum\_{s \in S} \log \mathbf{f}(\mathbf{x}^s;\theta)\_{y^s}
+$$
+
+---
+# Training the network
+
+Find parameters $\mathbf{\theta} = ( \mathbf{W}^h; \mathbf{b}^h; \mathbf{W}^o; \mathbf{b}^o )$
+that minimize the **negative log likelihood** (or [cross entropy](
+  https://en.wikipedia.org/wiki/Cross_entropy#Cross-entropy_loss_function_and_logistic_regression))
+
+The loss function for a given sample $s \in S$:
+
+$$
+l(\mathbf{f}(\mathbf{x}^s;\theta), y^s) = nll(\mathbf{x}^s, y^s; \theta) = -\log \mathbf{f}(\mathbf{x}^s;\theta)\_{y^s}
+$$
+
+The cost function is the negative likelihood of the model computed on the full
+training set (for i.i.d. samples):
+
+$$
 L\_S(\theta) = -\frac{1}{|S|} \sum\_{s \in S} \log \mathbf{f}(\mathbf{x}^s;\theta)\_{y^s} + \lambda \Omega(\mathbf{\theta})
 $$
 
---
 $\lambda \Omega(\mathbf{\theta}) = \lambda (||W^h||^2 + ||W^o||^2)$ is an optional regularization term.
 
 ???
