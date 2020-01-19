@@ -48,8 +48,8 @@ Direct links to the rendered notebooks including solutions (to be updated in ren
 
 #### Lab 1: Intro to Deep Learning
 
+  - [Demo: Object Detection with pretrained RetinaNet with Keras](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/01_keras/Demo_RetinaNet.ipynb)
   - [Intro to MLP with Keras](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/01_keras/Intro%20Keras.ipynb)
-  - [Pretrained models with Keras](https://github.com/m2dsupsdlclass/lectures-labs/blob/master/labs/01_keras/Intro%20pretrained%20models%20for%20computer%20vision.ipynb)
 
 #### Lab 2: Neural Networks and Backpropagation
 
