@@ -30,7 +30,7 @@ class DeepRegressionModel(Model):
         ## when we want to predict values between 1 and 5
         self.dense2 = Dense(1)
 
-    def call(self, inputs):
+    def call(self, inputs, training=False):
         user_inputs = inputs[0]
         item_inputs = inputs[1]
 
@@ -39,14 +39,15 @@ class DeepRegressionModel(Model):
 
         input_vecs = self.concat([user_vecs, item_vecs])
 
-        y = self.dropout(input_vecs)
+        y = self.dropout(input_vecs, training=training)
         y = self.dense1(y)
+        y = self.dropout(y, training=training)
         y = self.dense2(y)
 
         return y
 
 
-model = DeepRegressionModel(30, max_user_id, max_item_id)
+model = DeepRegressionModel(64, max_user_id, max_item_id)
 ## Error 4: A binary crossentropy loss is only useful for binary
 ## classification, while we are in regression (use mse or mae)
 model.compile(optimizer='adam', loss='mae')
