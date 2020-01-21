@@ -757,9 +757,22 @@ Esteban Real, et al. Regularized Evolution for Image Classifier Architecture Sea
 <img src="images/architectures.png" style="width: 760px;" />
 ]
 
+See also: https://sotabench.com
+
 .footnote.small[
 Canziani, Paszke, and Culurciello. "An Analysis of Deep Neural Network Models for Practical Applications." (May 2016).
 ]
+
+---
+## More ImageNet SOTA
+
+.center[
+<img src="images/efficientnet.png" style="width: 500px;" />
+]
+
+.footnote.small[
+Mingxing Tan, Quoc V. Le, [EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks
+](https://arxiv.org/abs/1905.11946), May 2019.]
 
 ---
 class: middle, center
@@ -820,12 +833,19 @@ available!
 <img src="images/augmented-cat.png" style="width: 550px" />
 ]
 
+--
+
+See also: [RandAugment](https://arxiv.org/abs/1909.13719) and
+[Unsupervised Data Augmentation for Consistency Training](
+  https://arxiv.org/abs/1904.12848).
+
+
 ???
 - Use prior knowledge on label-invariant transformation
 - A rotated picture of a cat is still a picture of a cat.
 - Effective way to reduce overfitting on small labeled sets.
-- No silver bullet: transfer learning often more effective for natural
-  images.
+- Can be very efficient in a Semi-Supervised setting when combined
+  with a consistency loss.
 
 ---
 ## Data Augmentation
