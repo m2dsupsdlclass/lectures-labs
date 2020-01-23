@@ -282,7 +282,7 @@ Single stage detector with:
 
 --
 
-See this [post](https://towardsdatascience.com/review-retinanet-focal-loss-object-detection-38fba6afabe4) for more information 
+See this [post](https://towardsdatascience.com/review-retinanet-focal-loss-object-detection-38fba6afabe4) for more information
 
 ---
 # Box Proposals
@@ -539,27 +539,6 @@ Newell, Alejandro, et al. "Stacked Hourglass Networks for Human Pose Estimation.
 - Each block refines the segmentation for the following
 - Each block has a segmentation loss
 
-
----
-# DeepMask / SharpMask
-
-.center[
-          <img src="images/deepmask.png" style="width: 500px;" />
-]
-
-.footnote.small[
-Pinheiro, Pedro O., et al. "Learning to segment object candidates" / "Learning to refine object segments", NIPS 2015 / ECCV 2016
-]
-
---
-
-- The network is fully convolutional: masks and scores are computed for each region
-
---
-- Score = 1 only if object centered and fully contained in the mask
-
---
-- SharpMask: make use of all conv layers with refinement network
 
 ---
 ## Mask-RCNN
