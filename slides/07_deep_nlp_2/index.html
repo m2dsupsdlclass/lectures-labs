@@ -37,7 +37,7 @@
       <textarea id="source">
 class: center, middle
 
-# Sequences, Attention and memory
+# Sequences, Attention and transformer
 
 Charles Ollion - Olivier Grisel
 
@@ -72,7 +72,7 @@ may output a single value, or a value for each time-step of the input
 
 --
 
-### Towards memory and reasoning
+### Self-attention and Transformer 
 
 ---
 class: center,middle
@@ -139,47 +139,6 @@ Sutskever, Ilya, Oriol Vinyals, and Quoc V. Le. "Sequence to sequence learning w
 --
 
 Encoder and decoder can **share weights** (but more common to have separate weights)
-
----
-## Skip-thought vectors
-
-.center[
-          <img src="images/skipthoughts1.jpg" style="width: 760px;" />
-]
-
-.footnote.small[
-Kiros, Ryan, et al. "Skip-thought vectors." NIPS 2015.
-]
-
---
-
-<br/>
-
-- Similar to Skim-gram Word2Vec, but with sentences
-- One encoder and two decoders, GRUs or bi-GRUs
-- train on triplets of sentences
-
---
-
-.center[
-          <img src="images/skipthoughts2.jpg" style="width: 760px;" />
-]
-
----
-## Skip-thought vectors
-
-.center[
-          <img src="images/skipthoughts.jpg" style="width: 760px;" />
-]
-
-.footnote.small[
-Kiros, Ryan, et al. "Skip-thought vectors." NIPS 2015.
-]
---
-
-<br/>
-
-But not always competitive with BoW techniques, see review *Learning Distributed Representations of Sentences from Unlabelled Data, Hill, Felix et al. NAACL-HLT. 2016.*
 
 ---
 ## Large Vocabulary Size
@@ -257,8 +216,8 @@ In depth explanation on https://blog.heuritech.com/2016/01/20/attention-mechanis
 ]
 --
 
- <br/> 
- Solution: 
+ <br/>
+ Solution:
 
 - Use all outputs of the encoder $\{h_i\}$ to compute the outputs
 - Build an **Attention Mechanism** to determine which output(s) to attend to
@@ -338,7 +297,7 @@ Neural machine translation by jointly learning to align and translate, D Bahdana
 Neural machine translation by jointly learning to align and translate, D Bahdanau, K Cho, Y Bengio 2014
 ]
 ---
-# Visualizing Attention 
+# Visualizing Attention
 
 .center[
           <img src="images/align.png" style="width: 670px;" />
@@ -349,25 +308,7 @@ Neural machine translation by jointly learning to align and translate, D Bahdana
 Neural machine translation by jointly learning to align and translate, D Bahdanau, K Cho, Y Bengio 2014
 ]
 ---
-
-# Image Captioning
-
-.center[
-          <img src="images/captioning_model.png" style="width: 500px;" />
-]
-
-.footnote.small[
-Xu, Kelvin, et al. "Show, Attend and Tell: Neural Image Caption Generation with Visual Attention." ICML. 2015
-]
-
---
-
-.center[
-          <img src="images/visual_attention.png" style="width: 500px;" />
-]
-
----
-# The GNMT architecture
+# The GNMT architecture (2016)
 
 .center[
           <img src="images/gnmt-architecture.png" style="width: 600px;" />
@@ -385,7 +326,71 @@ the Gap between Human and Machine Translation"
 - inference TPU
 
 ---
-### Alternative Machine Translation architecture
+
+# Image Captioning
+
+.center[
+          <img src="images/captioning_model.png" style="width: 500px;" />
+]
+
+.footnote.small[
+Xu, Kelvin, et al. "Show, Attend and Tell: Neural Image Caption Generation with Visual Attention." ICML. 2015
+]
+
+--
+
+.center[
+          <img src="images/visual_attention.png" style="width: 500px;" />
+]
+---
+class: center, middle
+
+# Self-attention and transformer
+---
+
+# Self-Attention
+
+For each element of an input sequence ${X_i}$ project into 3 vectors: <span style="color:blue">query</span>, <span style="color:red">key</span> and <span style="color:green">value</span>
+
+.center[
+          <img src="images/attention_kqv.jpg" style="width: 200px;" />
+]
+
+.footnote.small[
+Attention Is All You Need Ashish Vaswani et al. NIPS 2017
+]
+
+--
+
+For each element, compute attention over all other vectors
+
+$$SelfAttention(Q_i, \mathbf{K}, \mathbf{V}) = \sum_j softmax_j(\frac{Q_i \cdot \mathbf{K}^T}{\sqrt{d_k}}) V_j $$
+
+---
+
+# Single-head self-attention
+
+.center[
+          <img src="images/monohead.jpg" style="width: 700px;" />
+]
+
+.footnote.small[
+Adapted from Emma Strubell EMNLP 2018
+]
+
+---
+
+# Multi-head self-attention
+
+.center[
+          <img src="images/multihead.jpg" style="width: 700px;" />
+]
+
+.footnote.small[
+Adapted from Emma Strubell EMNLP 2018
+]
+---
+### Transformer Architecture
 
 .center[
           <img src="images/transformer.png" style="width: 350px;" />
@@ -395,189 +400,76 @@ the Gap between Human and Machine Translation"
 Attention Is All You Need Ashish Vaswani et al. NIPS 2017
 ]
 ---
-class: center, middle
 
-# Reasonning, Attention and Memory
+# Transformer tricks
 
----
-## Question answering tasks
+No notion of word order. Positional encoding need to be added:
 
 .center[
-          <img src="images/babi.png" style="width: 700px;" />
-]
-
-.footnote.small[
-Jason Weston, Antoine Bordes, Sumit Chopra, Alexander M. Rush, Bart van Merriënboer, Armand Joulin and Tomas Mikolov. Towards AI Complete Question Answering: A Set of Prerequisite Toy Tasks, 2015
+  <img src="images/input_simple_transformer.png" style="width: 300px;" />
 ]
 
 --
 
- <br/>
+.center[
+  <img src="images/positional_encoding.png" style="width: 400px;" />
+]
 
-- **Facts** (sentences), **Questions** (sentences) and **answers** (word)
-- Dataset is generated by templates
-- See also facebook's artificial tasks for reasoning: https://research.fb.com/downloads/babi/
-
+May also learn the embedding
 ---
-## Memory Networks
+# Transformer based language models
+
+*Pretrained transformers* for transfer learning, like "ImageNet-pretrained convnets" for NLP
 
 .center[
-          <img src="images/memadressing.png" style="width: 650px;" />
+          <img src="images/sota_bert.png" style="width: 700px;" />
 ]
-
-- Embed a collection of facts (i.e. sentences)
-- Compute an attention depending on a query (i.e. a question)
-
 .footnote.small[
-Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, Rob Fergus al. NIPS 2015
-]
----
-## Memory Networks
-
-.center[
-          <img src="images/memoutput.png" style="width: 650px;" />
-]
-
-- Output is a weighted sum of the fact embeddings
-- The embedding for querying is different from the output embedding
-
-
-.footnote.small[
-Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, Rob Fergus al. NIPS 2015
-]
----
-## Memory Networks
-
-.center[
-          <img src="images/memend.png" style="width: 550px;" />
-]
-
-- The output is then used in a classification scheme
-- Question is also re-used as input
-
-.footnote.small[
-Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, Rob Fergus al. NIPS 2015
-]
----
-## Memory Networks
-
-.center[
-          <img src="images/memfull.png" style="width: 650px;" />
-]
-
-- Parameters: Embedding matrices $A, B, C$ ; Dense output layer
-
-.footnote.small[
-Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, Rob Fergus al. NIPS 2015
-]
----
-## Memory Networks
-
-.center[
-          <img src="images/memhops.png" style="width: 300px;" />
-]
-
-.footnote.small[
-Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, Rob Fergus al. NIPS 2015
+GLUE : a multi-task benchmark and analysis platform for natural language processing, Alex Wang et al. ICLR 2019 <br/>
+BERT : Pre-training of Deep Bidirectional Transformers for Language Understanding, Jacob Devlin et al. 2018 <br/>
+GPT2 : https://openai.com/blog/better-language-models/
 ]
 
 --
 
-- Several "hops" of "reasonning" to produce the right answer
-- Embedding layers can be tied: $A_1 = A_2 = A_3$ and $C_1 = C_2 = C_3$, making it similar to a RNN
+
+Most recent models https://github.com/huggingface/transformers
 
 ---
-## Memory Networks
+
+# BERT
 
 .center[
-          <img src="images/memres.png" style="width: 500px;" />
-]
-
-- Everything is trained end-to-end from (Facts + Questions) to (Answer)
-- Visualizing attention enables to understand the behavior of the network
-
-
-.footnote.small[
-Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, Rob Fergus al. NIPS 2015
-]
-
----
-## Key-Value Networks
-
-.center[
-          <img src="images/keyvalue.png" style="width: 720px;" />
-]
-
-Globally the same architecture as Memory Networks
-
-.footnote.small[
-Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, Rob Fergus al. NIPS 2017
-]
-
-
-
---
-
-Interpreted as soft RAM or soft hashmap (soft ~ differentiable and learnable)
-
----
-## Neural Turing Machine
-
-.footnote.small[
-Graves, Alex, Greg Wayne, and Ivo Danihelka. "Neural turing machines." NIPS 2014 <br/>
-Graves, Alex, et al., Hybrid computing using a neural network with dynamic external memory. Nature 2016
-]
-
-.center[
-          <img src="images/ntm.png" style="width: 300px;" />
-]
-
-End to end differentiable architecture with access to a dynamic memory (read and write)
-
---
-
-- See also Differentiable Neural Computers, Stack augmented RNNs, etc.
-- https://distill.pub/2016/augmented-rnns/
-
----
-## Reading comprehension
-
-.center[
-          <img src="images/readandcomprehend.png" style="width: 700px;" />
+          <img src="images/pretrain_bert1.png" style="width: 700px;" />
 ]
 
 .footnote.small[
-Hermann, Karl Moritz, et al. "Teaching machines to read and comprehend." NIPS 2015.
+Slide from Thomas Wolf (HuggingFace)
+]
+---
+
+# BERT
+
+.center[
+          <img src="images/pretrain_bert2.png" style="width: 700px;" />
+]
+
+.footnote.small[
+Slide from Thomas Wolf (HuggingFace)
+]
+
+---
+# BERT
+
+.center[
+          <img src="images/train_bert.png" style="width: 600px;" />
 ]
 
 --
 
-Read text and query (through RNN-like architecture), then produce answer (classification or language model).
-
----
-## Question answering (SQuAD)
-
-
 .center[
-<img src="images/squad_matrix_rebel_question.png" style="width: 700px;">
+          <img src="images/inputs_bert.png" style="width: 600px;" />
 ]
-
-.footnote.small[
-http://demo.allennlp.org/machine-comprehension
-]
-
----
-## Question answering (SQuAD)
-
-
-.center[
-<img src="images/squad_matrix_machines_answer.png" style="width: 700px;">
-]
-
-.footnote.small[
-http://demo.allennlp.org/machine-comprehension
-]
-
 
 ---
 class: middle, center
