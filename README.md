@@ -6,11 +6,6 @@
 
 This course is being taught at as part of [Master Year 2 Data Science IP-Paris](https://www.ip-paris.fr/education/masters/mention-mathematiques-appliquees-statistiques/master-year-2-data-science)
 
-<p style="text-align: center">
-<a href="http://datascience-x-master-paris-saclay.fr/"><img
-  src="slides/05_conv_nets_2/images/Logo_Master_Datascience.png" width="300"/></a>
-</p>
-
 ## Table of contents
 
 The course covers the basics of Deep Learning, with a focus on applications.
