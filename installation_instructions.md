@@ -23,7 +23,7 @@ In either case install the following packages, for instance by opening a console
 Check that you can import tensorflow with the python from anaconda:
 
     python3 -c "import tensorflow as tf; print(tf.__version__)"
-    2.4.0
+    2.3.0
 
 Note that tensorflow version from 2.0.0 should also work.
 
