@@ -10,7 +10,7 @@ Download the Anaconda distribution for your Operating System
 Follow the instructions of the Anaconda page to install anaconda
 on your laptop.
 
-Alternatively, the lighter-weight miniconda command line:
+Alternatively, feel free to use the lighter-weight miniconda command line:
 
    https://docs.conda.io/en/latest/miniconda.html
 
