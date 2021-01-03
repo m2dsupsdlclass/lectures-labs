@@ -3,7 +3,7 @@
 Download the Anaconda distribution for your Operating System
 (Windows, macOS or Linux):
 
-   - https://www.continuum.io/downloads (~500 MB)
+   - https://www.anaconda.com/products/individual (~500 MB)
    - Choose **Python 3.8**
    - Choose "64-bit installer"
 
