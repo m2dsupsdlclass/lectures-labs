@@ -54,7 +54,7 @@ your PATH:
     conda info
 
 Read the output of that command to verify that your conda command is
-associated with Python 3.7.
+associated with Python 3.8.
 
 
 Check that the pip command in your PATH is the one installed by conda:
