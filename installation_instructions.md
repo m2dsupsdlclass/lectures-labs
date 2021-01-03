@@ -10,7 +10,12 @@ Download the Anaconda distribution for your Operating System
 Follow the instructions of the Anaconda page to install anaconda
 on your laptop.
 
-Open a console / terminal and update the following packages with conda:
+Alternatively, the lighter-weight miniconda command line:
+
+   https://docs.conda.io/en/latest/miniconda.html
+
+In either case install the following packages, for instance by opening a console
+/ terminal and update the following packages with the conda command:
 
     conda install python=3.8 numpy scikit-learn jupyter ipykernel matplotlib pip
     conda install pandas h5py pillow scikit-image lxml tensorflow
