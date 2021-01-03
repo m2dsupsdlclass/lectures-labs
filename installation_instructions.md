@@ -3,14 +3,19 @@
 Download the Anaconda distribution for your Operating System
 (Windows, macOS or Linux):
 
-   - https://www.continuum.io/downloads (~500 MB)
+   - https://www.anaconda.com/products/individual (~500 MB)
    - Choose **Python 3.8**
    - Choose "64-bit installer"
 
 Follow the instructions of the Anaconda page to install anaconda
 on your laptop.
 
-Open a console / terminal and update the following packages with conda:
+Alternatively, feel free to use the lighter-weight miniconda command line:
+
+   https://docs.conda.io/en/latest/miniconda.html
+
+In either case install the following packages, for instance by opening a console
+/ terminal and update the following packages with the conda command:
 
     conda install python=3.8 numpy scikit-learn jupyter ipykernel matplotlib pip
     conda install pandas h5py pillow scikit-image lxml tensorflow
@@ -18,7 +23,7 @@ Open a console / terminal and update the following packages with conda:
 Check that you can import tensorflow with the python from anaconda:
 
     python3 -c "import tensorflow as tf; print(tf.__version__)"
-    2.4.0
+    2.3.0
 
 Note that tensorflow version from 2.0.0 should also work.
 
@@ -49,7 +54,7 @@ your PATH:
     conda info
 
 Read the output of that command to verify that your conda command is
-associated with Python 3.7.
+associated with Python 3.8.
 
 
 Check that the pip command in your PATH is the one installed by conda:
