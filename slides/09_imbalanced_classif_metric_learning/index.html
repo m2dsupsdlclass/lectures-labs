@@ -30,7 +30,7 @@ class: center, middle
 Charles Ollion - Olivier Grisel
 
 .affiliations[
-  ![Heuritech](images/logo heuritech v2.png)
+  ![IPP](images/logo_ipp.jpeg)
   ![Inria](images/inria-logo.png)
   ![UPS](images/Logo_Master_Datascience.png)
 ]
@@ -92,7 +92,7 @@ You may use **oversampling**, **importance weighting** of minority classes / sam
 ```python
 # build your own batches and add weights
 model.train_on_batch(self, x, y, class_weight=None, sample_weight=None)
-``` 
+```
 --
 
 Evaluation must be very rigorous (the test set should represent the **true distribution** of data and labels)
@@ -118,7 +118,7 @@ Know any system we already talked about which is multilabel?
 _Object detection such as Fast RCNN is multilabel!_
 
 ---
-## Multilabel classification 
+## Multilabel classification
 
 Build a **binary classifier for each class** but with shared
 activations on hidden layers. Easily adapted from classic classification:
@@ -139,7 +139,7 @@ $y^{true}$ is a binary vector corresponding to classes present in the image (man
 
 --
 
-**Problem** : costly to label images exhaustively for ALL possible tags 
+**Problem** : costly to label images exhaustively for ALL possible tags
 
 ---
 # Weak supervision
@@ -662,7 +662,7 @@ Commercial recognition systems are trained on a large datasets like 10/100 milli
 
 --
 
-**Deploying Verification models** e.g. Iphone FaceID: 
+**Deploying Verification models** e.g. Iphone FaceID:
 
 Beforehand, precompute representations of your 10 photos
 
@@ -678,9 +678,9 @@ If a similarity is within a predefined threshold then Unlock!
 - For most cases, use a **classifier with softmax**
 - If you have many classes, and/or strong class imbalance use **representation learning**
 - both can give useful embeddings for clustering / low shot learning
- 
+
 --
- 
+
 
 - Use **ImageNet pre-trained features** in most cases
 - Ongoing research on learning *weakly* supervised features: cover larger spectrum of image domains

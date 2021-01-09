@@ -42,7 +42,7 @@ class: center, middle
 Charles Ollion - Olivier Grisel
 
 .affiliations[
-  ![Heuritech](images/logo heuritech v2.png)
+  ![IPP](images/logo_ipp.jpeg)
   ![Inria](images/inria-logo.png)
   ![UPS](images/Logo_Master_Datascience.png)
 ]
@@ -495,7 +495,7 @@ NLP problems expressed as **Conditional Language Models**:
 
 Model the output word by word:
 
-$p\_{\theta}(w\_{0} | Source) \cdot p\_{\theta}(w\_{1} | w\_{0}, Source) \cdot \ldots $ 
+$p\_{\theta}(w\_{0} | Source) \cdot p\_{\theta}(w\_{1} | w\_{0}, Source) \cdot \ldots $
 
 
 ---
@@ -555,7 +555,7 @@ Question: What's the dimension of concatenate embeddings?
 
 --
 
-Unroll over a sequence $(x_0, x_1, x_2)$: 
+Unroll over a sequence $(x_0, x_1, x_2)$:
 
 .center[
 <img src="images/unrolled_rnn_3.svg" style="width: 400px;" />
@@ -567,7 +567,7 @@ Unroll over a sequence $(x_0, x_1, x_2)$:
 <img src="images/rnn_simple.svg" style="width: 200px;" />
 ]
 
-Unroll over a sequence $(x_0, x_1, x_2)$: 
+Unroll over a sequence $(x_0, x_1, x_2)$:
 
 .center[
 <img src="images/unrolled_rnn_2.svg" style="width: 400px;" />
@@ -579,7 +579,7 @@ Unroll over a sequence $(x_0, x_1, x_2)$:
 <img src="images/rnn_simple.svg" style="width: 200px;" />
 ]
 
-Unroll over a sequence $(x_0, x_1, x_2)$: 
+Unroll over a sequence $(x_0, x_1, x_2)$:
 
 .center[
 <img src="images/unrolled_rnn.svg" style="width: 400px;" />
@@ -602,15 +602,15 @@ Unroll over a sequence $(x_0, x_1, x_2)$:
 <img src="images/unrolled_rnn_words.svg" style="width: 450px;" />
 ]
 
-$x\_t = \text{Emb}(w\_t) = \mathbf{E} w\_t$ .right[input projection .red[`H`]] 
+$x\_t = \text{Emb}(w\_t) = \mathbf{E} w\_t$ .right[input projection .red[`H`]]
 
 --
 
-$h\_t = g(\mathbf{W^h} h\_{t-1} + x\_t + b^h)$ .right[recurrent connection .red[`H`]] 
+$h\_t = g(\mathbf{W^h} h\_{t-1} + x\_t + b^h)$ .right[recurrent connection .red[`H`]]
 
 --
 
-$y = \text{softmax}( \mathbf{W^o} h\_t + b^o )$ .right[output projection .red[`K = |V|`]] 
+$y = \text{softmax}( \mathbf{W^o} h\_t + b^o )$ .right[output projection .red[`K = |V|`]]
 
 ---
 ## Recurrent Neural Network
@@ -667,7 +667,7 @@ Similar as standard backpropagation on unrolled network
 - Usually truncate the backprop after $T$ timesteps
 
 --
-- Difficulties to train long-term dependencies 
+- Difficulties to train long-term dependencies
 
 ---
 ## Other uses: Sentiment Analysis

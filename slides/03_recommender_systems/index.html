@@ -31,7 +31,7 @@ class: center, middle
 Charles Ollion - Olivier Grisel
 
 .affiliations[
-  ![Heuritech](images/heuritech-logo.png)
+  ![IPP](images/logo_ipp.jpeg)
   ![Inria](images/inria-logo.png)
   ![UPS](images/Logo_Master_Datascience.png)
 ]
@@ -68,7 +68,7 @@ class: middle, center
 
 - Text: characters, words, bigrams...
 
-- Recommender Systems: item ids, user ids 
+- Recommender Systems: item ids, user ids
 
 - <span style="color:#cccccc">Any categorical descriptor: tags, movie genres, visited URLs, skills on a resume, product categories...</span>
 
@@ -77,7 +77,7 @@ class: middle, center
 
 - Text: characters, words, bigrams...
 
-- Recommender Systems: item ids, user ids 
+- Recommender Systems: item ids, user ids
 
 - Any categorical descriptor: tags, movie genres, visited URLs, skills on a resume, product categories...
 
@@ -116,7 +116,7 @@ $$embedding(\text{'salad'}) = [3.28, -0.45, ... 7.11] \in \mathbb{R}^d$$
 
 --
 
-<br/> 
+<br/>
 
 - Continuous and dense
 - Can represent a huge vocabulary in low dimension, typically: $d \in \\{16, 32, ..., 4096\\}$
@@ -175,7 +175,7 @@ $cosine(x,y) = \frac{x \cdot y}{||x|| \cdot ||y||}$
 
 - Angle between points, regardless of norm
 - $cosine(x,y) \in (-1,1)$
-- Expected cosine similarity of random pairs of vectors is $0$ 
+- Expected cosine similarity of random pairs of vectors is $0$
 
 ]
 
@@ -193,7 +193,7 @@ $$cosine(x, y) = 1 - \frac{|| x - y ||_2^2}{2}$$
 
 --
 
-Alternatively, dot product (unnormalized) is used in practice as a pseudo similarity 
+Alternatively, dot product (unnormalized) is used in practice as a pseudo similarity
 
 ---
 # Visualizing Embeddings
@@ -456,7 +456,7 @@ and the **RecSys deployment** itself.
 ]
 
 $$
-L(U, V) = \sum\_{(i, j) \in D} || r\_{i,j} - \mathbf{u}\_i^T \cdot \mathbf{v}\_j ||_2^2 + \lambda (||U||\_2^2 + ||V||\_2^2) 
+L(U, V) = \sum\_{(i, j) \in D} || r\_{i,j} - \mathbf{u}\_i^T \cdot \mathbf{v}\_j ||_2^2 + \lambda (||U||\_2^2 + ||V||\_2^2)
 $$
 
 - Train $U$ and $V$ on observed ratings data $r\_{i, j}$
@@ -564,7 +564,7 @@ class: middle, center
 #### Amplification of the filter bubble and opinion polarization
 
 - Personalization can amplify "people only follow people they agree with"
-- Optimizing for "engagement" promotes content that cause strong 
+- Optimizing for "engagement" promotes content that cause strong
   emotional reaction (and turns normal users into *haters*?)
 - RecSys can exploit weaknesses of some users, lead to addiction
 - Addicted users clicks over-represented in future training data
