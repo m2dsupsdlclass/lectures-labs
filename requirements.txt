@@ -8,7 +8,7 @@ h5py
 pillow
 scikit-image
 lxml
-tensorflow>=2.0.0
+tensorflow<2.4  # keras-retinanet does not yet work with 2.4
 opencv-python
-gast==0.2.2
+gast
 setuptools>=41.0.0
