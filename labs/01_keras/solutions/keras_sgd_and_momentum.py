@@ -2,7 +2,6 @@ model = Sequential()
 model.add(Dense(hidden_dim, input_dim=input_dim,
                 activation="tanh"))
 model.add(Dense(output_dim, activation="softmax"))
-model.add(Activation("softmax"))
 
 optimizer = optimizers.SGD(lr=0.1, momentum=0.9, nesterov=True)
 model.compile(optimizer=optimizer, loss='categorical_crossentropy',
