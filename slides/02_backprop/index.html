@@ -33,21 +33,25 @@ Charles Ollion - Olivier Grisel
 ---
 # Neural Network for classification
 
-- Vector function with tunable parameters $\theta$
+Vector function with tunable parameters $\theta$
 
 $$
 \mathbf{f}(\cdot; \mathbf{\theta}): \mathbb{R}^N \rightarrow (0, 1)^K
 $$
 
-- Sample $s$ in dataset $S$:
+--
+
+Sample $s$ in dataset $S$:
   - input: $\mathbf{x}^s \in \mathbb{R}^N$
   - expected output: $y^s \in [0, K-1]$
 
-- Output is a conditional probability distribution:
+--
 
-$$
+Output is a conditional probability distribution:
+
+$
 \mathbf{f}(\mathbf{x}^s;\mathbf{\theta})_c = P(Y=c|X=\mathbf{x}^s)
-$$
+$
 
 ???
 the model parametrizes a conditional distribution of Y given X
@@ -397,9 +401,13 @@ template: bprop
 
 Compute partial derivatives of the loss
 
-- $\frac{\partial l(\mathbf{f(x)}, y)}{\partial \mathbf{f(x)}\_i} = \frac{\partial -\log \mathbf{f(x)}\_y}{\partial \mathbf{f(x)}\_i} = \frac{-1\_{y=i}}{\mathbf{f(x)}\_y}$
+- $\frac{\partial l(\mathbf{f(x)}, y)}{\partial \mathbf{f(x)}\_i} = \frac{\partial -\log \mathbf{f(x)}\_y}{\partial \mathbf{f(x)}\_i} = \frac{-1\_{y=i}}{\mathbf{f(x)}\_y}  = \frac{\partial \boldsymbol{l}}{\partial \mathbf{f(x)}\_i}$
 
-- $\frac{\partial l(\mathbf{f(x)}, y)}{\partial \mathbf{z}^o(\mathbf{x})_i} = \sum_j \frac{\partial l(\mathbf{f(x)}, y)}{\partial \mathbf{f(x)}\_j} \frac{\partial \mathbf{f(x)}\_j}{\partial \mathbf{z}^o(\mathbf{x})\_i}$
+
+--
+
+
+- $\frac{\partial \boldsymbol{l}}{\partial \mathbf{z}^o(\mathbf{x})_i} = ?$
 
 ---
 .center[
@@ -411,7 +419,15 @@ Compute partial derivatives of the loss
 ]
 ---
 .center[
-<img src="images/equations.svg" style="width: 800px;" />
+<img src="images/equations_3.svg" style="width: 800px;" />
+]
+---
+.center[
+<img src="images/equations_4.svg" style="width: 800px;" />
+]
+---
+.center[
+<img src="images/equations_5.svg" style="width: 800px;" />
 ]
 
 ---
@@ -419,38 +435,38 @@ template: bprop
 
 Gradients
 
-- $\nabla\_{\mathbf{z}^o(\mathbf{x})} l(\mathbf{f(x)}, y) = \mathbf{f(x)} - \mathbf{e}(y)$
+- $\nabla\_{\mathbf{z}^o(\mathbf{x})} \boldsymbol{l} = \mathbf{f(x)} - \mathbf{e}(y)$
 
-- $\nabla\_{\mathbf{b}^o} l(\mathbf{f(x)}, y) = \mathbf{f(x)} - \mathbf{e}(y)$
+- $\nabla\_{\mathbf{b}^o} \boldsymbol{l} = \mathbf{f(x)} - \mathbf{e}(y)$
 
-because $\frac{\partial \mathbf{z}^o(\mathbf{x})\_i}{\partial \mathbf{b}^o\_j} = 1\_{i=j}$
+because $\mathbf{z}^o(\mathbf{x}) = \mathbf{W}^o \mathbf{h}(\mathbf{x}) + \mathbf{b}^o$ and then $\frac{\partial \mathbf{z}^o(\mathbf{x})\_i}{\partial \mathbf{b}^o\_j} = 1\_{i=j}$
 
 ---
 template: bprop
 
 Partial derivatives related to $\mathbf{W}^o$
 
-- $\frac{\partial l(\mathbf{f(x)}, y)}{\partial W\_{i,j}} = \sum\_{k} \frac{\partial l(\mathbf{f(x)}, y)}{\partial \mathbf{z}^o(\mathbf{x})\_k} \frac{\partial \mathbf{z}^o(\mathbf{x})\_k}{\partial W^o\_{i,j}}$
+- $\frac{\partial \boldsymbol{l}}{\partial W\_{i,j}} = \sum\_{k} \frac{\partial \boldsymbol{l}}{\partial \mathbf{z}^o(\mathbf{x})\_k} \frac{\partial \mathbf{z}^o(\mathbf{x})\_k}{\partial W^o\_{i,j}}$
 
-- $\nabla\_{\mathbf{W}^o} l(\mathbf{f(x)}, y) = (\mathbf{f(x)} - \mathbf{e}(y)) . \mathbf{h(x)}^\top$
+- $\nabla\_{\mathbf{W}^o} \boldsymbol{l} = (\mathbf{f(x)} - \mathbf{e}(y)) . \mathbf{h(x)}^\top$
 
 ---
 # Backprop gradients
 
 ### Compute activation gradients
-- $\nabla\_{\mathbf{z}^o(\mathbf{x})} l = \mathbf{f(x)} - \mathbf{e}(y)$
+- $\nabla\_{\mathbf{z}^o(\mathbf{x})} \boldsymbol{l} = \mathbf{f(x)} - \mathbf{e}(y)$
 
 --
 
 ### Compute layer params gradients
-- $\nabla\_{\mathbf{W}^o} l = \nabla\_{\mathbf{z}^o(\mathbf{x})} l \cdot \mathbf{h(x)}^\top$
-- $\nabla\_{\mathbf{b}^o} l = \nabla\_{\mathbf{z}^o(\mathbf{x})} l$
+- $\nabla\_{\mathbf{W}^o} \boldsymbol{l} = \nabla\_{\mathbf{z}^o(\mathbf{x})} \boldsymbol{l} \cdot \mathbf{h(x)}^\top$
+- $\nabla\_{\mathbf{b}^o} \boldsymbol{l} = \nabla\_{\mathbf{z}^o(\mathbf{x})} \boldsymbol{l}$
 
 --
 
 ### Compute prev layer activation gradients
-- $\nabla\_{\mathbf{h(x)}} l = \mathbf{W}^{o\top} \nabla\_{\mathbf{z}^o(\mathbf{x})} l$
-- $\nabla\_{\mathbf{z}^h(\mathbf{x})} l = \nabla\_{\mathbf{h(x)}} l \odot \mathbf{\sigma^\prime(z^h(x))}$
+- $\nabla\_{\mathbf{h(x)}} \boldsymbol{l} = \mathbf{W}^{o\top} \nabla\_{\mathbf{z}^o(\mathbf{x})} \boldsymbol{l}$
+- $\nabla\_{\mathbf{z}^h(\mathbf{x})} \boldsymbol{l} = \nabla\_{\mathbf{h(x)}} \boldsymbol{l} \odot \mathbf{\sigma^\prime(z^h(x))}$
 
 ---
 class: center,middle
