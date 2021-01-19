@@ -288,9 +288,12 @@ See this [post](https://towardsdatascience.com/review-retinanet-focal-loss-objec
 # Box Proposals
 
 Instead of having a predefined set of box proposals, find them on the image:
-- **Selective Search** - from pixels (not learnt)
+- **Selective Search** - from pixels (not learnt, no longer used)
 - **Faster - RCNN** - Region Proposal Network (RPN)
 
+.footnote.small[
+Girshick, Ross, et al. "Fast r-cnn." ICCV 2015
+]
 --
 
 **Crop-and-resize** operator (**RoI-Pooling**):
@@ -299,36 +302,10 @@ Instead of having a predefined set of box proposals, find them on the image:
 - Allows to propagate gradient only on interesting regions, and efficient computation
 
 ---
-# Fast-RCNN
-
-.center[
-          <img src="images/fastRCNN.png" style="width: 650px;" />
-]
-
-
-.footnote.small[
-Girshick, Ross, et al. "Fast r-cnn." ICCV 2015
-]
-
---
-
-- **Selective Search** + Crop-and-resize (RoI pooling)
-
---
-- Output: Softmax over $(K + 1)$ classes, and $4$ box offsets
-
---
-- Positive box are the ones with largest Intersection over Union **IoU** with ground truth
-
-???
-- 200 box proposals
-- gradient propagated only in positive boxes
-
----
 # Faster-RCNN
 
 .center[
-          <img src="images/fasterrcnn.png" style="width: 300px;" />
+          <img src="images/fasterrcnn.png" style="width: 270px;" />
 ]
 
 .footnote.small[
@@ -337,26 +314,16 @@ Ren, Shaoqing, et al. "Faster r-cnn: Towards real-time object detection with reg
 
 --
 
-- Replace **Selective Search** with **RPN**, train jointly
+- Train jointly **RPN** and other head
+
+--
+- 200 box proposals, gradient propagated only in positive boxes
 
 --
 - Region proposal is translation invariant, compared to YOLO
 
 ???
 Region proposal input is a fully convolutional network: shares weights across spatial dimensions
-
----
-# Comparison of Detection Methods
-
-Measures: mean Average Precision **mAP** and Frames per Second **FPS**
-
-.center[
-          <img src="images/resultsyolo.png" style="width: 500px;" />
-]
-
-.footnote.small[
-Redmon, Joseph, et al. "YOLO9000, Faster, Better, Stronger." 2017
-]
 
 ---
 ## State-of-the-art
@@ -379,7 +346,7 @@ Zeming Li et al. Light-Head R-CNN: In Defense of Two-Stage Object Detector 2017
 ## State-of-the-art - fast methods
 
 .center[
-          <img src="images/sotaresults.png" style="width: 520px;" />
+          <img src="images/sotaresults.png" style="width: 450px;" />
 ]
 
 Measures: **mAP** and Frames per Second **FPS**
@@ -398,20 +365,26 @@ Zeming Li et al. Light-Head R-CNN: In Defense of Two-Stage Object Detector 2017
 ## State-of-the-art
 
 .center[
-          <img src="images/sotaresults2.png" style="width: 500px;" />
+          <img src="images/sotaresults3.png" style="width: 600px;" />
+]
+
+.footnote.small[
+Ghiasi G. et al. Simple Copy-Paste is a Strong Data Augmentation Method for Instance Segmentation, 2020
 ]
 
 --
 
-- Mask RCNN, light-head R-CNN for best accuracy
-- Yolo, SSD, Light-Head R-CNN for fast inference
+- Larger image sizes, larger and better models, better augmented data
+- https://paperswithcode.com/sota/object-detection-on-coco
 
 ---
-## Future works
+## Other works
 
 - New approaches try to avoid using anchors
 
-  -  CornerNet only predicts the two extreme edges of a box:
+--
+
+- CornerNet only predicts the two extreme edges of a box:
 
 .center[
           <img src="images/cornernet.png" style="width: 400px;" />
@@ -420,6 +393,24 @@ Zeming Li et al. Light-Head R-CNN: In Defense of Two-Stage Object Detector 2017
 .footnote.small[
 Law, Hei, and Deng, Jia. "CornerNet: Detecting Objects as Paired Keypoints" ECCV 2018
 ]
+---
+## Other works
+
+- New approaches try to avoid using anchors
+
+- DeTr uses a Transformer to map a set of features to a set of boxes (with different cardinality)
+
+.center[
+          <img src="images/detr.png" style="width: 650px;" />
+]
+
+.footnote.small[
+Carion, N., Massa, F., Synnaeve, G., Usunier, N., Kirillov, A., & Zagoruyko, S. "End-to-End Object Detection with Transformers" ECCV 2020
+]
+
+--
+
+.small[The loss is a pair-wise matching between ground truth and prediction set. This optimal assignment is computed with the Hungarian algorithm]
 
 ---
 class: middle, center
