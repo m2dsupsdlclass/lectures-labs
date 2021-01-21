@@ -4,7 +4,7 @@ scikit-learn
 jupyter
 matplotlib
 pandas
-h5py
+h5py==2.10.0  # problem when loading pre-trained keras models with newer versions
 pillow
 scikit-image
 lxml
