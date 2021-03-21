@@ -808,7 +808,7 @@ The algorithm is then similar as Batch Normalization
 
 --
 
-Suited for **RNNs**, degrades performance of **CNNs**
+Suited for **RNNs** and **Transformers**, degrades performance of **CNNs**
 
 ---
 # Weight Normalization
@@ -828,7 +828,6 @@ reparameterization to accelerate training of deep neural networks." NIPS
 
 --
 
-
 One new parameter $g$ to learn per neuron
 
 --
@@ -836,22 +835,27 @@ One new parameter $g$ to learn per neuron
 Careful **data-based** initialization of $g$ and neuron bias $b$ is
 better (not applicable to RNNs)
 
+--
+
+More recently: [Weight Standardization](https://arxiv.org/abs/1903.10520)
+
 ---
 # Reparametrizations and Normalizations
 
 **Significant impact** on results
 
-- Convergence speed and better optimum on CNNs (BN mostly used)
+- Batch Norm makes convergence faster to an optimum that generalizes better on
+  CNNs
 
 --
-- Layer Norm is used in the Transformer architecture
+- Layer Norm is typically used in RNNs and Transformer architectures
 
 --
-- Active area of research
+- Active area of research:
 
---
-- [Normalizer-Free ResNets (NFNets)](
-  https://arxiv.org/abs/2102.06171) SOTA on ImageNet.
+  - [Normalizer-Free ResNets (NFNets)](
+    https://arxiv.org/abs/2102.06171) SOTA on ImageNet
+    with Scaled Weight Standardization
 
 
 ---
