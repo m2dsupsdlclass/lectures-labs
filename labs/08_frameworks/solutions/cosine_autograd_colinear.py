@@ -1,5 +1,6 @@
 x = torch.tensor([0, 1, 2], dtype=torch.float32, requires_grad=True)
-y = torch.tensor(2 * x.data.clone(), requires_grad=True)
+y = 2 * x.clone().detach()
+y.requires_grad_()
 
 cosine = g(x, y)
 print("cosine: ", cosine)
