@@ -689,15 +689,18 @@ Optimal learning rate should be higher for some gradient components:
 
 Fixing the optimizer:
 
- - AdaGrad, RMSProp, AdaDelta, Adam, K-FAC
- - Cheap rescaling of the gradient components by the square root of the
-   (moving) average of $g_i^2$
+ - AdaGrad, RMSProp, AdaDelta, Adam
+   - Diagonal preconditioned stochastic updates
+   - Cheap rescaling of the gradient components by the square root of the
+     (moving) average of $g_i^2$
+ - Non-diagonal preconditioned stochastic updates: K-FAC & [Shampoo](
+   https://arxiv.org/abs/2002.09018)
 
 --
 
 Fixing the architecture:
 
-  - Skip, Residual connections (e.g. ResNets) and HighWay networks;
+  - Skip, Residual connections (e.g. ResNets)
   - LSTM and GRU with additive lanes from activations $h_{t-1}$ to $h_t$;
   - Normalization layers.
 
@@ -707,6 +710,11 @@ aligned with parameter axis: diagonal preconditioner.
 
 More advanced second-order optimizers are often too costly (per-step)
 to be able to be used on large neural networks.
+
+But this might change with K-FAC and Shampoo:
+
+https://arxiv.org/abs/1503.05671
+https://arxiv.org/abs/2002.09018
 
 ---
 # Residual Networks
@@ -833,19 +841,18 @@ better (not applicable to RNNs)
 
 **Significant impact** on results
 
-.footnote.small[
-Ren, Mengye, et al. "Normalizing the Normalizers: Comparing and
-Extending Network Normalization Schemes." 2017
-]
-
 - Convergence speed and better optimum on CNNs (BN mostly used)
 
 --
-- Layer Norm strongly impacts LSTM in language modelling tasks
+- Layer Norm is used in the Transformer architecture
 
 --
+- Active area of research
 
-Active area of research - See "Normalizing the Normalizers"
+--
+- [Normalizer-Free ResNets (NFNets)](
+  https://arxiv.org/abs/2102.06171) SOTA on ImageNet.
+
 
 ---
 # BTW: why minibatch SGD?
@@ -871,6 +878,9 @@ samples:
 Note: small batch SGD also has good generalization characteristics, see:
 Bottou and Bousquet, 2008 for the convex case and the next slides for
 the DL case.
+
+But: large batches make it easier to scale on many TPU/GPUs by computing the
+gradients on sub-minibatches in parallel.
 
 ---
 class: middle, center
