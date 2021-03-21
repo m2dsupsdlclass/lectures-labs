@@ -1140,7 +1140,7 @@ Minima](https://arxiv.org/abs/1609.04836), N. S. Keskar et al., 2016
 ]
 
 ---
-# Small Batch vs Large Batch
+# Good and bad global minima
 
 .center[
 <image src="images/half_moons.svg" width="70%" />
@@ -1149,35 +1149,35 @@ Minima](https://arxiv.org/abs/1609.04836), N. S. Keskar et al., 2016
 Trained with L-BFGS (large batch)
 
 ---
-# Small Batch vs Large Batch
+# Good and bad global minima
 
 .center[
 <image src="images/high_complexity_decision_function_01.svg" width="70%" />
 ]
 
 ---
-# Small Batch vs Large Batch
+# Good and bad global minima
 
 .center[
 <image src="images/high_complexity_decision_function_02.svg" width="70%" />
 ]
 
 ---
-# Small Batch vs Large Batch
+# Good and bad global minima
 
 .center[
 <image src="images/high_complexity_decision_function_03.svg" width="70%" />
 ]
 
 ---
-# Small Batch vs Large Batch
+# Good and bad global minima
 
 .center[
 <image src="images/high_complexity_decision_function_04.svg" width="70%" />
 ]
 
 ---
-# Small Batch vs Large Batch
+# Good and bad global minima
 
 .center[
 <image src="images/low_complexity_decision_function.svg" width="70%" />
@@ -1187,14 +1187,14 @@ Trained with L-BFGS (large batch)!
 
 
 ---
-# Small Batch vs Large Batch
+# Good and bad global minima
 
 .center[
 <image src="images/moons_lbfgs.svg" width="99%" />
 ]
 
 ---
-# Small Batch vs Large Batch
+# Good and bad global minima
 
 - Typical model capacity is enough to represent bad global minima.
 
@@ -1217,6 +1217,26 @@ Trained with L-BFGS (large batch)!
 Loss Landscapes](https://arxiv.org/abs/1706.10239)
 
 Lei Wu, Zhanxing Zhu, Weinan E
+]
+
+---
+# Geometry of the loss landscape
+
+.center[
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/kcVWAKf7UAg" title="YouTube video player"
+frameborder="0" allow="accelerometer; autoplay; clipboard-write;
+encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+]
+
+.footnote[
+[Visualizing the Loss Landscape of Neural Nets](https://arxiv.org/abs/1712.09913)
+Hao Li, Zheng Xu, Gavin Taylor, Christoph Studer, Tom Goldstein
+]
+.footnote[
+[Understanding Generalization through Visualizations](
+https://arxiv.org/abs/1906.03291) W. Ronny Huang, Zeyad Emam,
+Micah Goldblum, Liam Fowl, Justin K. Terry, Furong Huang, Tom Goldstein
 ]
 
 ---
@@ -1331,7 +1351,7 @@ Design architectures to limit conditioning issues:
 
 Use stochastic optimizers that are robust to bad conditioning
 
-Use small minibatches (at least at the beginning of optimization)
+Use small minibatches and learge learning rates
 
 Use validation set to anneal learning rate and do early stopping
 
@@ -1339,7 +1359,7 @@ Is it very often possible to trade more compute for less overfitting
 with **data augmentation** and **stochastic regularizers** (e.g.
 dropout).
 
-Collecting **more labelled data** is the best way to avoid overfitting.
+Collecting **more labelled data** is often the best way to avoid overfitting.
 
 ---
 class: middle, center
