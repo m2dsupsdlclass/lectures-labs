@@ -609,27 +609,6 @@ Sohn, Kihyuk. "Improved Deep Metric Learning withMulti-class N-pair Loss Objecti
 - Generalization of triplets to n-uplets
 - Samples pair of similar examples, negatives are all other samples in the batch
 
-
----
-## Histogram loss
-
-.center[
-          <img src="images/histogram.png" style="width: 460px;" />
-]
-
-Compute all the **positives similarities** and **negatives similarities** within a batch
-
-.footnote.small[
-Ustinova, Evgeniya, et al. Learning deep embeddings with histogram loss, NIPS 2016
-]
-
---
-
-The loss pushes to **seperate** the two similarity distributions (needs to be differentiable)
-
---
-
-Sample classes **intelligently** to have representative enough distributions
 ---
 ## Results
 
@@ -645,9 +624,7 @@ Metric: **Recall @K**
           <img src="images/reshist.png" style="width: 500px;" />
 ]
 
---
 
-ImageNet pretrained is competitive!
 ???
 recall @K: Rank all images by similarity to an input image ; is an image of similar class within the first K images
 ---
@@ -656,7 +633,6 @@ recall @K: Rank all images by similarity to an input image ; is an image of simi
 Available open source implementations / pretrained models:
 - Openface https://cmusatyalab.github.io/openface/
 - FaceNet https://github.com/davidsandberg/facenet
-- DeepFace
 
 Commercial recognition systems are trained on a large datasets like 10/100 million images
 
@@ -673,6 +649,21 @@ At test time, compute representation of the photo, then compute similarities wit
 If a similarity is within a predefined threshold then Unlock!
 
 ---
+## Self-supervised learning
+
+.center[
+  <img src="images/self-supervised.png" style="width: 700px;" />
+]
+
+[SimCLR](https://github.com/google-research/simclr) uses a contrastive loss on
+pairs of heavily augmented images vs independent images in the batch.
+
+--
+
+[BYOL](https://arxiv.org/abs/2006.07733) can even do away with the negative terms
+with an asymmetric architecture.
+
+---
 ## Take Aways on classification
 
 - For most cases, use a **classifier with softmax**
@@ -683,7 +674,8 @@ If a similarity is within a predefined threshold then Unlock!
 
 
 - Use **ImageNet pre-trained features** in most cases
-- Ongoing research on learning *weakly* supervised features: cover larger spectrum of image domains
+- If you have many many unlabeled images, self-supervised learning can be an alternative
+- Very active area of research!
 
 --
 
