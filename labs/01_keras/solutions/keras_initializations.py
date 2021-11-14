@@ -3,10 +3,10 @@ small_scale_init = initializers.TruncatedNormal(stddev=1e-3)
 
 
 optimizer_list = [
-    ('SGD', optimizers.SGD(lr=0.1)),
+    ('SGD', optimizers.SGD(learning_rate=0.1)),
     ('Adam', optimizers.Adam()),
     ('SGD + Nesterov momentum', optimizers.SGD(
-            lr=0.1, momentum=0.9, nesterov=True)),
+            learning_rate=0.1, momentum=0.9, nesterov=True)),
 ]
 
 init_list = [

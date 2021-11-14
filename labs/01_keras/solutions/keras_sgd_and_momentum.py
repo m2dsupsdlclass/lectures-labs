@@ -3,7 +3,7 @@ model.add(Dense(hidden_dim, input_dim=input_dim,
                 activation="tanh"))
 model.add(Dense(output_dim, activation="softmax"))
 
-optimizer = optimizers.SGD(lr=0.1, momentum=0.9, nesterov=True)
+optimizer = optimizers.SGD(learning_rate=0.1, momentum=0.9, nesterov=True)
 model.compile(optimizer=optimizer, loss='categorical_crossentropy',
               metrics=['accuracy'])
 history = model.fit(X_train, Y_train, validation_split=0.2,
