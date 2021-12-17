@@ -769,6 +769,26 @@ Ganin, Yaroslav, et al. Domain-adversarial training of neural networks. JMLR 201
 Plenty of other techniques besides DAN, such as Domain Separation Networks
 
 ---
+### Score-based matching (denoising diffusion)
+
+.center[
+          <img src="images/sde_schematic.jpg" style="width: 430px;" />
+]
+
+.footnote.small[
+Yang Song, and S. Ermon. [Generative Modeling by Estimating Gradients of the Data Distribution](https://arxiv.org/abs/1907.05600), NeurIPS 2019.</br>
+Jonathan Ho, A. Jain, P. Abbeel, [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239)
+]
+
+--
+
+Generate images by gradually denoising random noise
+
+.center[
+          <img src="images/denoise_vp.gif" style="width: 430px;" />
+]
+
+---
 ## Takeaways
 
 ### (Reconstruction) Autoencoders
@@ -809,6 +829,7 @@ There exists other kinds of generative models:
 - auto-regressive models: PixelCNN, WaveNet, RNN language models...
 - can be used as prior and decoder for VAEs, generators for GANs.
 - flow-based models: Glow, WaveGlow...
+- Score-matching / denoising diffusion models.
 
 ---
 ## Takeaways
