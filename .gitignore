@@ -62,5 +62,7 @@ labs/09_triplet_loss/lfw-a/
 labs/09_triplet_loss/lfw-deepfunneled.tgz
 labs/09_triplet_loss/lfw/
 
+labs/10_unsupervised_generative_models/BSR_bsds500.tgz
+labs/10_unsupervised_generative_models/mnistm_data.pkl
 
 tensorboard_logs
