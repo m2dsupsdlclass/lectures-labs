@@ -1,4 +1,4 @@
-from tensorflow.keras.layers import Add, Layer
+from tensorflow.keras.layers import Add, Layer, Activation
 
 
 class ResidualBlock(Layer):

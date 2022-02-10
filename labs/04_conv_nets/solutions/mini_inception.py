@@ -1,4 +1,4 @@
-from tensorflow.keras.layers import Concatenate, Input
+from tensorflow.keras.layers import Concatenate, Flatten, Input
 from tensorflow.keras.models import Model
 
 
