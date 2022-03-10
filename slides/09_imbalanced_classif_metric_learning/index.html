@@ -291,15 +291,18 @@ $$cosine(f\_{\theta}(x\_1), f\_{\theta}(x\_2))$$
 
 --
 
-Alternatively, **absolute difference + Binary classification**:
+Alternatively, **absolute difference + binary classification**:
 
 $$y = sigmoid ( \mathbf{w} \cdot |f\_{\theta}(x\_1) - f\_{\theta}(x\_2)| + b)$$
 
+$y = 1$ for same class, $y = 0$ for different classes
+
 ???
-difference is a vector
+Note: difference is a vector!
+
 --
 
-Also, **concat + Binary classification**
+Also, **concat + binary classification**
 
 $$y = sigmoid ( \mathbf{w} \cdot f\_{\theta}(x\_1) ||  f\_{\theta}(x\_2) + b)$$
 
