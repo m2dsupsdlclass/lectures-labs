@@ -142,49 +142,6 @@ $y^{true}$ is a binary vector corresponding to classes present in the image (man
 **Problem** : costly to label images exhaustively for ALL possible tags
 
 ---
-# Weak supervision
-
-.center[
-          <img src="images/flickr.png" style="width: 300px;" />
-]
-
-.footnote.small[
-Joulin, Armand, et al. "Learning visual features from large weakly supervised data." ECCV, 2016
-]
-
---
-
-- **Output dimension** (vocabulary) is huge: ~100 000
-
---
-- After stopword removal, **importance sampling** of positive labels
-
---
-- Do not compute the full softmax, **randomly sample negatives**
-
-???
-Useful as tagging system or representation learning
-used in production at Heuritech to pretrain models
-
----
-# Weak supervision
-
-.center[
-          <img src="images/instagram.jpg" style="width: 300px;" />
-]
-
-.footnote.small[
-Mahajan, Dhruv, et al. "Exploring the Limits of Weakly Supervised Pretraining." Technical Report, 2018
-]
-
---
-- Facebook trained a ResNet on Instagram's hashtags
-- Very noisy labels, most don't represent the image content
-
---
-- The model fine-tuned on ImageNet reached the best accuracy
-
----
 
 ## Inference tricks
 
@@ -552,99 +509,22 @@ Schroff, Florian, et al. Facenet: A unified embedding for face recognition and c
 ???
 Each line is a different identity (label)
 First 3 images can be seen as a hard triplet
-Face recognitoin: achieves a validation rate of 87% at false rate 0.001%
+Face recognition: validation rate of 87% at false rate 0.001%
 
 ---
-## Quadruplet loss
-
-.center[
-          <img src="images/quadruplets.png" style="width: 760px;" />
-]
-
-.footnote.small[
-Huang, Chen, et al. Local similarity-aware deep feature embedding, NIPS 2016
-]
-
---
-
-**intraclass distance** in a high-density region may be larger than the **interclass distance** in low-density regions
-
----
-## Quadruplet loss
-
-.center[
-          <img src="images/quadruplets.png" style="width: 760px;" />
-]
-
-.footnote.small[
-Huang, Chen, et al. Local similarity-aware deep feature embedding, NIPS 2016
-]
-
-Position-Dependent Deep Metric (PDDM) depends on two points + position of mean (red triangle)
-
----
-## Quadruplet loss
-
-.center[
-          <img src="images/quadruplets.png" style="width: 760px;" />
-]
-
-.footnote.small[
-Huang, Chen, et al. Local similarity-aware deep feature embedding, NIPS 2016
-]
-
-Sample a hard quadruplet $(i,j)$ most dissimilar positive sample, and $k$ and $l$ are hard negatives
-
----
-## N-pair loss
-
-.center[
-          <img src="images/npair.png" style="width: 500px;" />
-]
-
-.footnote.small[
-Sohn, Kihyuk. "Improved Deep Metric Learning withMulti-class N-pair Loss Objective", NIPS 2016
-]
-
-- Generalization of triplets to n-uplets
-- Samples pair of similar examples, negatives are all other samples in the batch
-
----
-## Results
-
-.center[
-          <img src="images/resquad.png" style="width: 500px;" />
-]
-
-Metric: **Recall @K**
-
---
-
-.center[
-          <img src="images/reshist.png" style="width: 500px;" />
-]
-
-
-???
-recall @K: Rank all images by similarity to an input image ; is an image of similar class within the first K images
----
-## Getting started
-
-Available open source implementations / pretrained models:
-- Openface https://cmusatyalab.github.io/openface/
-- FaceNet https://github.com/davidsandberg/facenet
-
-Commercial recognition systems are trained on a large datasets like 10/100 million images
-
---
+## Model in production
 
 **Deploying Verification models** e.g. Iphone FaceID:
 
-Beforehand, precompute representations of your 10 photos
+Build as light as possible model, both in terms of memory footprint and computing cost
 
 --
 
-At test time, compute representation of the photo, then compute similarities with the 10 representations
+Ask the user 10 photos and precompute representations of these.
+
+--
+
+At test time, compute representation of the new photo, then compute similarities with the 10 representations
 
 If a similarity is within a predefined threshold then Unlock!
 
@@ -677,9 +557,6 @@ with an asymmetric architecture.
 - If you have many many unlabeled images, self-supervised learning can be an alternative
 - Very active area of research!
 
---
-
-Use of **simulations** for generating data esp localisation / segmentation data (GTA V...)
 
 ???
 
