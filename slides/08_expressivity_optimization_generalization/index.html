@@ -1074,17 +1074,17 @@ Experiment: regression on 1D data with heteroschedastic noise
 # Non-intuitive behavior of MLP
 
 
-Adding hidden units:
+Adding hidden units (larger width):
 
-- does not lead to (more) overfitting
+- rarely lead to (more) overfitting
 
 - make optimization easier (less steps)
 
 - make computation slower (more FLOPS per pass)
 
-Adding layers:
+Adding layers (larger depth):
 
-- does not cause much more overfitting either
+- does not always cause much more overfitting either
 
 - can cause optimization issues (underfitting)
 
