@@ -852,10 +852,16 @@ More recently: [Weight Standardization](https://arxiv.org/abs/1903.10520)
 --
 - Active area of research:
 
-  - [Normalizer-Free ResNets (NFNets)](
-    https://arxiv.org/abs/2102.06171) SOTA on ImageNet
-    with Scaled Weight Standardization
+  - [Normalizer-Free ResNets (NFNets)](https://arxiv.org/abs/2102.06171)
+  - [DeepNet: Scaling Transformers to 1,000 Layers](https://arxiv.org/abs/2203.00555)
 
+???
+
+NFNets: convnets with Scaled Weight Standardization + other tricks to no need BatchNorm.
+
+DeepNet: reparametrized weight for the residual addition before layer norm +
+custom weight on init scheme with closed form formula to adapt those too
+parameters to the depth of the transformer architecture.
 
 ---
 # BTW: why minibatch SGD?
