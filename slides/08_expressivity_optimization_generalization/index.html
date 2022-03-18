@@ -897,45 +897,6 @@ class: middle, center
 # Generalization
 
 ---
-# Overfitting?
-
-Using [(decoupled) weight decay](https://arxiv.org/abs/1711.05101) can help a bit.
-
---
-
-Reducing width can cause optimization issues.
-
---
-
-Early stopping can help a bit but mostly useful to avoid wasting compute
-optimizing for nothing.
-
---
-
-Data augmentation and stochastic regularization (dropout) often help
-but:
-  - it also makes training (much) slower,
-  - too much gradient variance can prevent training completely.
-
---
-
-Ensembling models can help and can be reasonably cheap with SGD
-restarts ("snapshot ensembles").
-
-???
-
-Stochastic Regularization all-in: Stochastic Depth, Shakeout,
-Shake-Shake, Shake-Drop...
-
-Clever noise injection on the input:
-[random blank token in LM](https://arxiv.org/abs/1703.02573),
-[cutout](https://arxiv.org/abs/1708.04552) / [Random Erasing](
-  https://arxiv.org/abs/1708.04896)
-
-
-
-
----
 .center[
 <img src="images/noisy_sin_dataset.svg" width="95%" />
 ]
@@ -1325,6 +1286,64 @@ Compressibility of neural networks
 [Do Deep Learning Models Have Too Many Parameters? An Information Theory
  Viewpoint](https://arxiv.org/abs/1802.07044)
  Léonard Blier, Yann Ollivier
+
+---
+# Overfitting?
+
+Using [(decoupled) weight decay](https://arxiv.org/abs/1711.05101) (AdamW) can
+help a bit.
+
+--
+
+Reducing width can cause optimization issues.
+
+--
+
+Early stopping can help a bit but mostly useful to avoid wasting compute
+optimizing for nothing.
+
+--
+
+Data augmentation and stochastic regularization (dropout) often help
+but:
+  - it also makes training (much) slower,
+  - too much gradient variance can prevent training completely.
+
+--
+
+Ensembling models can help and can be reasonably cheap with SGD
+restarts ("snapshot ensembles").
+
+???
+
+Stochastic Regularization all-in: Stochastic Depth, Shakeout,
+Shake-Shake, Shake-Drop...
+
+Clever noise injection on the input:
+[random blank token in LM](https://arxiv.org/abs/1703.02573),
+[cutout](https://arxiv.org/abs/1708.04552) / [Random Erasing](
+  https://arxiv.org/abs/1708.04896)
+ 
+Also label smoothing trick to avoid over-confident decision boundaries.
+
+---
+# Overfitting? From theory to practice
+
+[Sharpness-Aware Minimization (SAM) for Efficiently Improving
+Generalization](https://arxiv.org/abs/2010.01412)
+
+[Low-Pass Filtering SGD for Recovering Flat Optima in the Deep Learning
+Optimization Landscape](https://arxiv.org/abs/2201.08025)
+
+[Surrogate Gap Minimization Improves Sharpness-Aware
+Training](https://arxiv.org/abs/2203.08065)
+
+SAM often used to reach SOTA performance (but a few % improvement in accuracy
+max).
+
+SAM can help significantly (for instance
+[transformers](https://arxiv.org/abs/2106.01548)), in particular in cases where
+no good data augmentation strategy is known.
 
 ---
 class: middle, center
