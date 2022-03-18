@@ -1290,29 +1290,36 @@ Compressibility of neural networks
 ---
 # Overfitting?
 
-Using [(decoupled) weight decay](https://arxiv.org/abs/1711.05101) (AdamW) can
-help a bit.
+Using [(decoupled) weight decay](https://arxiv.org/abs/1711.05101) (AdamW) often
+helps (a bit).
 
 --
 
-Reducing width can cause optimization issues.
+Reducing width can cause optimization issues (underfitting)
 
 --
 
-Early stopping can help a bit but mostly useful to avoid wasting compute
-optimizing for nothing.
+Early stopping can help but mostly useful to avoid wasting compute optimizing
+for nothing.
 
 --
 
-Data augmentation and stochastic regularization (dropout) often help
-but:
-  - it also makes training (much) slower,
-  - too much gradient variance can prevent training completely.
+Data augmentation, stochastic regularization (dropout), MixUp and SAM often
+help but it also make training slower.
 
 --
 
 Ensembling models can help and can be reasonably cheap with SGD
 restarts ("snapshot ensembles").
+
+--
+
+Self-supervised learning on pretext task + transfer learning used more and
+more.
+
+--
+
+Collecting more labels always help when possible!
 
 ???
 
@@ -1385,7 +1392,7 @@ Design architectures to limit conditioning issues:
 
 Use stochastic optimizers that are robust to bad conditioning
 
-Use small minibatches and learge learning rates
+Use small minibatches and large learning rates
 
 Use validation set to anneal learning rate and do early stopping
 
