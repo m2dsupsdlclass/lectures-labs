@@ -79,49 +79,10 @@ class: center,middle
 
 # Encoder-Decoder for machine translation
 
----
-## Encoder-Decoder
-
-.center[
-          <img src="images/encoder_decoder_1.svg" style="width: 680px;" />
-]
-
-.footnote.small[
-Cho, Kyunghyun, et al. "Learning phrase representations using RNN encoder-decoder for statistical machine translation." 2014
-]
----
-## Encoder-Decoder
-
-.center[
-          <img src="images/encoder_decoder_2.svg" style="width: 680px;" />
-]
-
-.footnote.small[
-Cho, Kyunghyun, et al. "Learning phrase representations using RNN encoder-decoder for statistical machine translation." 2014
-]
----
-## Encoder-Decoder
-
-.center[
-          <img src="images/encoder_decoder.svg" style="width: 680px;" />
-]
-
-.footnote.small[
-Cho, Kyunghyun, et al. "Learning phrase representations using RNN encoder-decoder for statistical machine translation." 2014
-]
----
-## Encoder-Decoder
-
-.center[
-          <img src="images/encoder_decoder_forcing.svg" style="width: 680px;" />
-]
-
-.footnote.small[
-Cho, Kyunghyun, et al. "Learning phrase representations using RNN encoder-decoder for statistical machine translation." 2014
-]
+From sequence to sequence
 
 ---
-## Sequence to Sequence
+## Decoder-only Seq2Seq
 
 .center[
           <img src="images/basic_seq2seq.png" style="width: 760px;" />
@@ -131,14 +92,63 @@ Cho, Kyunghyun, et al. "Learning phrase representations using RNN encoder-decode
 Sutskever, Ilya, Oriol Vinyals, and Quoc V. Le. "Sequence to sequence learning with neural networks." NIPS 2014
 ]
 
---
+---
+## Decoder-only Seq2Seq
 
-- **Reverse input sequence** for translation
+.center[
+          <img src="images/basic_seq2seq.png" style="width: 760px;" />
+]
+
+- Trained via **Teacher Forcing**:
+  - Feed the ground-truth translation as input at each time-step
+  - The model is trained to predict the next word in the target sequence
+
+--
+- **Reverse order** of the source sequence
+
+--
 - Special symbols for starting decoding and end of sentence
 
---
+---
+## Encoder-Decoder Seq2Seq
 
-Encoder and decoder can **share weights** (but more common to have separate weights)
+.center[
+          <img src="images/encoder_decoder_1.svg" style="width: 680px;" />
+]
+
+.footnote.small[
+Cho, Kyunghyun, et al. "Learning phrase representations using RNN encoder-decoder for statistical machine translation." 2014
+]
+---
+## Encoder-Decoder Seq2Seq
+
+.center[
+          <img src="images/encoder_decoder_2.svg" style="width: 680px;" />
+]
+
+.footnote.small[
+Cho, Kyunghyun, et al. "Learning phrase representations using RNN encoder-decoder for statistical machine translation." 2014
+]
+---
+## Encoder-Decoder Seq2Seq
+
+.center[
+          <img src="images/encoder_decoder.svg" style="width: 680px;" />
+]
+
+.footnote.small[
+Cho, Kyunghyun, et al. "Learning phrase representations using RNN encoder-decoder for statistical machine translation." 2014
+]
+---
+## Encoder-Decoder Seq2Seq
+
+.center[
+          <img src="images/encoder_decoder_forcing.svg" style="width: 680px;" />
+]
+
+.footnote.small[
+Cho, Kyunghyun, et al. "Learning phrase representations using RNN encoder-decoder for statistical machine translation." 2014
+]
 
 ---
 ## Large Vocabulary Size
@@ -170,7 +180,7 @@ Sampled softmax (https://arxiv.org/abs/1412.2007):
 
 Character-level Embedding (possibly with a CNN layer)
 
-- (+) Much smaller vocabulary size
+- (+) Much smaller vocabulary size (faster softmax)
 - (+) No need for language specific segmentation (e.g. Chinese);
 - (+) Robust to spelling mistakes and out-of-vocabulary words;
 - (+) Can deal with mixed language contents.
@@ -470,6 +480,21 @@ Slide from Thomas Wolf (HuggingFace)
 .center[
           <img src="images/inputs_bert.png" style="width: 600px;" />
 ]
+
+---
+# Takeaways
+
+- Seq2Seq: variable number of input and ouput tokens
+
+- Decoder-only vs Encoder-Decoder
+
+- Decoder always trained by **Teacher Forcing**
+
+- Can use either RNN or **Transformers** with *causal* attention
+
+- Pretraining:
+  - Autogressive language modeling (GPT)
+  - Masked language modeling (BERT)
 
 ---
 class: middle, center
